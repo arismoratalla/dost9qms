@@ -1,0 +1,26 @@
+namespace frontend\modules\[modulename];
+/*
+
+ */
+
+/**
+ * Description of module
+ *
+ * @author OneLab
+ */
+class [modulename] extends \yii\base\Module{
+    /**
+     * @inheritdoc
+     */
+    public $controllerNamespace = 'frontend\modules\[modulename]\controllers';
+
+    /**
+     * @inheritdoc
+     */
+    public function init()
+    {
+        parent::init();
+
+        // custom initialization code goes here
+    }
+}

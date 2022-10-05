@@ -1,0 +1,113 @@
+<?php
+use common\modules\message\models\Message;
+use kartik\grid\GridView;
+use yii\helpers\Html;
+use yii\widgets\Pjax;
+
+
+/* @var $this yii\web\View */
+/* @var $searchModel app\models\MessageSearch */
+/* @var $dataProvider yii\data\ActiveDataProvider */
+
+$this->title = Yii::t('message', 'Inbox');
+$this->params['breadcrumbs'][] = $this->title;
+
+rmrevin\yii\fontawesome\AssetBundle::register($this);
+
+?>
+<div class="message-index">
+    <p> <?= Html::a(Yii::t('message', 'Write a message') . ' <i class="fa fa-plus"></i>', ['compose'], ['class' => 'btn btn-success']) ?> </p>
+    <hr style="margin-bottom: 0px">
+    <?php Pjax::begin(); ?>
+    <?= GridView::widget([
+        'dataProvider' => $dataProvider,
+        'filterModel' => $searchModel,
+        'panel' => [
+            'type' => GridView::TYPE_PRIMARY,
+            'heading' => '<span class="glyphicon glyphicon-book"></span>  ' . Html::encode($this->title),
+        ],
+        'columns' => [
+            [
+                'headerOptions' => ['style' => 'width: 200px;'],
+                'attribute' => 'from',
+                'format' => 'raw',
+                'value' => function ($message) {
+                    if (isset(Yii::$app->getModule('message')->userProfileRoute)) {
+                        return Html::a($message->sender->username, array_merge(
+                                Yii::$app->getModule('message')->userProfileRoute, ['id' => $message->from]), ['data-pjax' => 0]);
+                    } else {
+                        return $message->sender->username;
+                    }
+                },
+                'filter' => $senders,
+            ],
+            [
+                'headerOptions' => ['style' => 'width: 200px;'],
+                'attribute' => 'to',
+                'format' => 'raw',
+                'value' => function ($message) {
+                    if (isset(Yii::$app->getModule('message')->userProfileRoute)) {
+                        return Html::a($message->recipient->username, array_merge(
+                                Yii::$app->getModule('message')->userProfileRoute, ['id' => $message->to]), ['data-pjax' => 0]);
+                    } else {
+                        return $message->recipient->username;
+                    }
+                },
+                'filter' => $users,
+            ],
+            [
+                'headerOptions' => ['style' => 'width: 200px;'],
+                'attribute' => 'created_at',
+                'format' => 'datetime',
+                'filter' => false,
+            ],
+            [
+                'attribute' => 'title',
+                'format' => 'raw', // do not use 'format' => 'html' because the 'data-pjax=0' gets swallowed.
+                'value' => function ($data) {
+                    if(Message::STATUS_UNREAD){
+                        return Html::a("<strong>".$data->title."</strong>", ['view', 'hash' => $data->hash], ['data-pjax' => 0]);
+                    }else{
+                        return Html::a($data->title, ['view', 'hash' => $data->hash], ['data-pjax' => 0]);
+                    }
+                },
+            ],
+            [
+                'headerOptions' => ['style' => 'width: 50px;'],
+                'filter' => [
+                    0 => Yii::t('message', 'unread'),
+                    1 => Yii::t('message', 'read'),
+                    2 => Yii::t('message', 'answered'),
+                ],
+                'attribute' => 'status',
+                'format' => 'raw',
+                'value' => function ($data) {
+                    switch ($data->status) {
+                        case Message::STATUS_UNREAD:
+                            return '<span class="glyphicon glyphicon-envelope" title="' . Yii::t('message', 'unread') . '">';
+                            break;
+                        case Message::STATUS_READ:
+                            return '<span class="glyphicon glyphicon-ok" title="' . Yii::t('message', 'read') . '">';
+                            break;
+                        case Message::STATUS_ANSWERED:
+                            return '<span class="glyphicon glyphicon-repeat" title="' . Yii::t('message', 'answered') . '">';
+                            break;
+                    }
+                },
+            ],
+            [
+                'headerOptions' => ['style' => 'width: 50px;'],
+                'filter' => false,
+                'format' => 'raw',
+                'value' => function($data) {
+                    return Html::a('<i class="glyphicon glyphicon-remove">', ['delete', 'hash' => $data->hash], [
+                        'data-pjax' => 0,
+                        'data-method' => 'POST',
+                        'data-confirm' => Yii::t('message', 'Are you sure you want to delete this message?'),
+                        'title' => Yii::t('message', 'Delete message'),
+                    ]);
+                }
+            ],
+        ],
+    ]); ?>
+    <?php Pjax::end(); ?></div>

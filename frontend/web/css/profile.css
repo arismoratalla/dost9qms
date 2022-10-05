@@ -1,0 +1,50 @@
+/*
+Project Name: eulims
+Copyright(C)2018 Department of Science & Technology -IX
+Developer: Eng'r Nolan F. Sunico 
+01 22, 18 , 2:54:57 PM
+Module: profile
+*/
+/* 
+    Created on : 01 22, 18, 2:54:57 PM
+    Author     : OneLab
+*/
+.image-view{
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    padding-left: 10px;
+    padding: 8px 0px 8px 1px;
+    width: 100%;
+    margin-bottom: 15px;
+}
+.image-preview {
+    font: 40px Impact, Charcoal, sans-serif;
+    color: #008000;
+}
+.image-footer-caption {
+    display: block;
+    text-align: center;
+    padding-top: 14px;
+    font-size: 11px;
+    color: #777;
+    margin-bottom: 15px;
+}
+
+.image-thumbnail-footer {
+    height: 70px;
+}
+.image-content {
+    width: 213px;
+    height: 160px;
+}
+.image-default.image-preview-frame {
+    margin: 8px;
+    border: 1px solid #ddd;
+    box-shadow: 1px 1px 5px 0 #a2958a;
+    padding: 6px;
+    float: left;
+    text-align: center;
+}
+.image-default.file-preview-frame, .iamge-default .image-thumbnail-footer, .image-zoom-dialog .modal-dialog {
+    position: relative;
+}

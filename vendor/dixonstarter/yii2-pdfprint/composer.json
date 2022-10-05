@@ -1,0 +1,28 @@
+{
+    "name": "dixonstarter/yii2-pdfprint",
+    "description": "Load PDF into iframe and call print.",
+    "type": "yii2-extension",
+    "keywords": ["iframe"," print"," pdf print"," yii2","extension"],
+    "license": "MIT",
+    "repositories":[
+        {
+        "type": "git",
+        "url": "https://github.com/dixonsatit/yii2-pdfprint"
+        }
+    ],
+    "authors": [
+        {
+            "name": "Sathit Seethaphon",
+            "email": "dixonsatit@gmail.com"
+        }
+    ],
+    "require": {
+        "yiisoft/yii2": "*",
+        "bower-asset/nprogress":"*"
+    },
+    "autoload": {
+        "psr-4": {
+            "dixonstarter\\pdfprint\\": ""
+        }
+    }
+}

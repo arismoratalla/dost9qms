@@ -1,0 +1,179 @@
+
+body {
+	font-family: \'DejaVu Sans Condensed\';
+}
+@page {
+	margin-top: 1.0cm;
+	margin-bottom: 1.0cm;
+	margin-left: 0.5cm;
+	margin-right: 0.5cm;
+	/*margin-header: 0mm;
+	margin-footer: 0mm;*/
+	background-color:#ffffff;
+}
+
+
+.lddapada table{
+    border: 1px solid #000;
+}
+
+
+
+
+
+
+.border-bottom-line{
+    border-bottom: 1px solid black;
+}
+.border-top-line{
+    border-top: 1px solid black;
+}
+.border-right-line{
+    border-right: 1px solid black;
+}
+.border-left-line{
+    border-left: 1px solid black;
+}
+.valign-bottom{
+    vertical-align: bottom;
+}
+.text-bold{
+    font-weight: bold;
+}
+.text-right{
+    text-align: right;
+}
+.text-left{
+    text-align: left;
+} 
+.text-center{
+    text-align: center;
+}
+.padding-right-5{
+    padding-right: 5px;
+}
+.padding-left-5{
+    padding-left: 5px;
+}
+
+
+/** OS Signature **/
+.os-box-a{
+    padding-left: 100px;
+    padding-top: 60px;
+    position: absolute;
+    top: 560px;
+    width: 270px;
+    height: 150px;
+    vertical-align: middle;
+}
+
+.os-box-a-sig{
+    height: 90px;
+    float: left;
+}
+
+.os-box-a-sig-details{
+    font-size: 25%;
+    padding-top: 35px;
+    margin-left: -40px;
+    color: blue;
+    float: right;
+}
+
+.os-box-b{
+    padding-left: 100px;
+    padding-top: 60px;
+    position: absolute;
+    top: 560px;
+    left: 395px;
+    width: 270px;
+    height: 150px;
+    vertical-align: middle;
+}
+
+.os-box-b-sig{
+    height: 90px;
+    float: left;
+}
+
+.os-box-b-sig-details{
+    font-size: 25%;
+    padding-top: 35px;
+    margin-left: -40px;
+    color: blue;
+    float: right;
+}
+
+/** DV Signature **/
+.dv-box-a{
+    padding-left: 100px;
+    padding-top: 60px;
+    position: absolute;
+    top: 360px;
+    left: 210px;
+    width: 270px;
+    height: 150px;
+    vertical-align: middle;
+}
+
+.dv-box-a-sig{
+    height: 90px;
+    float: left;
+}
+
+.dv-box-a-sig-details{
+    font-size: 25%;
+    padding-top: 35px;
+    margin-left: -25px;
+    color: blue;
+    float: right;
+}
+
+.dv-box-c{
+    padding-left: 100px;
+    padding-top: 60px;
+    position: absolute;
+    top: 650px;
+    left: 55px;
+    width: 270px;
+    height: 150px;
+    vertical-align: middle;
+}
+
+.dv-box-c-sig{
+    height: 90px;
+    float: left;
+}
+
+.dv-box-c-sig-details{
+    font-size: 25%;
+    margin-left: -45px;
+    padding-top: 35px;
+    color: blue;
+    float: right;
+}
+
+.dv-box-d{
+    padding-left: 100px;
+    padding-top: 60px;
+    position: absolute;
+    top: 650px;
+    left: 475px;
+    width: 270px;
+    height: 150px;
+    vertical-align: middle;
+}
+
+.dv-box-d-sig{
+    height: 90px;
+    float: left;
+}
+
+.dv-box-d-sig-details{
+    font-size: 25%;
+    margin-left: -15px;
+    padding-top: 35px;
+    color: blue;
+    float: right;
+}

@@ -1,0 +1,53 @@
+{
+  "name": "motion/yii2-language-provider",
+  "description": "Language providers kit for modules based on Yii2 Framework",
+  "keywords": ["yii2", "language", "provider", "i18n"],
+  "type": "yii2-extension",
+  "license": "BSD-3-Clause",
+  "support": {
+    "source": "https://github.com/motion-web-production/yii2-language-provider",
+    "issues": "https://github.com/motion-web-production/yii2-language-provider/issues"
+  },
+  "authors": [
+    {
+      "name": "Vladimir Kuprienko",
+      "email": "vldmr.kuprienko@gmail.com",
+      "role": "Developer"
+    }
+  ],
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://asset-packagist.org"
+    }
+  ],
+  "require": {
+    "yiisoft/yii2": "~2.0"
+  },
+  "require-dev": {
+    "codeception/codeception": "~2.3",
+    "codeception/verify": "*",
+    "codeception/specify": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "motion\\i18n\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "motion\\i18n\\tests\\": "tests/"
+    }
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "scripts": {
+    "test": [
+      "codecept build",
+      "codecept run"
+    ]
+  }
+}

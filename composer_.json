@@ -1,0 +1,55 @@
+{
+    "name": "adm/fais",
+    "authors": [
+        {
+            "name": "arismoratalla",
+            "email": "35106073+arismoratalla@users.noreply.github.com"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/yiisoft/yii2/issues?state=open",
+        "forum": "http://www.yiiframework.com/forum/",
+        "wiki": "http://www.yiiframework.com/wiki/",
+        "irc": "irc://irc.freenode.net/yii",
+        "source": "https://github.com/yiisoft/yii2"
+    },
+    "minimum-stability": "stable",
+    "require": {
+        "php": ">=5.4.0",
+        "yiisoft/yii2": "~2.0.6",
+        "yiisoft/yii2-bootstrap": "~2.0.0",
+        "yiisoft/yii2-swiftmailer": "~2.0.0 || ~2.1.0",
+        "mdmsoft/yii2-admin": "~2.0",
+        "dmstr/yii2-adminlte-asset": "^2.1",
+        "2amigos/yii2-file-upload-widget": "~1.0",
+        "budyaga/yii2-cropper": "*",
+        "dektrium/yii2-user": "^0.9.12",
+        "cozumel/yii2-image-cropper": "*",
+        "maxmirazh33/yii2-uploadable-cropable-image": "*",
+        "brussens/yii2-maintenance-mode": "*",
+        "thyseus/yii2-message": "^0.3.0",
+        "2amigos/yii2-ckeditor-widget": "^2.1",
+        "mihaildev/yii2-ckeditor": "*",
+        "noam148/yii2-image-manager": "*",
+        "kartik-v/yii2-mpdf": "*",
+        "kartik-v/yii2-detail-view": "*",
+        "kartik-v/yii2-widget-datepicker": "@dev",
+        "phpoffice/phpexcel": "~1.8.0",
+        "sergmoro1/yii2-google-spreadsheet": "dev-master",
+        "2amigos/yii2-highcharts-widget": "~1.0",
+        "edofre/yii2-fullcalendar": "v1.0.11",
+        "2amigos/yii2-google-places-library": "1.0.2",
+        "yiimaker/yii2-email-templates": "^3.0",
+        "yii2mod/yii2-sweet-alert": "*",
+        "dixonstarter/yii2-pdfprint": "*",
+        "kartik-v/yii2-editable": "@dev"
+    },
+    "require-dev": {
+        "yiisoft/yii2-debug": "~2.0.0",
+        "yiisoft/yii2-gii": "~2.0.0",
+        "yiisoft/yii2-faker": "~2.0.0",
+        "codeception/base": "^2.2.3",
+        "codeception/verify": "~0.3.1",
+        "jamband/yii2-schemadump": "*"
+    }
+}

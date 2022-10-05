@@ -1,0 +1,407 @@
+/* Overried CSS */
+.treeview-menu {
+    padding-top:10px!important;
+    padding-bottom:10px!important;
+}
+
+.treeview-menu>li>a {
+    font-size:12px!important;
+    padding-top:10px!important;
+    padding-bottom: 10px!important;
+}
+
+.skin-blue .sidebar-menu>li>.treeview-menu {
+    margin:0 6px!important;
+}
+
+.user-panel {
+    padding-top:25px!important;
+    padding-bottom: 25px!important;
+}
+
+.breadcrumb-arrow li:first-child a {
+    border-radius: 0px!important;
+    -webkit-border-radius: 0px!important;
+    -moz-border-radius: 0px!important;
+}
+
+.login-box, .register-box {
+    width: 500px!important;
+}
+
+@media (max-width: 767px) {
+    .skin-green .main-header .navbar .dropdown-menu li a {
+        color:#337ab7!important;
+    }
+}
+
+div.wrapper {
+    background: #fff !important;
+}
+
+div.wrapper.wrapper-white {
+    margin-top: -10px;
+    padding:10px!important;
+}
+
+.space-10 {
+    height: 10px!important;
+}
+.space-20 {
+    height: 20px!important;
+}
+.space-30 {
+    height: 30px!important;
+}
+
+@media screen and (max-width: 769px) {
+    .modal-dialog {
+        width:100%!important;
+        margin-top: 0%;
+    }
+}
+
+@media screen and (max-width: 1202px) {
+    #btnInsert {
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+}
+
+
+h4.modal-title {
+    color:#ffffff;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+div.modal-header {
+    background: #212121;
+}
+
+.form-control {
+    border: 1px solid #ccc!important;
+    border-radius: 4px!important;
+}
+
+
+.grdbutton {
+    float:right;
+    width:24px!important;
+    height: 24px;
+}
+
+.grdbutton:after {
+    clear: both;
+}
+
+.btn {
+    font-family: 'Poppins', sans-serif;
+    padding: 8px;
+    margin-left: 2px;
+    font-size: 12px;
+    border-radius: 1px!important;
+    outline: none;
+    cursor: pointer;
+    font-weight: 100!important;
+}
+
+.small {
+    padding: 7px!important;
+}
+
+thead {
+    background: #52B3D9;
+    color: #ffffff;
+}
+
+thead tr th {
+    padding: 15px!important;
+}
+/*
+td.ng-binding {
+    padding-top: 8px!important;
+    font-family: 'Poppins', sans-serif;
+}
+
+th {
+    text-transform: uppercase;
+}
+
+*/
+td.button-control {
+    padding-top: 8px!important;
+}
+
+td.button-control::after {
+    clear: both;
+}
+
+td.button-control a {
+    position: relative;
+
+}
+
+td.button-control i.fa{
+    position: absolute;
+    top: 5px;
+    left: 6px;
+}
+
+/*
+.table-striped > tbody > tr:nth-of-type(even) {
+    background: #C8F7C5;
+    font-family: 'Poppins', sans-serif;
+}
+
+.table-striped > tbody > tr:nth-of-type(odd) {
+    background: #ffffff;
+    font-family: 'Poppins', sans-serif;
+}
+
+.table-striped > tbody > tr:nth-of-type(even):hover {
+    background: #52B3D9;
+    color: #ffffff;
+}
+*/
+
+.table-striped > tbody > tr:nth-of-type(odd):hover {
+    background: #2ECC71;
+}
+
+
+.btn.btn-primary {
+    background: #52B3D9!important;
+    border: none;
+}
+
+.btn.btn-primary:hover {
+    background: #1E8BC3!important;
+    transition-delay: inherit;
+    transition: 0.5s;
+}
+
+tr.ng-scope:hover {
+    background: #eaf5f7;
+    transition: 0.25s;
+
+}
+
+.centered {
+    text-transform: uppercase;
+    font-family: 'Poppins', sans-serif;
+    background: #52B3D9;
+    color: #ffffff;
+    padding: 10px;
+}
+
+.modal {
+    /* background: url('../images/slice2.gif')!important; */
+    /*background: url('../images/slice.png')!important;*/
+}
+
+.loadpartial {
+    display: block;
+    position: relative;
+}
+
+.loadpartial img {
+    text-align: center;
+    display: block;
+    margin: 0 auto;
+}
+
+textarea#purchaserequest-purchase_request_purpose {
+    height: 183px;
+}
+
+.modal-scroll {
+    overflow-y: auto!important;
+    overflow-x: hidden;
+    height: 815px;
+    padding: 15px;
+}
+
+
+.table-scroll {
+    background-color: #DCDCDC;
+    height: 350px !important;
+    transition: 0.5s;
+    overflow-y: scroll;
+    margin-top: 15px;
+    margin-bottom: 20px;
+    position: relative;
+
+}
+
+.table-scroll.max-scroll {
+    height: 600px!important;
+    transition: 0.5s;
+}
+
+
+.table-scroll #myHead {
+}
+
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 1px rgba(0,0,0,0.3);
+    border-radius: 2px;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 2px;
+    -webkit-box-shadow: inset 0 0 1px rgba(0,0,0,0.5);
+}
+
+.popup-container {
+    position: relative;
+    width: 100%;
+    display:block;
+}
+
+.mypopup {
+    overflow-y: auto;
+    position:absolute;
+    top:25px;
+    left: 25px;
+    right: 25px;
+    height: auto;
+    min-height: 250px;
+    max-height: 600px;
+    background: #0a0a0a;
+    display: block;
+    visibility: hidden;
+    z-index: 9999999999999999999999;
+    padding: 10px;
+    opacity: 1;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    border-radius: 8px;
+}
+
+.mypopup.selected {
+    visibility: visible;
+}
+
+table#myHead {
+    position: relative;
+}
+
+.radio-container{ }
+
+.radio-container .radio{
+    position: relative;
+    border:3px solid #AAAAAA;
+    width: 13px;
+    height: 13px;
+    border-radius: 100%;
+    cursor: pointer;
+}
+.radio-container .radio.check{
+    background: #19b5fe url("../images/tick.png") no-repeat center center;
+    background-size: 10px 10px;
+    border: 3px solid #19b5fe;
+}
+
+.radio-container input[type="radio"] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -ms-appearance: none;
+    -o-appearance: none;
+    display: none;
+}
+
+/* Control Options */
+.control-options{
+    position: relative;
+    background: #4285f4;
+    padding: 7px 5px;
+}
+.control-options.false{ display: none; }
+
+.control-options .control-options-items { display: inline-block; margin-right: 40px; vertical-align: text-bottom; }
+.control-options .control-options-items .dropdown { width: auto; border-bottom: 0px; }
+.control-options .control-options-items .dropdown a.dropdown-toggle { color: #ffffff; }
+.control-options .control-options-items .dropdown a .caret{ right: -15px; }
+.control-options a, .control-options h1 { color: #ffffff; font-size: 16px; font-weight: 300; }
+.control-options a.dropdown-toggle { font-size: 16px; font-weight: 500; }
+.control-options h1 {
+    padding: 2px 20px;
+    background: #ffffff;
+    color: #888888;
+    font-weight: 600;
+    border-radius: 15px;
+    position: absolute;
+    top:-13px;
+}
+.control-options ul
+.control-options ul li a{
+    color: #888888;
+    padding: 5px 0px;
+}
+.control-options ul{
+    padding: 10px 0
+}
+
+.panel-footer {
+    border-top:0px!important;
+}
+
+.noprint-border {
+    border:0px;
+}
+
+
+.kartik-sheet-style {
+    color:#337ab7;
+    background: #ffffff;
+    background: -moz-linear-gradient(top, #ffffff 0%, #f5f5f5 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#f5f5f5));
+    background: -webkit-linear-gradient(top, #ffffff 0%,#f5f5f5 100%);
+    background: -o-linear-gradient(top, #ffffff 0%,#f5f5f5 100%);
+    background: -ms-linear-gradient(top, #ffffff 0%,#f5f5f5 100%);
+    background: linear-gradient(to bottom, #ffffff 0%,#f5f5f5 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#f5f5f5',GradientType=0 );
+}
+
+.kv-disable-link {
+    border: none;
+    background: transparent;
+}
+
+.custom-check {
+    background:red;
+}
+
+.registration-index{
+    margin: 0 auto;
+    width: 98.5%;
+    height: 93%;
+    position: absolute;
+    float: left;
+    
+    background: url('../images/paai/royalty4x3.jpg');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+
+.req {
+    display: none!important;
+}
+.req.visible {
+    display: block!important;
+    color: red;
+}
+
+.cboEmployeeA {
+    width: 94%!important;
+}
+
+.cke_contents > iframe{
+    width: 100% !important;
+}
+

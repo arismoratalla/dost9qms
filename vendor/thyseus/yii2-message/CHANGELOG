@@ -1,0 +1,16 @@
+0.3.0 - released on 2017-04-13
+ENH: style improved using font awesome icons
+ENH: add optional context feature to Messages
+ENH: add 'answerPrefix' defaults to 'Re: '
+ENH: allow to render the compose view into an dialog
+
+0.2.0, released on 2016-12-16
+ENH: allow multiple recipients for an message
+ENH: add select2 widget for all dropDownLists
+ENH: add 'ignoreListCallback' function
+ENH: add 'mailMessages' function
+ENH: dont display 'answer' button for my own messages
+ENH: add MessageController->actionMarkAllAsRead()
+SECURITY: disallow deletion of foreign messages
+
+0.1.0 initial release
