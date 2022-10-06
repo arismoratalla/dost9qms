@@ -99,8 +99,9 @@ use common\models\docman\Functionalunit;
     <div class="row">
         <div class="col-md-6">
             <?= $form->field($model, 'revision_number')->textInput() ?>
+            <?= $form->field($model, 'qms_type_id')->hiddenInput(['value'=>$_GET['qms_type_id']])->label('') ?>
         </div>
-        
+
         <div class="col-md-6">
             <?= $form->field($model, 'effectivity_date')->widget(DatePicker::classname(), [
                 'readonly' => false,

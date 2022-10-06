@@ -135,10 +135,10 @@ class DocumentController extends Controller
     public function actionCreate()
     {
         $model = new Document();
-
+        $qms_type_id = $_GET['qms_type_id'];
         if ($model->load(Yii::$app->request->post())) {
             $model->user_id = Yii::$app->user->identity->user_id;
-            $model->qms_type_id = $_GET['qms_type_id'];
+            // $model->qms_type_id = $qms_type_id;
             $model->active = 1;
             if($model->save(false)){
                 $doc_types = Documenttype::find()->where('active =:active',[':active'=>1])->all();
@@ -157,10 +157,12 @@ class DocumentController extends Controller
         }elseif (Yii::$app->request->isAjax) {
             return $this->renderAjax('_form', [
                         'model' => $model,
+                        'qms_type_id' => $qms_type_id,
             ]);
         } else {
             return $this->render('_form', [
                         'model' => $model,
+                        'qms_type_id' => $qms_type_id,
             ]);
         }
         
