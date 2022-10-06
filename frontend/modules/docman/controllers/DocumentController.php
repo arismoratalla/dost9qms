@@ -138,6 +138,7 @@ class DocumentController extends Controller
 
         if ($model->load(Yii::$app->request->post())) {
             $model->user_id = Yii::$app->user->identity->user_id;
+            $model->qms_type_id = $_GET['qms_type_id'];
             $model->active = 1;
             if($model->save(false)){
                 $doc_types = Documenttype::find()->where('active =:active',[':active'=>1])->all();
