@@ -105,21 +105,21 @@ Modal::end();
             ],
             [   
                 'attribute'=>'filename',
-                'header' => 'Attachment',//'Document Type',
+                'header' => 'Document Type',
                 'headerOptions' => ['style' => 'text-align: center;'],
                 'contentOptions' => ['style' => 'text-align: center; vertical-align: middle; text-transform: uppercase;'],
                 'width'=>'50px',
                 'value'=>function ($model, $key, $index, $widget) { 
-                    return $model->type->name;
+                    return 'Attachment';
                 },
             ],
-            [
+            /*[
                 'attribute'=>'filename',
                 'header' => 'Filename',
                 'headerOptions' => ['style' => 'text-align: center;'],
                 'contentOptions' => ['style' => 'text-align: left; vertical-align: middle;'],
                 'width'=>'100px'
-            ],
+            ],*/
             [   
                 'attribute'=>'filename',
                 'header' => 'Attachments',
