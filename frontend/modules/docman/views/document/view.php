@@ -76,9 +76,6 @@ Modal::end();
 <?= DetailView::widget([
         'model' => $model,
         'mode'=>DetailView::MODE_VIEW,
-        /*'deleteOptions'=>[ // your ajax delete parameters
-            'params' => ['id' => 1000, 'kvdelete'=>true],
-        ],*/
         'container' => ['id'=>'kv-demo'],
         //'formOptions' => ['action' => Url::current(['#' => 'kv-demo'])] // your action to delete
         // 'buttons1' => ( (Yii::$app->user->identity->username == 'Admin') || Yii::$app->user->can('access-document-management')) ? '{update}' : '', //hides buttons on detail view
@@ -88,7 +85,6 @@ Modal::end();
         'responsive' => true,
         'hover' => true,
         'formOptions' => ['action' => ['document/view', 'id' => $model->document_id]],
-        //'formOptions' => ['action' => ['document/view', 'id' => $model->document_id]],
         'panel' => [
             'heading'=>'DOCUMENT DETAILS',
             'type'=>DetailView::TYPE_PRIMARY,
@@ -103,8 +99,6 @@ Modal::end();
                 'contentOptions' => ['class' => 'kartik-sheet-style'],
                 'width' => '10px',
                 'header' => '',
-                //'headerOptions' => ['style' => 'text-align: center; background-color: #f7ab78'],
-                //'mergeHeader' => true,
             ],
             [   
                 'attribute'=>'filename',
@@ -135,22 +129,16 @@ Modal::end();
                     $btnCss = [];
                     $status = Documentattachment::hasAttachment($model->document_attachment_id);
                     
-//                    $type = ($model->document_type == 1) ? ['pdf'] : ['doc', 'docx', 'xls', 'xlsx'];
                     switch($status){
                         case 0:
                             $btnCss = 'btn btn-danger';
                             break;
                         case 1:
-                            //if($model->status_id)
                                 $btnCss = 'btn btn-success';
-                            //else
-                                //$btnCss = 'btn btn-warning';
                             break;
                     }
                     
                     return Html::button('<i class="glyphicon glyphicon-file"></i> '.($status ? 'View' : 'Upload'), ['value' => Url::to(['document/uploadattachment', 'id'=>$model->document_attachment_id]), 'title' => Yii::t('app', "Attachment"), 'class' => $btnCss, 'style'=>'margin-right: 6px; display: "";', 'id'=>'buttonUploadDocument']);// . 
-                        
-                    //Html::button('<i class="glyphicon glyphicon-file"></i> Upload', ['value' => Url::to(['document/uploadattachment', 'id'=>$model->document_id]), 'title' => 'Submit', 'class'=>$btnCss, 'style'=>'margin-right: 6px;', 'id'=>'buttonDocument']);
                 },
             ],
             
