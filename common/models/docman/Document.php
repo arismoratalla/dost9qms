@@ -79,7 +79,7 @@ class Document extends \yii\db\ActiveRecord
      */
     public function getAttachments()
     {
-        return $this->hasMany(Documentattachment::className(), ['document_id' => 'document_id'])->andOnCondition(['document_type_id' => 1]);
+        return $this->hasMany(Documentattachment::className(), ['document_id' => 'document_id'])->andOnCondition(['document_type' => 1]);
     }
     
     public function getCategory()
