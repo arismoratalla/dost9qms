@@ -20,23 +20,23 @@ class AppAsset extends AssetBundle
 //        'css/bootstrap.min.css',
         'css/demo.css',
         'css/animate.min.css',
-        'css/steps.css'
+        // 'css/steps.css'
 //        'css/style.bundle.css'
     ];
     public $js = [
         'js/bootbox.min.js',
         'js/main.js',
-        'js/jquery.validate.min.js',
-        'js/lineitembudget/ajax-modal-popup.js',
-        'js/ppmp/ajax-modal-popup.js',
-        'js/budget/ajax-modal-popup.js',
-        'js/cashier/ajax-modal-popup.js',
+        // 'js/jquery.validate.min.js',
+        // 'js/lineitembudget/ajax-modal-popup.js',
+        // 'js/ppmp/ajax-modal-popup.js',
+        // 'js/budget/ajax-modal-popup.js',
+        // 'js/cashier/ajax-modal-popup.js',
         'js/docman/ajax-modal-popup.js',
-        'js/employeecompensation/ajax-modal-popup.js',
+        // 'js/employeecompensation/ajax-modal-popup.js',
         'js/finance/ajax-modal-popup.js',
-        'js/finance/fileinput.min.js',
-        'js/finance/sortable.min.js',
-        'js/intro.js',
+        // 'js/finance/fileinput.min.js',
+        // 'js/finance/sortable.min.js',
+        // 'js/intro.js',
 //        'js/scripts.bundle.js',
         //'js/dashboard/dashboard.js',
         //'js/dashboard/jquery.knob.min.js',

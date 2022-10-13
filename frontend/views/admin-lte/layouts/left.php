@@ -113,8 +113,6 @@ if(Yii::$app->user->isGuest){
                     [
                         'label' => 'Account Setting',
                         'icon' => 'user',
-                        //'url' => ['/settings'],
-                        //'visible'=> Yii::$app->user->can('access-settings'),
                         'items' => [
                             ['label' => 'Profile', 'icon' => 'user', 'url' => ['/profile'],'visible'=> Yii::$app->user->can('access-settings')],
                             ['label' => 'Change Password', 'icon' => 'key', 'url' => ['/admin/user/change-password'],'visible'=> Yii::$app->user->can('access-settings')],

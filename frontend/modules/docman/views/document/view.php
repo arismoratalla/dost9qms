@@ -1,5 +1,4 @@
 <?php
-
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\helpers\ArrayHelper;
@@ -37,21 +36,22 @@ Modal::end();
     
 <?php $attributes = [
         [
-            'group'=>true,
+            'group'=>true,  
             'label'=>'Details',
             'rowOptions'=>['class'=>'info']
         ],
         [
             'attribute'=>'document_code',
             'label'=>'Document Code',
-            'inputContainer' => ['class'=>'col-sm-6'],
-            'displayOnly'=>true
+            'inputContainer' => ['class'=>'col-sm-4'],
+            // 'displayOnly'=>true
         ],
         [
             'attribute'=>'category_id',
             'label'=>'Category',
-            'inputContainer' => ['class'=>'col-sm-6'],
+            'inputContainer' => ['class'=>'col-sm-4'],
             'value' => $model->category->name,
+            // 'displayOnly'=>true,
             'type'=>DetailView::INPUT_SELECT2, 
             'widgetOptions'=>[
                 'data'=>ArrayHelper::map(Category::find()->all(),'category_id','name'),
@@ -62,14 +62,15 @@ Modal::end();
         [
             'attribute'=>'revision_number',
             'label'=>'Revision Number',
-            'inputContainer' => ['class'=>'col-sm-6'],
-            'displayOnly'=>true
+            'inputContainer' => ['class'=>'col-sm-4'],
+            // 'displayOnly'=>true
         ],
         [
             'attribute'=>'effectivity_date',
             'label'=>'Effectivity Date',
-            'inputContainer' => ['class'=>'col-sm-6'],
-            'displayOnly'=>true
+            'type'=>DetailView::INPUT_DATE,
+            'inputContainer' => ['class'=>'col-sm-4'],
+            // 'displayOnly'=>true
         ],
     ];?>
 <?= DetailView::widget([
@@ -80,18 +81,17 @@ Modal::end();
         ],*/
         'container' => ['id'=>'kv-demo'],
         //'formOptions' => ['action' => Url::current(['#' => 'kv-demo'])] // your action to delete
-        
-//        'buttons1' => ( (Yii::$app->user->identity->username == 'Admin') || $model->owner() || Yii::$app->user->can('access-finance-verification')) ? '{update}' : '', //hides buttons on detail view
+        // 'buttons1' => ( (Yii::$app->user->identity->username == 'Admin') || Yii::$app->user->can('access-document-management')) ? '{update}' : '', //hides buttons on detail view
+        'buttons1' => '{update}',
         'attributes' => $attributes,
         'condensed' => true,
         'responsive' => true,
         'hover' => true,
         'formOptions' => ['action' => ['document/view', 'id' => $model->document_id]],
+        //'formOptions' => ['action' => ['document/view', 'id' => $model->document_id]],
         'panel' => [
-            //'type' => 'Primary', 
-            'heading'=>'FINANCIAL REQUEST',
+            'heading'=>'DOCUMENT DETAILS',
             'type'=>DetailView::TYPE_PRIMARY,
-            //'footer' => '<div class="text-center text-muted">This is a sample footer message for the detail view.</div>'
         ],
     ]); ?>
     
@@ -106,17 +106,6 @@ Modal::end();
                 //'headerOptions' => ['style' => 'text-align: center; background-color: #f7ab78'],
                 //'mergeHeader' => true,
             ],
-            /*[
-                'attribute'=>'attachment_id',
-                'header' => 'Required Documents',
-                'contentOptions' => ['style' => 'padding-left: 25px; vertical-align: middle;'],
-                'width'=>'650px',
-                'format' => 'raw',
-                'value'=>function ($model, $key, $index, $widget) { 
-                    
-                    return $model->attachment->name;
-                },
-            ],*/
             [   
                 'attribute'=>'filename',
                 'header' => 'Document Type',

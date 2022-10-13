@@ -43,7 +43,7 @@ class Document extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['qms_type_id', 'subject', 'filename', 'document_code', 'category_id', 'content', 'revision_number', 'effectivity_date'], 'required'],
+            [['qms_type_id', 'subject', 'document_code', 'category_id', 'content', 'revision_number', 'effectivity_date'], 'required'],
             [['category_id', 'functional_unit_id', 'revision_number', 'user_id', 'active'], 'integer'],
             [['content'], 'string'],
             [['effectivity_date'], 'safe'],
