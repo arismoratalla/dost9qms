@@ -105,7 +105,7 @@ Modal::end();
             ],
             [   
                 'attribute'=>'filename',
-                'header' => 'Document Type',
+                'header' => 'Attachment',//'Document Type',
                 'headerOptions' => ['style' => 'text-align: center;'],
                 'contentOptions' => ['style' => 'text-align: center; vertical-align: middle; text-transform: uppercase;'],
                 'width'=>'50px',
