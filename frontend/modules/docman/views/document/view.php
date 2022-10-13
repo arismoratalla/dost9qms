@@ -46,6 +46,12 @@ Modal::end();
             // 'displayOnly'=>true
         ],
         [
+            'attribute'=>'subject',
+            'label'=>'Title',
+            'inputContainer' => ['class'=>'col-sm-4'],
+            // 'displayOnly'=>true
+        ],
+        [
             'attribute'=>'category_id',
             'label'=>'Category',
             'inputContainer' => ['class'=>'col-sm-4'],
