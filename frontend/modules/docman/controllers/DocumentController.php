@@ -12,6 +12,7 @@ use common\models\docman\Functionalunit;
 use common\models\docman\Qmstype;
 
 use kartik\helpers\Html;
+use yii\helpers\Url;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -62,7 +63,13 @@ class DocumentController extends Controller
         $toolbars = '';
         $units = Functionalunit::findAll(['qms_type_id'=> $_GET['qms_type_id']]);
         foreach($units as $unit){
-            $toolbars .= Html::button($unit->code, ['title' => 'Approved', 'class' => 'btn btn-info', 'style'=>'width: 90px; margin-right: 6px;']);
+            //$toolbars .= Html::button($unit->code, ['value' => Url::to(['document/index', 'DocumentSearch[functional_unit_id]' => $unit->functional_unit_id]), 'title' => 'Approved', 'class' => 'btn btn-info', 'style'=>'width: 90px; margin-right: 6px;']);
+            $toolbars .= Html::a($unit->code, ['index?qms_type_id='.$_GET['qms_type_id'].'&DocumentSearch[functional_unit_id]='.$unit->functional_unit_id], [
+                'class' => 'btn btn-outline-secondary',
+                //'value' => Url::to(['document/index', 'DocumentSearch[functional_unit_id]' => $unit->functional_unit_id]),
+                // 'title'=>Yii::t('Reset Grid'),
+                'data-pjax' => 0, 
+            ]);
         }
             
         return $this->render('index', [

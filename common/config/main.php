@@ -24,5 +24,6 @@ return [
     ],
     
     'components' => $components,
+    //'defaultRoute' => '/docman/document/index?qms_type_id=2',
     'defaultRoute' => 'docman/document/index?qms_type_id=2',
 ];

@@ -47,6 +47,7 @@ class DocumentSearch extends Document
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort'=> ['defaultOrder' => ['document_code'=>SORT_ASC]]
         ]);
 
         $this->load($params);
