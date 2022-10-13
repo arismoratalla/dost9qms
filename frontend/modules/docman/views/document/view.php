@@ -3,7 +3,6 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\helpers\ArrayHelper;
 use kartik\select2\Select2;
-
 use kartik\detail\DetailView;
 use kartik\editable\Editable;
 use kartik\grid\GridView;
@@ -90,8 +89,6 @@ Modal::end();
             'type'=>DetailView::TYPE_PRIMARY,
         ],
     ]); ?>
-    
-
 <?php 
         $gridColumns = [
             [
@@ -116,7 +113,6 @@ Modal::end();
                 'headerOptions' => ['style' => 'text-align: center;'],
                 'contentOptions' => ['style' => 'text-align: left; vertical-align: middle;'],
                 'width'=>'100px'
-
             ],
             [   
                 'attribute'=>'filename',
@@ -137,7 +133,6 @@ Modal::end();
                                 $btnCss = 'btn btn-success';
                             break;
                     }
-                    
                     return Html::button('<i class="glyphicon glyphicon-file"></i> '.($status ? 'View' : 'Upload'), ['value' => Url::to(['document/uploadattachment', 'id'=>$model->document_attachment_id]), 'title' => Yii::t('app', "Attachment"), 'class' => $btnCss, 'style'=>'margin-right: 6px; display: "";', 'id'=>'buttonUploadDocument']);// . 
                 },
             ],

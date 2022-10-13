@@ -112,36 +112,6 @@ class DocumentController extends Controller
      * @param integer $id
      * @return mixed
      */
-    /*public function actionView($id)
-    {
-        $model = $this->findModel($id); 
-        // $model = Document::find($id)->one(); 
-        
-        $attachmentsDataProvider = new ActiveDataProvider([
-            'query' => $model->getAttachments(),
-            'pagination' => false,
-        ]);
-
-        
-
-        if ($model->load(Yii::$app->request->post())) {
-            
-            if($model->save()){ 
-                // $model->request->amount = $_POST['Osdv']['grossamount'];
-                // $model->request->save();
-                Yii::$app->session->setFlash('kv-detail-success', 'Document Updated!');
-            }
-            
-        }
-        // if ($model->load(Yii::$app->request->post()) && $model->save()) {
-        //     Yii::$app->session->setFlash('kv-detail-success', 'Document Updated!');
-        // }
-            
-        return $this->render('view2', [
-            'model' => $model,
-            'attachmentsDataProvider' => $attachmentsDataProvider,
-        ]);
-    }*/
 
     public function actionView($id)
     {

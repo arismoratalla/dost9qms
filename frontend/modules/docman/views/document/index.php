@@ -11,9 +11,8 @@ use kartik\grid\GridView;
 
 use yii\bootstrap\Modal;
 
-use common\models\procurement\Division;
-use common\models\system\Profile;
-use common\models\sec\Blockchain;
+use common\models\docman\Category;
+use common\models\docman\Document;
 
 /* @var $this yii\web\View */
 /* @var $searchModel common\models\finance\RequestSearch */
@@ -66,14 +65,26 @@ Modal::end();
             'columns' => [
 //                            'document_id',
                             [
+                                'attribute'=>'category_id',
+                                'label'=>'Category',
+                                'width'=>'120px',
+                                'format'=>'raw',
+                                'value'=>function ($model, $key, $index, $widget) { 
+                                    return $model->category->name;
+                                },
+                                'filterType' => GridView::FILTER_SELECT2,
+                                'filter' => ArrayHelper::map(Category::find()->where(['<>', 'code', 'F'])->asArray()->all(), 'category_id', 'name'), 
+                                'filterWidgetOptions' => [
+                                    'pluginOptions' => ['allowClear' => true],
+                                ],  
+                                'filterInputOptions' => ['placeholder' => 'Select Category'],
+                            ],
+                            [
                                 'attribute'=>'document_code',
                                 'headerOptions' => ['style' => 'text-align: center;'],
                                 'contentOptions' => ['style' => 'vertical-align:middle; text-align: center;'],
                                 'width'=>'120px',
                                 'format'=>'raw',
-//                                'value'=>function ($model, $key, $index, $widget) { 
-//                                    return '<b>'.$model->request_number.'</b><br/>'.date('Y-m-d', strtotime($model->request_date));
-//                                },
                             ],
                             [
                                 'attribute'=>'subject',
@@ -81,9 +92,6 @@ Modal::end();
                                 'contentOptions' => ['style' => 'vertical-align:middle; text-align: center;'],
                                 'width'=>'120px',
                                 'format'=>'raw',
-//                                'value'=>function ($model, $key, $index, $widget) { 
-//                                    return '<b>'.$model->request_number.'</b><br/>'.date('Y-m-d', strtotime($model->request_date));
-//                                },
                             ],
                                                         [
                                 'attribute'=>'effectivity_date',
@@ -91,9 +99,6 @@ Modal::end();
                                 'contentOptions' => ['style' => 'vertical-align:middle; text-align: center;'],
                                 'width'=>'120px',
                                 'format'=>'raw',
-//                                'value'=>function ($model, $key, $index, $widget) { 
-//                                    return '<b>'.$model->request_number.'</b><br/>'.date('Y-m-d', strtotime($model->request_date));
-//                                },
                             ],
                                             [
                                 'attribute'=>'revision_number',
@@ -101,9 +106,6 @@ Modal::end();
                                 'contentOptions' => ['style' => 'vertical-align:middle; text-align: center;'],
                                 'width'=>'120px',
                                 'format'=>'raw',
-//                                'value'=>function ($model, $key, $index, $widget) { 
-//                                    return '<b>'.$model->request_number.'</b><br/>'.date('Y-m-d', strtotime($model->request_date));
-//                                },
                             ],
                             [
                                 'class' => kartik\grid\ActionColumn::className(),
@@ -115,7 +117,6 @@ Modal::end();
                                 ],
                             ],
                     ],
-            
             'pjax' => true, // pjax is set to always true for this demo
             'panel' => [
 //                    'heading' => $this->title,
@@ -128,7 +129,7 @@ Modal::end();
             'toolbar' => 
                         [
                             [
-                                'content'=> $category_menus.$toolbars,
+                                'content'=> $toolbars,
                             ],
                             //'{export}',
                             //'{toggleData}'

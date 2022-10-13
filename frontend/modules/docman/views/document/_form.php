@@ -51,7 +51,7 @@ use common\models\docman\Functionalunit;
         
         <div class="col-md-6"> 
                 <?= $form->field($model, 'functional_unit_id')->widget(Select2::classname(), [
-                    'data' => ArrayHelper::map(Functionalunit::find()->all(),'functional_unit_id','name'),
+                    'data' => ArrayHelper::map(Functionalunit::find()->where(['qms_type_id'=> $_GET['qms_type_id']])->all(),'functional_unit_id','name'),
                     'language' => 'en',
                     'options' => ['placeholder' => 'Select Functional Unit'],
                     'pluginOptions' => [
