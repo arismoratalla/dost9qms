@@ -37,6 +37,9 @@ class Document extends \yii\db\ActiveRecord
         return Yii::$app->db;
     }
 
+    const SCENARIO_LOGIN = 'all_units';
+    const SCENARIO_REGISTER = 'exclusive';
+
     /**
      * @inheritdoc
      */

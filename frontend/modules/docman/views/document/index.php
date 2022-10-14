@@ -70,7 +70,11 @@ Modal::end();
                                 'width'=>'120px',
                                 'format'=>'raw',
                                 'value'=>function ($model, $key, $index, $widget) { 
-                                    return $model->category->name;
+                                    if($_GET['qms_type_id'] == 1) {
+                                        return ($model->category_id == 2) ? $model->category->name : 'Procedures Manual';
+                                    } elseif($_GET['qms_type_id'] == 2){
+                                        return ($model->category_id == 2) ? 'Operational Procedure' : $model->category->name;
+                                    }
                                 },
                                 'filterType' => GridView::FILTER_SELECT2,
                                 'filter' => ArrayHelper::map(Category::find()->where(['<>', 'code', 'F'])->asArray()->all(), 'category_id', 'name'), 
