@@ -126,7 +126,7 @@ Modal::end();
 //                    'heading' => $this->title,
                     'heading' => '<h2 class="panel-title"><i class="fas fa-'.(($qmstype->qms_type_id == 1) ? 'folder' : 'folder-open').'"></i> '.$this->title.'</h2>',
                     'type' => GridView::TYPE_PRIMARY,
-                    'before'=>  Html::button('<i class="fas fa-plus"></i> Add', ['value' => Url::to(['document/create', 'qms_type_id' => $_GET['qms_type_id']]), 'title' => 'Add Document', 'class' => 'btn btn-info', 'style'=>'margin-right: 6px;', 'id'=>'buttonCreateRequest']),
+                    'before'=>  Html::button('<i class="fas fa-plus"></i> Add', ['value' => Url::to(['document/create', 'qms_type_id' => $_GET['qms_type_id']]), 'title' => 'Add Document', 'class' => 'btn btn-info', 'style'=>'margin-right: 6px; '.( ( (Yii::$app->user->identity->username == 'Admin') || Yii::$app->user->can('17025-docman')) ? '' : 'display: none;'), 'id'=>'buttonCreateRequest']),
                     'after'=>false,
                 ],
 
@@ -148,18 +148,6 @@ Modal::end();
                         [
                             [
                                 'content'=> $toolbars,
-                                //'content' =>
-                                //Html::button('<i class="fas fa-plus"></i> Add', ['value' => Url::to(['document/create', 'qms_type_id' => $_GET['qms_type_id']]), 'title' => 'Add Document', 'class' => 'btn btn-info', 'style'=>'margin-right: 6px;', 'id'=>'buttonCreateRequest']),
-                                    /*Html::button('<i class="fas fa-plus"></i>', [
-                                        'class' => 'btn btn-success',
-                                        // 'title' => Yii::t('kvgrid', 'Add Book'),
-                                        'onclick' => 'alert("This should launch the book creation form.\n\nDisabled for this demo!");'
-                                    ]) . ' '.
-                                    Html::a('<i class="fas fa-redo"></i>', ['grid-demo'], [
-                                        'class' => 'btn btn-outline-secondary',
-                                        // 'title'=>Yii::t('kvgrid', 'Reset Grid'),
-                                        'data-pjax' => 0, 
-                                    ]), */
                                 'options' => ['class' => 'btn-group mr-2 me-2']
                             ],
                             '{export}',
