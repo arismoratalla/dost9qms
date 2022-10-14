@@ -83,8 +83,8 @@ Modal::end();
         'mode'=>DetailView::MODE_VIEW,
         'container' => ['id'=>'kv-demo'],
         //'formOptions' => ['action' => Url::current(['#' => 'kv-demo'])] // your action to delete
-        // 'buttons1' => ( (Yii::$app->user->identity->username == 'Admin') || Yii::$app->user->can('access-document-management')) ? '{update}' : '', //hides buttons on detail view
-        'buttons1' => '{update}',
+        'buttons1' => ( (Yii::$app->user->identity->username == 'Admin') || Yii::$app->user->can('17025-docman')) ? '{update}' : '', //hides buttons on detail view
+        //'buttons1' => '{update}',
         'attributes' => $attributes,
         'condensed' => true,
         'responsive' => true,
