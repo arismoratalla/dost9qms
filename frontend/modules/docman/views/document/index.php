@@ -86,14 +86,14 @@ Modal::end();
                             [
                                 'attribute'=>'document_code',
                                 'headerOptions' => ['style' => 'text-align: center;'],
-                                'contentOptions' => ['style' => 'vertical-align:middle; text-align: center;'],
+                                'contentOptions' => ['style' => 'vertical-align:middle; text-align: left;'],
                                 'width'=>'120px',
                                 'format'=>'raw',
                             ],
                             [
                                 'attribute'=>'subject',
                                 'headerOptions' => ['style' => 'text-align: center;'],
-                                'contentOptions' => ['style' => 'vertical-align:middle; text-align: center;'],
+                                'contentOptions' => ['style' => 'vertical-align:middle; text-align: left;'],
                                 'width'=>'120px',
                                 'format'=>'raw',
                             ],
