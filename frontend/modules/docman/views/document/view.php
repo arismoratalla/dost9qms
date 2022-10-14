@@ -113,18 +113,35 @@ Modal::end();
                     return 'Attachment';
                 },
             ],
-            /*[
-                'attribute'=>'filename',
-                'header' => 'Filename',
-                'headerOptions' => ['style' => 'text-align: center;'],
-                'contentOptions' => ['style' => 'text-align: left; vertical-align: middle;'],
-                'width'=>'100px'
-            ],*/
             [   
                 'attribute'=>'filename',
-                'header' => 'Attachments',
+                'header' => 'Download',
                 'headerOptions' => ['style' => 'text-align: center;'],
                 'contentOptions' => ['style' => 'text-align: center; vertical-align: middle;'],
+                'visible' => ( (Yii::$app->user->identity->username == 'Admin') || Yii::$app->user->can('17025-docman')) ? false : true,
+                'format' => 'raw',
+                'width'=>'80px',
+                'value'=>function ($model, $key, $index, $widget) { 
+                    $btnCss = [];
+                    $status = Documentattachment::hasAttachment($model->document_attachment_id);
+                    
+                    switch($status){
+                        case 0:
+                            $btnCss = 'btn btn-danger';
+                            break;
+                        case 1:
+                                $btnCss = 'btn btn-success';
+                            break;
+                    }
+                    return Html::button('<i class="glyphicon glyphicon-file"></i> '.($status ? 'View' : 'Upload'), ['value' => Url::to(['document/downloadattachment', 'id'=>$model->document_attachment_id]), 'title' => Yii::t('app', "Attachment"), 'class' => $btnCss, 'style'=>'margin-right: 6px; display: "";', 'id'=>'buttonUploadDocument']);// . 
+                },
+            ],
+            [   
+                'attribute'=>'filename',
+                'header' => 'Upload',
+                'headerOptions' => ['style' => 'text-align: center;'],
+                'contentOptions' => ['style' => 'text-align: center; vertical-align: middle;'],
+                'visible' => ( (Yii::$app->user->identity->username == 'Admin') || Yii::$app->user->can('17025-docman')) ? true : false,
                 'format' => 'raw',
                 'width'=>'80px',
                 'value'=>function ($model, $key, $index, $widget) { 
