@@ -15,8 +15,8 @@ $form = ActiveForm::begin([
 echo $form->field($model, 'pdfFile')->widget(FileInput::classname(), [
     //'disabled' => $model->request->owner() ? false : true, //this also disables buttons on fileActionSettings below
     'pluginOptions' => [
-        //'allowedFileExtensions'=>['pdf', 'xls', 'doc', 'docx', 'ppt'],
-        'allowedFileExtensions'=> ($model->document_type == 1) ? ['xls', 'xlsx', 'doc', 'docx'] : ['pdf'],
+        'allowedFileExtensions'=>['pdf', 'xls', 'xlsx', 'doc', 'docx'],
+        //'allowedFileExtensions'=> ($model->document_type == 1) ? ['xls', 'xlsx', 'doc', 'docx'] : ['pdf'],
         //'showPreview' => true,
         'previewFileType' => 'any',
         'overwriteInitial' => true,
