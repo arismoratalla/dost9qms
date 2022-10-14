@@ -50,7 +50,7 @@ echo $form->field($model, 'pdfFile')->widget(FileInput::classname(), [
 
 
 ActiveForm::end(); ?>
-
+<br><br>
 <script>
 $(document).ready(function(){
     $(".fileinput-upload-button").hide();
