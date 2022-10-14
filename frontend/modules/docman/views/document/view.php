@@ -118,7 +118,7 @@ Modal::end();
                 'header' => 'Download',
                 'headerOptions' => ['style' => 'text-align: center;'],
                 'contentOptions' => ['style' => 'text-align: center; vertical-align: middle;'],
-                'visible' => ( (Yii::$app->user->identity->username == 'Admin') || Yii::$app->user->can('17025-docman')) ? false : true,
+                'visible' => ( (Yii::$app->user->identity->username == 'Admin') || Yii::$app->user->can('17025-document-custodian')) ? false : true,
                 'format' => 'raw',
                 'width'=>'80px',
                 'value'=>function ($model, $key, $index, $widget) { 
@@ -141,7 +141,7 @@ Modal::end();
                 'header' => 'Upload',
                 'headerOptions' => ['style' => 'text-align: center;'],
                 'contentOptions' => ['style' => 'text-align: center; vertical-align: middle;'],
-                'visible' => ( (Yii::$app->user->identity->username == 'Admin') || Yii::$app->user->can('17025-docman')) ? true : false,
+                'visible' => ( (Yii::$app->user->identity->username == 'Admin') || Yii::$app->user->can('17025-document-custodian')) ? true : false,
                 'format' => 'raw',
                 'width'=>'80px',
                 'value'=>function ($model, $key, $index, $widget) { 
