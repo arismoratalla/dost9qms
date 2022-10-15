@@ -16,7 +16,7 @@ use common\models\docman\Documentattachment;
 /* @var $this yii\web\View */
 /* @var $model common\models\documentmanagement\Document */
 
-$this->title = $model->document_id;
+$this->title = $model->subject;
 $this->params['breadcrumbs'][] = ['label' => 'Documents', 'url' => ['index?qms_type_id='.$model->qms_type_id]];
 $this->params['breadcrumbs'][] = $this->title;
 
