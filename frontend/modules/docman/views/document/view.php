@@ -17,7 +17,7 @@ use common\models\docman\Documentattachment;
 /* @var $model common\models\documentmanagement\Document */
 
 $this->title = $model->document_id;
-$this->params['breadcrumbs'][] = ['label' => 'Documents', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Documents', 'url' => ['index?qms_type_id='.$model->qms_type_id]];
 $this->params['breadcrumbs'][] = $this->title;
 
 Modal::begin([
@@ -83,7 +83,7 @@ Modal::end();
         'mode'=>DetailView::MODE_VIEW,
         'container' => ['id'=>'kv-demo'],
         //'formOptions' => ['action' => Url::current(['#' => 'kv-demo'])] // your action to delete
-        'buttons1' => ( (Yii::$app->user->identity->username == 'Admin') || Yii::$app->user->can('17025-docman')) ? '{update}' : '', //hides buttons on detail view
+        'buttons1' => ( (Yii::$app->user->identity->username == 'Admin') || Yii::$app->user->can('17025-document-custodian')) ? '{update}' : '', //hides buttons on detail view
         //'buttons1' => '{update}',
         'attributes' => $attributes,
         'condensed' => true,
