@@ -123,7 +123,8 @@ class DocumentController extends Controller
     public function actionView($id)
     {
         $model = $this->findModel($id); 
-        
+        $_document_code = $model->document_code;
+
         $attachmentsDataProvider = new ActiveDataProvider([
             'query' => $model->getAttachments(),
             'pagination' => false,
@@ -131,8 +132,15 @@ class DocumentController extends Controller
         
         if ($model->load(Yii::$app->request->post()))
         {
+
             if ($model->save(false))
             {
+                if($_document_code != $model->document_code){
+                    $oldPath = Yii::getAlias('@uploads') . "/docman/document/" . $_document_code;
+                    $newPath = Yii::getAlias('@uploads') . "/docman/document/" . $model->document_code;
+                    rename( $oldPath, $newPath);
+                }
+
                 Yii::$app->session->setFlash('kv-detail-success', 'Request Updated!');
             }else{
                 Yii::$app->session->setFlash('error', print_r($model->getErrors()));
