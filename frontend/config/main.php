@@ -66,7 +66,8 @@ return [
             // '127.0.0.1',
             //],
             // Layout path
-            'layoutPath' => '@frontend/views/admin-lte/layouts/main.php',
+            //'layoutPath' => '@frontend/views/admin-lte/layouts/main.php',
+            'layoutPath' => '@frontend/views/dmstr/layouts/main.php',
             // View path
             'viewPath' => '@frontend/views/maintenance',
             // User name attribute name
@@ -86,7 +87,8 @@ return [
          'theme' => [
              'pathMap' => [
                 //'@app/views/' => '@vendor/dmstr/yii2-adminlte-asset/example-views/yiisoft/yii2-app'
-                '@app/views' => '@frontend/views/admin-lte'
+                //'@app/views' => '@frontend/views/admin-lte'
+                '@app/views' => '@frontend/views/dmstr'
              ],
          ],
         ],
@@ -108,7 +110,7 @@ return [
         ],
         'urlManagerBackend'=>[
             'class' => 'yii\web\UrlManager',
-            'baseUrl' => '//localhost/faims/backend/web',
+            'baseUrl' => '//localhost/docman/backend/web',
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [

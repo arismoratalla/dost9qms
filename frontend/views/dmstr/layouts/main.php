@@ -27,13 +27,14 @@ if (Yii::$app->controller->action->id === 'login') {
     <!DOCTYPE html>
     <html lang="<?= Yii::$app->language ?>" ng-app="<?= str_replace(" ", "",strtolower(Html::encode($this->title))) ?>">
     <head>
-
+        <!-- <meta charset="<--?= Yii::$app->charset ?>"/> -->
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <?= Html::csrfMetaTags() ?>
         <title><?= Html::encode($this->title) ?></title>
         <link rel="shortcut icon" href="<?php echo Yii::$app->request->baseUrl; ?>/favicon.ico" type="image/x-icon" />
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css">
         <?php $this->head() ?>
+
         <style>
             .label-pr {
                 cursor: pointer;
@@ -53,7 +54,7 @@ if (Yii::$app->controller->action->id === 'login') {
             });
         </script>
     </head>
-    <body class="hold-transition skin-green" oncontextmenu="return true;">
+    <body class="hold-transition skin-blue sidebar-mini" oncontextmenu="return true;">
     <?php $this->beginBody() ?>
     <div class="wrapper">
 
@@ -72,7 +73,7 @@ if (Yii::$app->controller->action->id === 'login') {
             'content.php',
             ['content' => $content, 'directoryAsset' => $directoryAsset]
         ) ?>
-        
+
     </div>
 
     <?php $this->endBody() ?>
