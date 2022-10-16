@@ -302,16 +302,4 @@ if(Yii::$app->user->isGuest){
 $( document ).ready(function() {
     toggled = false;
 });
-
-function toggleLogo() {
-    // if(toggled){
-    //     toggled = false;
-    // }else{
-    //     toggled = true;
-    // }
-    // alert(toggled);
-    //$(".logo").toggle();
-}
-
-
 </script>
