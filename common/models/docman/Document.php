@@ -89,4 +89,9 @@ class Document extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Category::className(), ['category_id' => 'category_id']);
     }
+
+    public function getFunctionalunit()
+    {
+        return $this->hasOne(Functionalunit::className(), ['functional_unit_id' => 'functional_unit_id']);
+    }
 }

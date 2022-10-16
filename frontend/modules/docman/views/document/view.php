@@ -12,6 +12,7 @@ use yii\bootstrap\Modal;
 
 use common\models\docman\Category;
 use common\models\docman\Documentattachment;
+use common\models\docman\Functionalunit;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\documentmanagement\Document */
@@ -61,6 +62,31 @@ Modal::end();
             'widgetOptions'=>[
                 'data'=>ArrayHelper::map(Category::find()->all(),'category_id','name'),
                 'options' => ['placeholder' => 'Select Type'],
+                'pluginOptions' => ['allowClear'=>true, 'width'=>'100%'],
+            ],
+            // 'pluginEvents'=>[
+                // "onChange" => 'function() { 
+                //     var categoryId=this.value;
+                    // if((categoryId == 4) || (categoryId == 5)){
+                    //     alert($("#document-functional_unit_id").val());
+                    //     //$("#document-functional_unit_id").prop("disabled", false);
+                    // }else{
+                    //     alert($("#document-functional_unit_id").val());
+                    //     //$("#document-functional_unit_id").prop("disabled", "disabled");
+                    // }
+                // }
+            // ', ]
+        ],
+        [
+            'attribute'=>'functional_unit_id',
+            'label'=>'Functional Unit',
+            'inputContainer' => ['class'=>'col-sm-4'],
+            'value' => $model->functionalunit->name,
+            // 'displayOnly'=>true,
+            'type'=>DetailView::INPUT_SELECT2, 
+            'widgetOptions'=>[
+                'data'=>ArrayHelper::map(Functionalunit::find()->where(['qms_type_id'=> $model->qms_type_id])->all(),'functional_unit_id','name'),
+                'options' => ['placeholder' => 'Select Functional Unit'],
                 'pluginOptions' => ['allowClear'=>true, 'width'=>'100%'],
             ],
         ],
@@ -200,10 +226,3 @@ Modal::end();
 
     
     ?>
-
-<script>
-$( document ).ready(function() {
-    console.log( "ready!" );
-    //alert('haha');
-});
-</script>

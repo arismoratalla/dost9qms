@@ -25,7 +25,7 @@ use common\models\docman\Functionalunit;
         
         <div class="col-md-6"> 
                 <?= $form->field($model, 'category_id')->widget(Select2::classname(), [
-                    'data' => ArrayHelper::map(Category::find()->all(),'category_id','name'),
+                    'data' => ArrayHelper::map(Category::find()->orderBy(['num'=>SORT_ASC])->all(),'category_id','name'),
                     'language' => 'en',
                     'options' => ['placeholder' => 'Select Category'],
                     'pluginOptions' => [
@@ -34,16 +34,11 @@ use common\models\docman\Functionalunit;
                     'pluginEvents'=>[
                         "change" => 'function() { 
                             var categoryId=this.value;
-                            $.post("/docman/document/updateunits/", 
-                                {
-                                    categoryId: categoryId
-                                }, 
-                                function(response){
-                                    if(response){
-                                       $("#document-content").val(response.default_text);
-                                    }
-                                }
-                            );
+                            if((categoryId == 4) || (categoryId == 5)){
+                                $("#document-functional_unit_id").prop("disabled", false);
+                            }else{
+                                $("#document-functional_unit_id").prop("disabled", "disabled");
+                            }
                         }
                     ',]
                 ])->label('Cetegory'); ?>
@@ -53,7 +48,10 @@ use common\models\docman\Functionalunit;
                 <?= $form->field($model, 'functional_unit_id')->widget(Select2::classname(), [
                     'data' => ArrayHelper::map(Functionalunit::find()->where(['qms_type_id'=> $_GET['qms_type_id']])->all(),'functional_unit_id','name'),
                     'language' => 'en',
-                    'options' => ['placeholder' => 'Select Functional Unit'],
+                    'options' => [
+                        'placeholder' => 'Select Functional Unit',
+                        'disabled' => true,
+                    ],
                     'pluginOptions' => [
                         'allowClear' => false
                     ],

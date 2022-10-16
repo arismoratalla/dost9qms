@@ -165,9 +165,14 @@ class DocumentController extends Controller
         $qms_type_id = $_GET['qms_type_id'];
         if ($model->load(Yii::$app->request->post())) {
             $model->user_id = Yii::$app->user->identity->user_id;
-            // $model->qms_type_id = $qms_type_id;
+            if( isset($_POST['Document']['functional_unit_id']) )
+                $model->functional_unit_id = $_POST['Document']['functional_unit_id'];
+            else
+                $model->functional_unit_id = NULL;
+
             $model->active = 1;
-            if($model->save(false)){
+            
+                if($model->save(false)){
                 $doc_types = Documenttype::find()->where('active =:active',[':active'=>1])->all();
                     foreach($doc_types as $doc_type){
                         $attachment = new Documentattachment();
