@@ -110,6 +110,9 @@ Modal::end();
                                 'contentOptions' => ['style' => 'vertical-align:middle; text-align: center;'],
                                 'width'=>'120px',
                                 'format'=>'raw',
+                                'value' => function($model, $key, $index, $widget){
+                                    return ($model->revision_number < 0 ) ? 'N/A' : $model->revision_number;
+                                }
                             ],
                             [
                                 'class' => kartik\grid\ActionColumn::className(),
