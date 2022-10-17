@@ -95,6 +95,7 @@ Modal::end();
             'attribute'=>'revision_number',
             'label'=>'Revision Number',
             'inputContainer' => ['class'=>'col-sm-4'],
+            'value' => ($model->revision_number < 0 ) ? 'N/A' : $model->revision_number,
             // 'displayOnly'=>true
         ],
         [
