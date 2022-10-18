@@ -75,10 +75,10 @@ class DocumentSearch extends Document
                 ->andFilterWhere(['in', 'category_id', [1,2,3,6,7,8,9,10]]);
         }
 
-        /*$query->andFilterWhere(['like', 'subject', $this->subject])
+        $query->andFilterWhere(['like', 'subject', $this->subject])
             ->andFilterWhere(['like', 'filename', $this->filename])
             ->andFilterWhere(['like', 'document_code', $this->document_code])
-            ->andFilterWhere(['like', 'content', $this->content]);*/
+            ->andFilterWhere(['like', 'content', $this->content]);
 
         return $dataProvider;
     }
