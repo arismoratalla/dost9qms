@@ -78,8 +78,8 @@ class DocumentController extends Controller
             15 => 'color: #B76E79',
             16 => 'color: #B76E79',
             17 => 'color: #B76E79',
-            18 => 'color: #00FFFF',
-            19 => 'color: #8A9A5B',
+            18 => 'color: #8A9A5B',
+            19 => 'color: #00FFFF',
             20 => 'color: #B76E79',
         ];
 
