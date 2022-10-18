@@ -70,10 +70,15 @@ class DocumentSearch extends Document
             'active' => $this->active,
         ]);
 
-        $query->andFilterWhere(['like', 'subject', $this->subject])
+        if( !(Yii::$app->user->can('17025-document-custodian') || (Yii::$app->user->identity->username == 'Admin') ) ){
+            $query->andFilterWhere(['=', 'functional_unit_id', $this->functional_unit_id])
+                ->andFilterWhere(['in', 'category_id', [1,2,3,6,7,8,9,10]]);
+        }
+
+        /*$query->andFilterWhere(['like', 'subject', $this->subject])
             ->andFilterWhere(['like', 'filename', $this->filename])
             ->andFilterWhere(['like', 'document_code', $this->document_code])
-            ->andFilterWhere(['like', 'content', $this->content]);
+            ->andFilterWhere(['like', 'content', $this->content]);*/
 
         return $dataProvider;
     }

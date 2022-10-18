@@ -53,8 +53,11 @@ class DocumentController extends Controller
 
         $searchModel = new DocumentSearch();
         $searchModel->qms_type_id = $_GET['qms_type_id'];
-        if( !(Yii::$app->user->can('17025-document-custodian') || (Yii::$app->user->identity->username == 'Admin') ) )
+        /*if( !(Yii::$app->user->can('17025-document-custodian') || (Yii::$app->user->identity->username == 'Admin') ) ){
             $searchModel->functional_unit_id = $user->profile->unit_id;
+            $searchModel->category_id = 1;
+        }*/
+            
 
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         
