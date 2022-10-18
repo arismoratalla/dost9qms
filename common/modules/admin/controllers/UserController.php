@@ -3,9 +3,10 @@
 namespace common\modules\admin\controllers;
 
 use Yii;
-use common\models\procurement\Division;
-use common\models\procurement\Unit;
-use common\models\procurement\Position;
+use common\models\docman\Division;
+use common\models\docman\Functionalunit;
+use common\models\docman\Position;
+use common\models\docman\Profile;
 
 use common\modules\admin\models\form\Login;
 use common\modules\admin\models\form\PasswordResetRequest;
@@ -97,8 +98,12 @@ class UserController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $profile= Profile::findOne(['user_id'=>$model->user_id]);
+
         //$model= User::findOne(['id'=>$id]);
         //if ($model->load(Yii::$app->request->post())) {
+        
+
         if ($_POST && $model) {
             $oldPwd=$model->password_hash;
             $obj=Yii::$app->request->post();
@@ -111,11 +116,35 @@ class UserController extends Controller
             $model->save(true);
             Helper::invalidate();
             return $this->redirect(['view', 'id' => $model->id]);
+
         } else {
             return $this->render('update', [
                     'model' => $model,
+                    'profile' => $profile,
             ]);
         }
+    }
+
+    public function actionUpdateprofile($id)
+    {
+
+        $model = $this->findModel($id);
+        $profile= Profile::findOne(['user_id'=>$model->user_id]);
+
+        if ($profile->load(Yii::$app->request->post()))
+        {
+            if ($profile->save(false))
+            {
+                Yii::$app->session->setFlash('kv-detail-success', 'Profile Updated!');
+            }else{
+                Yii::$app->session->setFlash('error', print_r($profile->getErrors()));
+            }
+        }
+        
+        return $this->render('update', [
+            'model' => $model,
+            'profile' => $profile,
+    ]);
     }
     
     /**
@@ -206,11 +235,11 @@ class UserController extends Controller
         $model = new Signup();
         
         $divisions = Division::find()->all();
-        $units = Unit::find()->all();
+        $units = Functionalunit::find()->all();
         $positions = Position::find()->all();
 
         $listDivisions = ArrayHelper::map($divisions,'division_id','name');
-        $listUnits = ArrayHelper::map($units,'unit_id','name');
+        $listUnits = ArrayHelper::map($units,'functional_unit_id','name');
         $listPositions = ArrayHelper::map($positions,'name','name');
         
         if ($model->load(Yii::$app->getRequest()->post())) {
@@ -336,14 +365,14 @@ class UserController extends Controller
         $out = [];
         if (isset($_POST['depdrop_parents'])) {
             $id = end($_POST['depdrop_parents']);
-            $list = Unit::find()->andWhere(['division_id'=>$id])->asArray()->all();
+            $list = Functionalunit::find()->andWhere(['division_id'=>$id])->asArray()->all();
             $selected  = null;
             if ($id != null && count($list) > 0) {
                 $selected = '';
                 foreach ($list as $i => $unit) {
-                    $out[] = ['id' => $unit['unit_id'], 'name' => $unit['name']];
+                    $out[] = ['id' => $unit['functional_unit_id'], 'name' => $unit['name']];
                     if ($i == 0) {
-                        $selected = $unit['unit_id'];
+                        $selected = $unit['functional_unit_id'];
                     }
                 }
                 // Shows how you can preselect a value

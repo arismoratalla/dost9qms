@@ -371,3 +371,4 @@ frontend/web/uploads/docman/document/123456aris/index - Copy.php
 frontend/web/uploads/docman/document/123456aris/index.php
 frontend/web/uploads/docman/document/123456/index - Copy.php
 frontend/modules/docman/views/document/DMS.code-workspace
+common/modules/admin/views/user/update_.php

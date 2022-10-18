@@ -13,6 +13,7 @@ $this->params['breadcrumbs'][] = 'Update';
 <div class="user-update">
     <?= $this->render('_form', [
         'model' => $model,
+        'profile' => $profile,
     ]) ?>
 
 </div>

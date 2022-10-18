@@ -1,6 +1,7 @@
 <?php
 
 namespace common\modules\admin\models;
+use common\models\docman\Profile;
 
 use Yii;
 use yii\base\NotSupportedException;
@@ -218,4 +219,10 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return Configs::userDb();
     }
+
+    public function getProfile()
+    {
+        return $this->hasOne(Profile::className(), ['user_id' => 'user_id']);
+    }
+
 }

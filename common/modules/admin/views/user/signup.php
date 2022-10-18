@@ -19,7 +19,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="panel-heading"><i class="fa fa-user-circle fa-adn"></i> Signup New User</div>
         <div class="panel-body">
     
-    <p>Please fill out the following fields to signup:</p>
+    <p>Please fill out the following fields to signup;</p>
     <?= Html::errorSummary($model)?>
     <div class="row">
         <!--div class="col-lg-5"-->
