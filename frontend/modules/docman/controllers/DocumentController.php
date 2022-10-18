@@ -1,6 +1,7 @@
 <?php
 
 namespace frontend\modules\docman\controllers;
+use common\models\system\User;
 
 use Yii;
 use common\models\docman\Document;
@@ -48,26 +49,61 @@ class DocumentController extends Controller
      */
     public function actionIndex()
     {
+        $user = User::findOne(['user_id'=> Yii::$app->user->identity->user_id]);
+
         $searchModel = new DocumentSearch();
         $searchModel->qms_type_id = $_GET['qms_type_id'];
+        if( !(Yii::$app->user->can('17025-document-custodian') || (Yii::$app->user->identity->username == 'Admin') ) )
+            $searchModel->functional_unit_id = $user->profile->unit_id;
+
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         
         $qmstype = Qmstype::findOne(['qms_type_id'=> $_GET['qms_type_id']]);
-        
+
+        $color = [
+            1 => 'color: #B76E79',
+            2 => 'color: #B76E79',
+            3 => 'color: #B76E79',
+            4 => 'color: #B76E79',
+            5 => 'color: #B76E79',
+            6 => 'color: #B76E79',
+            7 => 'color: #B76E79',
+            8 => 'color: #B76E79',
+            9 => 'color: #B76E79',
+            10 => 'color: #B76E79',
+            11 => 'color: #B76E79',
+            12 => 'color: #B76E79',
+            13 => 'color: #B76E79',
+            14 => 'color: #B76E79',
+            15 => 'color: #B76E79',
+            16 => 'color: #B76E79',
+            17 => 'color: #B76E79',
+            18 => 'color: #00FFFF',
+            19 => 'color: #8A9A5B',
+            20 => 'color: #B76E79',
+        ];
+
         $category_menus = '';
         $categories = Category::find()->limit(3)->all();
         foreach($categories as $category){
-            $category_menus .= Html::button($category->code, ['title' => 'Approved', 'class' => 'btn btn-success', 'style'=>'width: 90px; margin-right: 6px;']);
+            //$category_menus .= Html::button($category->code, ['title' => 'Approved', 'class' => 'btn btn-success', 'style'=>'width: 90px; margin-right: 6px;']);
+            $category_menus .= Html::a($category->code, ['index?qms_type_id='.$_GET['qms_type_id'].'&DocumentSearch[category_id]='.$category->category_id], [
+                'class' => 'btn btn-outline-secondary',
+                'data-pjax' => 0, 
+            ]);
         }
         
         $toolbars = '';
-        $units = Functionalunit::findAll(['qms_type_id'=> $_GET['qms_type_id']]);
+        if( !(Yii::$app->user->can('17025-document-custodian') || (Yii::$app->user->identity->username == 'Admin') ) )
+            $units = Functionalunit::findAll(['qms_type_id'=> $_GET['qms_type_id'], 'functional_unit_id'=>$user->profile->unit_id]);
+        else
+            $units = Functionalunit::findAll(['qms_type_id'=> $_GET['qms_type_id']]);
+
         foreach($units as $unit){
             //$toolbars .= Html::button($unit->code, ['value' => Url::to(['document/index', 'DocumentSearch[functional_unit_id]' => $unit->functional_unit_id]), 'title' => 'Approved', 'class' => 'btn btn-info', 'style'=>'width: 90px; margin-right: 6px;']);
             $toolbars .= Html::a($unit->code, ['index?qms_type_id='.$_GET['qms_type_id'].'&DocumentSearch[functional_unit_id]='.$unit->functional_unit_id], [
                 'class' => 'btn btn-outline-secondary',
-                //'value' => Url::to(['document/index', 'DocumentSearch[functional_unit_id]' => $unit->functional_unit_id]),
-                // 'title'=>Yii::t('Reset Grid'),
+                'style' => $color[$unit->functional_unit_id],
                 'data-pjax' => 0, 
             ]);
         }

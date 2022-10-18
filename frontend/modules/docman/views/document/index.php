@@ -47,12 +47,8 @@ Modal::begin([
 echo "<div id='modalContent'><div style='text-align:center'><img src='/images/loading.gif'></div></div>";
 Modal::end();
 ?>
-
-<?php //echo $this->render('_search', ['model' => $searchModel]); ?>
-
 <div class="request-index">
 
-<!--    <h1><?= Html::encode($this->title) ?></h1>-->
 <?php Pjax::begin(); ?>
       <?php
         echo GridView::widget([
@@ -77,7 +73,7 @@ Modal::end();
                                     }
                                 },
                                 'filterType' => GridView::FILTER_SELECT2,
-                                'filter' => ArrayHelper::map(Category::find()->where(['<>', 'code', 'F'])->asArray()->all(), 'category_id', 'name'), 
+                                'filter' => ArrayHelper::map(Category::find()->where(['<>', 'code', 'F'])->asArray()->all(), 'category_id', 'code'), 
                                 'filterWidgetOptions' => [
                                     'pluginOptions' => ['allowClear' => true],
                                 ],  
@@ -150,7 +146,7 @@ Modal::end();
             'toolbar' => 
                         [
                             [
-                                'content'=> $toolbars,
+                                'content'=> $category_menus . $toolbars,
                                 'options' => ['class' => 'btn-group mr-2 me-2']
                             ],
                             '{export}',
