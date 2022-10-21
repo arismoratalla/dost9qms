@@ -73,7 +73,7 @@ Modal::end();
                                     }
                                 },
                                 'filterType' => GridView::FILTER_SELECT2,
-                                'filter' => ArrayHelper::map(Category::find()->where(['<>', 'code', 'F'])->asArray()->all(), 'category_id', 'code'), 
+                                'filter' => ArrayHelper::map(Category::find()->where(['<>', 'code', 'F'])->asArray()->all(), 'category_id', 'name'), 
                                 'filterWidgetOptions' => [
                                     'pluginOptions' => ['allowClear' => true],
                                 ],  
