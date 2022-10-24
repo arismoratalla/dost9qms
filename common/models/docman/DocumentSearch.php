@@ -71,8 +71,11 @@ class DocumentSearch extends Document
         ]);
 
         if( !(Yii::$app->user->can('17025-document-custodian') || (Yii::$app->user->identity->username == 'Admin') ) ){
-            $query->andFilterWhere(['=', 'functional_unit_id', $this->functional_unit_id])
-                ->andFilterWhere(['in', 'category_id', [1,2,3,6,7,8,9,10]]);
+            $query->andFilterWhere(['=', 'functional_unit_id', $this->functional_unit_id]);
+            //    ->andFilterWhere(['in', 'category_id', [1,2,3,6,7,8,9,10]]);
+        }else{
+            //$query->andFilterWhere(['=', 'functional_unit_id', $this->functional_unit_id]);
+                // ->andFilterWhere(['in', 'category_id', 0]);
         }
 
         $query->andFilterWhere(['like', 'subject', $this->subject])
