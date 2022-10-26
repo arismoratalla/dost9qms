@@ -22,6 +22,17 @@ use common\models\sec\Blockchain;
 $this->title = 'FORMS';
 $this->params['breadcrumbs'][] = $this->title;
 
+Modal::begin([
+    'header' => '<h4 id="modalHeader" style="color: #ffffff"></h4>',
+    'id' => 'modalRequest',
+    'size' => 'modal-md',
+    'options'=> [
+             'tabindex'=>false,
+        ],
+]);
+
+echo "<div id='modalContent'><div style='text-align:center'><img src='/images/loading.gif'></div></div>";
+Modal::end();
 ?>
 
 <?php //echo $this->render('_search', ['model' => $searchModel]); ?>
@@ -36,8 +47,6 @@ $this->params['breadcrumbs'][] = $this->title;
             'dataProvider' => $dataProvider,
             'filterModel' => $searchModel,
             'containerOptions' => ['style' => 'overflow: auto'], // only set when $responsive = false
-//            'headerRowOptions' => ['class' => 'kartik-sheet-style'],
-//            'filterRowOptions' => ['class' => 'kartik-sheet-style'],
             'columns' => [
 //                            'document_id',
                             [
@@ -46,9 +55,6 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'contentOptions' => ['style' => 'vertical-align:middle; text-align: center;'],
                                 'width'=>'120px',
                                 'format'=>'raw',
-//                                'value'=>function ($model, $key, $index, $widget) { 
-//                                    return '<b>'.$model->request_number.'</b><br/>'.date('Y-m-d', strtotime($model->request_date));
-//                                },
                             ],
                             [
                                 'attribute'=>'subject',
@@ -56,9 +62,6 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'contentOptions' => ['style' => 'vertical-align:middle; text-align: center;'],
                                 'width'=>'120px',
                                 'format'=>'raw',
-//                                'value'=>function ($model, $key, $index, $widget) { 
-//                                    return '<b>'.$model->request_number.'</b><br/>'.date('Y-m-d', strtotime($model->request_date));
-//                                },
                             ],
                                                         [
                                 'attribute'=>'effectivity_date',
@@ -66,9 +69,6 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'contentOptions' => ['style' => 'vertical-align:middle; text-align: center;'],
                                 'width'=>'120px',
                                 'format'=>'raw',
-//                                'value'=>function ($model, $key, $index, $widget) { 
-//                                    return '<b>'.$model->request_number.'</b><br/>'.date('Y-m-d', strtotime($model->request_date));
-//                                },
                             ],
                                             [
                                 'attribute'=>'revision_number',
@@ -76,9 +76,6 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'contentOptions' => ['style' => 'vertical-align:middle; text-align: center;'],
                                 'width'=>'120px',
                                 'format'=>'raw',
-//                                'value'=>function ($model, $key, $index, $widget) { 
-//                                    return '<b>'.$model->request_number.'</b><br/>'.date('Y-m-d', strtotime($model->request_date));
-//                                },
                             ],
                             [
                                 'class' => kartik\grid\ActionColumn::className(),
@@ -96,7 +93,8 @@ $this->params['breadcrumbs'][] = $this->title;
 //                    'heading' => $this->title,
                     'heading' => 'FORMS',
                     'type' => GridView::TYPE_PRIMARY,
-                    'before'=>  Html::button('<i class="fas fa-plus"></i> Add', ['value' => Url::to(['document/create']), 'title' => 'Add Document', 'class' => 'btn btn-info', 'style'=>'margin-right: 6px;', 'id'=>'buttonCreateRequest']),
+                    //'before'=>  Html::button('<i class="fas fa-plus"></i> Add', ['value' => Url::to(['document/createform']), 'title' => 'Add Document', 'class' => 'btn btn-info', 'style'=>'margin-right: 6px;', 'id'=>'buttonCreateForm']),
+                    'before'=>  Html::button('<i class="fas fa-plus"></i> Add', ['value' => Url::to(['document/createform', 'qms_type_id' => $_GET['qms_type_id']]), 'title' => 'Add Form', 'class' => 'btn btn-info', 'style'=>'margin-right: 6px; '.( ( (Yii::$app->user->identity->username == 'Admin') || Yii::$app->user->can('17025-document-custodian')) ? '' : 'display: none;'), 'id'=>'buttonCreateRequest']),
                     'after'=>false,
                 ],
             // set your toolbar

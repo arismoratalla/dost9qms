@@ -127,7 +127,8 @@ class DocumentController extends Controller
     public function actionFormsindex()
     {
         $searchModel = new DocumentSearch();
-        $searchModel->category_id = 4;
+        $searchModel->category_id = 11;
+        $searchModel->qms_type_id = $_GET['qms_type_id'];
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         
         /*$qmstype = Qmstype::findOne(['qms_type_id'=> $_GET['qms_type_id']]);
@@ -232,6 +233,48 @@ class DocumentController extends Controller
             ]);
         } else {
             return $this->render('_form', [
+                        'model' => $model,
+                        'qms_type_id' => $qms_type_id,
+            ]);
+        }
+        
+    }
+
+    public function actionCreateform()
+    {
+        $model = new Document();
+        $qms_type_id = $_GET['qms_type_id'];
+        if ($model->load(Yii::$app->request->post())) {
+            $model->user_id = Yii::$app->user->identity->user_id;
+            $model->category_id = 11;
+            if( isset($_POST['Document']['functional_unit_id']) )
+                $model->functional_unit_id = $_POST['Document']['functional_unit_id'];
+            else
+                $model->functional_unit_id = NULL;
+
+            $model->active = 1;
+            
+                if($model->save(false)){
+                $doc_types = Documenttype::find()->where('active =:active',[':active'=>1])->all();
+                    foreach($doc_types as $doc_type){
+                        $attachment = new Documentattachment();
+                        $attachment->document_id = $model->document_id;
+                        $attachment->filename = '';
+                        $attachment->document_type = $doc_type->document_type_id;
+                        $attachment->last_update = $doc_type->document_type_id;
+                        $attachment->save(false);
+                    }
+
+                return $this->redirect(['view', 'id' => $model->document_id]);   
+            }
+                 
+        }elseif (Yii::$app->request->isAjax) {
+            return $this->renderAjax('_form2', [
+                        'model' => $model,
+                        'qms_type_id' => $qms_type_id,
+            ]);
+        } else {
+            return $this->render('_form2', [
                         'model' => $model,
                         'qms_type_id' => $qms_type_id,
             ]);
