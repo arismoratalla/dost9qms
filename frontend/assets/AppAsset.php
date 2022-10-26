@@ -26,22 +26,7 @@ class AppAsset extends AssetBundle
     public $js = [
         'js/bootbox.min.js',
         'js/main.js',
-        // 'js/jquery.validate.min.js',
-        // 'js/lineitembudget/ajax-modal-popup.js',
-        // 'js/ppmp/ajax-modal-popup.js',
-        // 'js/budget/ajax-modal-popup.js',
-        // 'js/cashier/ajax-modal-popup.js',
         'js/docman/ajax-modal-popup.js',
-        // 'js/employeecompensation/ajax-modal-popup.js',
-        'js/finance/ajax-modal-popup.js',
-        // 'js/finance/fileinput.min.js',
-        // 'js/finance/sortable.min.js',
-        // 'js/intro.js',
-//        'js/scripts.bundle.js',
-        //'js/dashboard/dashboard.js',
-        //'js/dashboard/jquery.knob.min.js',
-        //'js/supplemental/ajax-modal-popup.js',
-        
     ];
     public $depends = [
         'yii\web\YiiAsset',
