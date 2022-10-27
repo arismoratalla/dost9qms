@@ -68,11 +68,11 @@ if(Yii::$app->user->isGuest){
                                 'url' => ['/docman/document/index', 'qms_type_id'=>1], 
                             ],
                             [
-                                'label' => 'ISO 9001 Forms', 
+                                'label' => 'FORMS', 
                                 'icon' => 'folder text-aqua', 
                                 'url' => ['/docman/document/formsindex', 'qms_type_id'=>1], 
                             ],
-                            [
+                            /*[
                                 'label' => 'ISO 17025', 
                                 'icon' => 'folder-open text-aqua', 
                                 'url' => ['/docman/document/index', 'qms_type_id'=>2], 
@@ -82,7 +82,7 @@ if(Yii::$app->user->isGuest){
                                 'icon' => 'folder-open text-aqua', 
                                 'url' => ['/docman/document/formsindex', 'qms_type_id'=>2], 
                             ],
-                            /*[
+                            [
                                 'label' => 'FORMS', 
                                 'icon' => 'file text-aqua', 
                                 'url' => ['/docman/document/formsindex'],
