@@ -49,8 +49,23 @@ class DocumentController extends Controller
      */
     public function actionIndex()
     {
-        if( (Yii::$app->user->can('9001-basic-role')) || (Yii::$app->user->can('17025-basic-role')) || (Yii::$app->user->identity->username == 'Admin')) {
+        $allowed = false;
 
+        if($_GET['qms_type_id'] == 1){
+            if( Yii::$app->user->can('9001-basic-role') || Yii::$app->user->can('9001-document-custodian') )
+                $allowed = true;
+        }
+
+        if($_GET['qms_type_id'] == 2){
+            if( Yii::$app->user->can('17025-basic-role') || Yii::$app->user->can('17025-document-custodian') )
+                $allowed = true;
+        }
+
+        if(Yii::$app->user->identity->username == 'Admin'){
+            $allowed = true;
+        }
+
+        if($allowed){ 
             $user = User::findOne(['user_id'=> Yii::$app->user->identity->user_id]);
 
             $searchModel = new DocumentSearch();
@@ -122,16 +137,14 @@ class DocumentController extends Controller
                     'data-pjax' => 0, 
                 ]);
             }
-                
-            return $this->render('index', [
-                'qmstype'=>$qmstype,
-                'category_menus'=>$category_menus,
-                'toolbars'=>$toolbars,
-                'searchModel' => $searchModel,
-                'dataProvider' => $dataProvider,
-                'filter_categories' => $filter_categories,
-            ]);
-
+                return $this->render('index', [
+                    'qmstype'=>$qmstype,
+                    'category_menus'=>$category_menus,
+                    'toolbars'=>$toolbars,
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider,
+                    'filter_categories' => $filter_categories,
+                ]);
         }else{
             return $this->render('restricted');
         }
