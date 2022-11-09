@@ -67,11 +67,11 @@ if(Yii::$app->user->isGuest){
                                 'icon' => 'folder text-aqua', 
                                 'url' => ['/docman/document/index', 'qms_type_id'=>1], 
                             ],
-                            [
+                            /*[
                                 'label' => 'FORMS', 
                                 'icon' => 'folder text-aqua', 
                                 'url' => ['/docman/document/formsindex', 'qms_type_id'=>1], 
-                            ],
+                            ],*/
                             [
                                 'label' => 'ISO 17025', 
                                 'icon' => 'folder-open text-aqua', 

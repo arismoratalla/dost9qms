@@ -57,7 +57,17 @@ class DocumentController extends Controller
             $searchModel->functional_unit_id = $user->profile->unit_id;
             $searchModel->category_id = 1;
         }*/
-            
+        switch ($_GET['qms_type_id']) {
+            case 1:
+                $filter_categories = Category::find()->where(['in', 'category_id', [1,2,3,11]])->orderBy(['num'=>SORT_ASC])->all();
+                break;
+            case 2:
+                $filter_categories = Category::find()->where(['in', 'category_id', [1,2,3,4,5,6,7,8,9,10]])->orderBy(['num'=>SORT_ASC])->all();
+                
+                break;
+            default:
+                $filter_categories = Category::find()->orderBy(['num'=>SORT_ASC])->all();
+        }
 
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         
@@ -117,6 +127,7 @@ class DocumentController extends Controller
             'toolbars'=>$toolbars,
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'filter_categories' => $filter_categories,
         ]);
     }
     
@@ -172,7 +183,7 @@ class DocumentController extends Controller
         
         if ($model->load(Yii::$app->request->post()))
         {
-
+            $model->effectivity_date = date("Y-m-d", strtotime($_POST['Document']['effectivity_date']));
             if ($model->save(false))
             {
                 if($_document_code != $model->document_code){
@@ -203,6 +214,19 @@ class DocumentController extends Controller
     {
         $model = new Document();
         $qms_type_id = $_GET['qms_type_id'];
+        
+        switch ($qms_type_id) {
+            case 1:
+                $categories = Category::find()->where(['in', 'category_id', [1,2,3,11]])->orderBy(['num'=>SORT_ASC])->all();
+                break;
+            case 2:
+                $categories = Category::find()->where(['in', 'category_id', [1,2,3,4,5,6,7,8,9,10]])->orderBy(['num'=>SORT_ASC])->all();
+                
+                break;
+            default:
+                $categories = Category::find()->orderBy(['num'=>SORT_ASC])->all();
+        }
+        
         if ($model->load(Yii::$app->request->post())) {
             $model->user_id = Yii::$app->user->identity->user_id;
             if( isset($_POST['Document']['functional_unit_id']) )
@@ -230,11 +254,13 @@ class DocumentController extends Controller
             return $this->renderAjax('_form', [
                         'model' => $model,
                         'qms_type_id' => $qms_type_id,
+                        'categories' => $categories,
             ]);
         } else {
             return $this->render('_form', [
                         'model' => $model,
                         'qms_type_id' => $qms_type_id,
+                        'categories' => $categories,
             ]);
         }
         

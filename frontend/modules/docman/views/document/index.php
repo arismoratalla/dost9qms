@@ -47,6 +47,7 @@ Modal::begin([
 echo "<div id='modalContent'><div style='text-align:center'><img src='/images/loading.gif'></div></div>";
 Modal::end();
 ?>
+
 <div class="request-index">
 
 <?php Pjax::begin(); ?>
@@ -67,13 +68,13 @@ Modal::end();
                                 'format'=>'raw',
                                 'value'=>function ($model, $key, $index, $widget) { 
                                     if($_GET['qms_type_id'] == 1) {
-                                        return ($model->category_id == 2) ? $model->category->name : 'Procedures Manual';
+                                        return ($model->category_id == 2) ? 'Procedures Manual' : $model->category->name ;
                                     } elseif($_GET['qms_type_id'] == 2){
                                         return ($model->category_id == 2) ? 'Operational Procedure' : $model->category->name;
                                     }
                                 },
                                 'filterType' => GridView::FILTER_SELECT2,
-                                'filter' => ArrayHelper::map(Category::find()->where(['<>', 'code', 'F'])->asArray()->all(), 'category_id', 'name'), 
+                                'filter' => ArrayHelper::map($filter_categories, 'category_id', 'name'), 
                                 'filterWidgetOptions' => [
                                     'pluginOptions' => ['allowClear' => true],
                                 ],  

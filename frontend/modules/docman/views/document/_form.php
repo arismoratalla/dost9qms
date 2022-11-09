@@ -25,7 +25,7 @@ use common\models\docman\Functionalunit;
         
         <div class="col-md-6"> 
                 <?= $form->field($model, 'category_id')->widget(Select2::classname(), [
-                    'data' => ArrayHelper::map(Category::find()->orderBy(['num'=>SORT_ASC])->all(),'category_id','name'),
+                    'data' => ArrayHelper::map($categories,'category_id','name'),
                     'language' => 'en',
                     'options' => ['placeholder' => 'Select Category'],
                     'pluginOptions' => [
