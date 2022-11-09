@@ -65,7 +65,8 @@ if(Yii::$app->user->isGuest){
                             [
                                 'label' => 'ISO 9001', 
                                 'icon' => 'folder text-aqua', 
-                                'url' => ['/docman/document/index', 'qms_type_id'=>1], 
+                                'url' => ['/docman/document/index', 'qms_type_id'=>1],
+                                'visible'=> ( Yii::$app->user->can('9001-basic-role') || (Yii::$app->user->identity->username == 'Admin') ),
                             ],
                             /*[
                                 'label' => 'FORMS', 
@@ -75,7 +76,8 @@ if(Yii::$app->user->isGuest){
                             [
                                 'label' => 'ISO 17025', 
                                 'icon' => 'folder-open text-aqua', 
-                                'url' => ['/docman/document/index', 'qms_type_id'=>2], 
+                                'url' => ['/docman/document/index', 'qms_type_id'=>2],
+                                'visible'=> ( Yii::$app->user->can('17025-basic-role') || (Yii::$app->user->identity->username == 'Admin') ),
                             ],
                             /*[
                                 'label' => 'ISO 17025 Forms', 
