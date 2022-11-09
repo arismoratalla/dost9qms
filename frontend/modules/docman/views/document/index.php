@@ -147,7 +147,8 @@ Modal::end();
             'toolbar' => 
                         [
                             [
-                                'content'=> $category_menus . $toolbars,
+                                // 'content'=> $category_menus . $toolbars,
+                                'content'=> $toolbars,
                                 'options' => ['class' => 'btn-group mr-2 me-2']
                             ],
                             '{export}',
