@@ -77,13 +77,13 @@ if(Yii::$app->user->isGuest){
                                 'label' => 'ISO 17025', 
                                 'icon' => 'folder-open text-aqua', 
                                 'url' => ['/docman/document/index', 'qms_type_id'=>2],
-                                'visible'=> ( Yii::$app->user->can('17025-basic-role') || (Yii::$app->user->identity->username == 'Admin') ),
+                                'visible'=> ( Yii::$app->user->can('17025-auditor-access') || Yii::$app->user->can('17025-basic-role') || (Yii::$app->user->identity->username == 'Admin') ),
                             ],
                             [
                                 'label' => 'Lab Records', 
                                 'icon' => 'folder-open text-aqua', 
                                 'url' => ['/docman/document/labrecordsindex', 'qms_type_id'=>2],
-                                'visible'=> ( Yii::$app->user->can('17025-basic-role') || (Yii::$app->user->identity->username == 'Admin') ),
+                                'visible'=> ( Yii::$app->user->can('17025-auditor-access') || Yii::$app->user->can('17025-basic-role') || (Yii::$app->user->identity->username == 'Admin') ),
                             ],
                             /*[
                                 'label' => 'ISO 17025 Forms', 
