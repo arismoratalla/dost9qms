@@ -52,12 +52,12 @@ class DocumentController extends Controller
         $allowed = false;
 
         if($_GET['qms_type_id'] == 1){
-            if( Yii::$app->user->can('9001-basic-role') || Yii::$app->user->can('9001-document-custodian') )
+            if( Yii::$app->user->can('9001-basic-role') || Yii::$app->user->can('9001-auditor') || Yii::$app->user->can('9001-document-custodian') )
                 $allowed = true;
         }
 
         if($_GET['qms_type_id'] == 2){
-            if( Yii::$app->user->can('17025-basic-role') || Yii::$app->user->can('17025-document-custodian') )
+            if( Yii::$app->user->can('17025-basic-role') || Yii::$app->user->can('17025-auditor') || Yii::$app->user->can('17025-document-custodian') )
                 $allowed = true;
         }
 
