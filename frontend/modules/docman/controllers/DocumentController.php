@@ -70,6 +70,10 @@ class DocumentController extends Controller
 
             $searchModel = new DocumentSearch();
             $searchModel->qms_type_id = $_GET['qms_type_id'];
+            $searchModel->category_id = 1;
+            // if(isset($_GET['functional_unit_id']))
+                // $searchModel->functional_unit_id = Yii::$app->user->identity->profile->unit_id;
+
             /*if( !(Yii::$app->user->can('17025-document-custodian') || (Yii::$app->user->identity->username == 'Admin') ) ){
                 $searchModel->functional_unit_id = $user->profile->unit_id;
                 $searchModel->category_id = 1;
@@ -79,7 +83,7 @@ class DocumentController extends Controller
                     $filter_categories = Category::find()->where(['in', 'category_id', [1,2,3,11]])->orderBy(['num'=>SORT_ASC])->all();
                     break;
                 case 2:
-                    $filter_categories = Category::find()->where(['in', 'category_id', [1,2,3,4,5,6,7,8,9,10]])->orderBy(['num'=>SORT_ASC])->all();
+                    $filter_categories = Category::find()->where(['in', 'category_id', [1,2,3,4,6,7,8,9,10]])->orderBy(['num'=>SORT_ASC])->all();
                     
                     break;
                 default:
@@ -131,7 +135,7 @@ class DocumentController extends Controller
 
             foreach($units as $unit){
                 //$toolbars .= Html::button($unit->code, ['value' => Url::to(['document/index', 'DocumentSearch[functional_unit_id]' => $unit->functional_unit_id]), 'title' => 'Approved', 'class' => 'btn btn-info', 'style'=>'width: 90px; margin-right: 6px;']);
-                $toolbars .= Html::a($unit->code, ['index?qms_type_id='.$_GET['qms_type_id'].'&DocumentSearch[functional_unit_id]='.$unit->functional_unit_id], [
+                $toolbars .= Html::a($unit->code, ['index?qms_type_id='.$_GET['qms_type_id'].'&DocumentSearch[category_id]=&DocumentSearch[functional_unit_id]='.$unit->functional_unit_id], [
                     'class' => 'btn btn-outline-secondary',
                     'style' => $color[$unit->functional_unit_id],
                     'data-pjax' => 0, 

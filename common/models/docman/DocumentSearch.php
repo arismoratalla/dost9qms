@@ -78,6 +78,12 @@ class DocumentSearch extends Document
             }
         }
 
+        if( (Yii::$app->user->can('17025-auditor') ) ){
+            if(isset($_GET['functional_unit_id'])){
+                $query->andFilterWhere(['=', 'functional_unit_id', $this->functional_unit_id]);
+            }
+        }
+
         $query->andFilterWhere(['like', 'subject', $this->subject])
             ->andFilterWhere(['like', 'filename', $this->filename])
             ->andFilterWhere(['like', 'document_code', $this->document_code])

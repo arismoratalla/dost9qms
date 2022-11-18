@@ -46,7 +46,6 @@ Modal::begin([
 
 echo "<div id='modalContent'><div style='text-align:center'><img src='/images/loading.gif'></div></div>";
 Modal::end();
-
 ?>
 <div class="request-index">
 
@@ -75,10 +74,10 @@ Modal::end();
                                 },
                                 'filterType' => GridView::FILTER_SELECT2,
                                 'filter' => ArrayHelper::map($filter_categories, 'category_id', 'name'), 
-                                'filterWidgetOptions' => [
-                                    'pluginOptions' => ['allowClear' => true],
-                                ],  
-                                'filterInputOptions' => ['placeholder' => 'Select Category'],
+                                // 'filterWidgetOptions' => [
+                                //     'pluginOptions' => ['allowClear' => true],
+                                // ],  
+                                // 'filterInputOptions' => ['placeholder' => 'Select Category'],
                             ],
                             [
                                 'attribute'=>'document_code',
