@@ -19,7 +19,7 @@ use common\models\docman\Document;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = $qmstype->code;
-$this->params['breadcrumbs'][] = $this->title;
+$this->params['breadcrumbs'][] = 'Laboratory Records';
 
 // Modal Create Request
 Modal::begin([
@@ -74,6 +74,10 @@ Modal::end();
                                 },
                                 'filterType' => GridView::FILTER_SELECT2,
                                 'filter' => ArrayHelper::map($filter_categories, 'category_id', 'name'), 
+                                // 'filterWidgetOptions' => [
+                                //     'pluginOptions' => ['allowClear' => true],
+                                // ],  
+                                // 'filterInputOptions' => ['placeholder' => 'Select Category'],
                             ],
                             [
                                 'attribute'=>'document_code',
@@ -119,7 +123,8 @@ Modal::end();
             'pjax' => true, // pjax is set to always true for this demo
             'panel' => [
 //                    'heading' => $this->title,
-                    'heading' => '<h2 class="panel-title"><i class="fas fa-'.(($qmstype->qms_type_id == 1) ? 'folder' : 'folder-open').'"></i> '.$this->title.'</h2>',
+                    // 'heading' => '<h2 class="panel-title"><i class="fas fa-'.(($qmstype->qms_type_id == 1) ? 'folder' : 'folder-open').'"></i> '.$this->title.'</h2>',
+                    'heading' => '<h2 class="panel-title"><i class="fas fa-'.(($qmstype->qms_type_id == 1) ? 'folder' : 'folder-open').'"></i> Laboratory Records</h2>',
                     'type' => GridView::TYPE_PRIMARY,
                     'before'=>  Html::button('<i class="fas fa-plus"></i> Add', ['value' => Url::to(['document/create', 'qms_type_id' => $_GET['qms_type_id']]), 'title' => 'Add Document', 'class' => 'btn btn-info', 'style'=>'margin-right: 6px; '.( ( (Yii::$app->user->identity->username == 'Admin') || Yii::$app->user->can('17025-document-custodian')) ? '' : 'display: none;'), 'id'=>'buttonCreateRequest']),
                     'after'=>false,

@@ -68,33 +68,102 @@ if(Yii::$app->user->isGuest){
                                 'url' => ['/docman/document/index', 'qms_type_id'=>1],
                                 'visible'=> ( Yii::$app->user->can('9001-basic-role') || (Yii::$app->user->identity->username == 'Admin') ),
                             ],
-                            /*[
-                                'label' => 'FORMS', 
-                                'icon' => 'folder text-aqua', 
-                                'url' => ['/docman/document/formsindex', 'qms_type_id'=>1], 
-                            ],*/
                             [
                                 'label' => 'ISO 17025', 
                                 'icon' => 'folder-open text-aqua', 
                                 'url' => ['/docman/document/index', 'qms_type_id'=>2],
                                 'visible'=> ( Yii::$app->user->can('17025-auditor-access') || Yii::$app->user->can('17025-basic-role') || (Yii::$app->user->identity->username == 'Admin') ),
+                                'items' => [
+                                    [
+                                        'label' => 'Quality Manual', 
+                                        'icon' => 'file text-aqua', 
+                                        'url' => ['/docman/document/index', 'qms_type_id'=>2, 'category_id'=>1],
+                                    ],
+                                    [
+                                        'label' => 'Operational Procedure', 
+                                        'icon' => 'file text-aqua', 
+                                        'url' => ['/docman/document/index', 'qms_type_id'=>2, 'category_id'=>2],
+                                    ],
+                                    [
+                                        'label' => 'Work Instruction', 
+                                        'icon' => 'file text-aqua', 
+                                        'url' => ['/docman/document/index', 'qms_type_id'=>2, 'category_id'=>3],
+                                    ],
+                                    [
+                                        'label' => 'Methods', 
+                                        'icon' => 'file text-aqua', 
+                                        'url' => ['/docman/document/index', 'qms_type_id'=>2, 'category_id'=>5],
+                                    ],
+                                ],
                             ],
                             [
                                 'label' => 'Lab Records', 
                                 'icon' => 'folder-open text-aqua', 
                                 'url' => ['/docman/document/labrecordsindex', 'qms_type_id'=>2],
                                 'visible'=> ( Yii::$app->user->can('17025-auditor-access') || Yii::$app->user->can('17025-basic-role') || (Yii::$app->user->identity->username == 'Admin') ),
+                                'items' => [
+                                    [
+                                        'label' => 'Reports', 
+                                        'icon' => 'file text-aqua', 
+                                        'url' => ['/docman/document/labrecordsindex', 'qms_type_id'=>2, 'category_id'=>4],
+                                    ],
+                                    [
+                                        'label' => 'Impartiality', 
+                                        'icon' => 'file text-aqua', 
+                                        'url' => ['/docman/document/labrecordsindex', 'qms_type_id'=>2, 'category_id'=>10],
+                                    ],
+                                    [
+                                        'label' => 'Non-Disclosure Agreement', 
+                                        'icon' => 'file text-aqua', 
+                                        'url' => ['/docman/document/labrecordsindex', 'qms_type_id'=>2, 'category_id'=>17],
+                                    ],
+                                    [
+                                        'label' => 'Authorization', 
+                                        'icon' => 'file text-aqua', 
+                                        'url' => ['/docman/document/labrecordsindex', 'qms_type_id'=>2, 'category_id'=>6],
+                                    ],
+                                    [
+                                        'label' => 'Duties and Responsibilities', 
+                                        'icon' => 'file text-aqua', 
+                                        'url' => ['/docman/document/labrecordsindex', 'qms_type_id'=>2, 'category_id'=>7],
+                                    ],
+                                    [
+                                        'label' => 'Memorandum', 
+                                        'icon' => 'file text-aqua', 
+                                        'url' => ['/docman/document/labrecordsindex', 'qms_type_id'=>2, 'category_id'=>12],
+                                    ],
+                                    [
+                                        'label' => 'Quotation', 
+                                        'icon' => 'file text-aqua', 
+                                        'url' => ['/docman/document/labrecordsindex', 'qms_type_id'=>2, 'category_id'=>9],
+                                    ],
+                                    [
+                                        'label' => 'Nonconformities', 
+                                        'icon' => 'file text-aqua', 
+                                        'url' => ['/docman/document/labrecordsindex', 'qms_type_id'=>2, 'category_id'=>8],
+                                    ],
+                                    [
+                                        'label' => 'Management Review', 
+                                        'icon' => 'file text-aqua', 
+                                        'url' => ['/docman/document/labrecordsindex', 'qms_type_id'=>2, 'category_id'=>15],
+                                    ],
+                                    [
+                                        'label' => 'Masterlist of Documents', 
+                                        'icon' => 'file text-aqua', 
+                                        'url' => ['/docman/document/labrecordsindex', 'qms_type_id'=>2, 'category_id'=>16],
+                                    ],
+                                    [
+                                        'label' => 'Document Control Form', 
+                                        'icon' => 'file text-aqua', 
+                                        'url' => ['/docman/document/labrecordsindex', 'qms_type_id'=>2, 'category_id'=>13],
+                                    ],
+                                    [
+                                        'label' => 'Document Control Index', 
+                                        'icon' => 'file text-aqua', 
+                                        'url' => ['/docman/document/labrecordsindex', 'qms_type_id'=>2, 'category_id'=>14],
+                                    ],
+                                ]
                             ],
-                            /*[
-                                'label' => 'ISO 17025 Forms', 
-                                'icon' => 'folder-open text-aqua', 
-                                'url' => ['/docman/document/formsindex', 'qms_type_id'=>2], 
-                            ],
-                            [
-                                'label' => 'FORMS', 
-                                'icon' => 'file text-aqua', 
-                                'url' => ['/docman/document/formsindex'],
-                            ],*/
                         ]
                     ],
                     [

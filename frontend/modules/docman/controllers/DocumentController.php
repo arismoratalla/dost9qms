@@ -70,7 +70,7 @@ class DocumentController extends Controller
 
             $searchModel = new DocumentSearch();
             $searchModel->qms_type_id = $_GET['qms_type_id'];
-            $searchModel->category_id = 1;
+            $searchModel->category_id = $_GET['category_id'];
             // if(isset($_GET['functional_unit_id']))
                 // $searchModel->functional_unit_id = Yii::$app->user->identity->profile->unit_id;
 
@@ -135,7 +135,7 @@ class DocumentController extends Controller
 
             foreach($units as $unit){
                 //$toolbars .= Html::button($unit->code, ['value' => Url::to(['document/index', 'DocumentSearch[functional_unit_id]' => $unit->functional_unit_id]), 'title' => 'Approved', 'class' => 'btn btn-info', 'style'=>'width: 90px; margin-right: 6px;']);
-                $toolbars .= Html::a($unit->code, ['index?qms_type_id='.$_GET['qms_type_id'].'&DocumentSearch[category_id]=&DocumentSearch[functional_unit_id]='.$unit->functional_unit_id], [
+                $toolbars .= Html::a($unit->code, ['index?qms_type_id='.$_GET['qms_type_id'].'&category_id='.$_GET['category_id'].'&DocumentSearch[functional_unit_id]='.$unit->functional_unit_id], [
                     'class' => 'btn btn-outline-secondary',
                     'style' => $color[$unit->functional_unit_id],
                     'data-pjax' => 0, 
@@ -143,6 +143,101 @@ class DocumentController extends Controller
             }
                 return $this->render('index', [
                     'qmstype'=>$qmstype,
+                    'category_id'=>$_GET['category_id'],
+                    'category_menus'=>$category_menus,
+                    'toolbars'=>$toolbars,
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider,
+                    'filter_categories' => $filter_categories,
+                ]);
+        }else{
+            return $this->render('restricted');
+        }
+    }
+
+    public function actionLabrecordsindex()
+    {
+        $allowed = false;
+
+        if($_GET['qms_type_id'] == 1){
+            if( Yii::$app->user->can('9001-basic-role') || Yii::$app->user->can('9001-auditor') || Yii::$app->user->can('9001-document-custodian') )
+                $allowed = true;
+        }
+
+        if($_GET['qms_type_id'] == 2){
+            if( Yii::$app->user->can('17025-basic-role') || Yii::$app->user->can('17025-auditor') || Yii::$app->user->can('17025-document-custodian') )
+                $allowed = true;
+        }
+
+        if(Yii::$app->user->identity->username == 'Admin'){
+            $allowed = true;
+        }
+
+        if($allowed){ 
+            $user = User::findOne(['user_id'=> Yii::$app->user->identity->user_id]);
+
+            $searchModel = new DocumentSearch();
+            $searchModel->qms_type_id = $_GET['qms_type_id'];
+            $searchModel->category_id = $_GET['category_id'];
+
+            $filter_categories = Category::find()->where(['in', 'category_id', [$_GET['category_id']]])->orderBy(['num'=>SORT_ASC])->all();
+            //$filter_categories = Category::find()->where(['in', 'category_id', [4,6,7,8,9,10,12,13,14,15,16]])->orderBy(['num'=>SORT_ASC])->all();
+            //$filter_categories = Category::find()->where(['category_id' => $_GET['category_id']])->orderBy(['num'=>SORT_ASC])->all();
+
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+            
+            $qmstype = Qmstype::findOne(['qms_type_id'=> $_GET['qms_type_id']]);
+
+            $color = [
+                1 => 'color: #B76E79',
+                2 => 'color: #B76E79',
+                3 => 'color: #B76E79',
+                4 => 'color: #B76E79',
+                5 => 'color: #B76E79',
+                6 => 'color: #B76E79',
+                7 => 'color: #B76E79',
+                8 => 'color: #B76E79',
+                9 => 'color: #B76E79',
+                10 => 'color: #B76E79',
+                11 => 'color: #B76E79',
+                12 => 'color: #B76E79',
+                13 => 'color: #B76E79',
+                14 => 'color: #B76E79',
+                15 => 'color: #B76E79',
+                16 => 'color: #B76E79',
+                17 => 'color: #B76E79',
+                18 => 'color: #8A9A5B',
+                19 => 'color: #00FFFF',
+                20 => 'color: #B76E79',
+            ];
+
+            $category_menus = '';
+            $categories = Category::find()->limit(3)->all();
+            foreach($categories as $category){
+                //$category_menus .= Html::button($category->code, ['title' => 'Approved', 'class' => 'btn btn-success', 'style'=>'width: 90px; margin-right: 6px;']);
+                $category_menus .= Html::a($category->code, ['labrecordsindex?qms_type_id='.$_GET['qms_type_id'].'&DocumentSearch[category_id]='.$category->category_id], [
+                    'class' => 'btn btn-outline-secondary',
+                    'data-pjax' => 0, 
+                ]);
+            }
+            
+            $toolbars = '';
+            if( !(Yii::$app->user->can('17025-document-custodian') || (Yii::$app->user->identity->username == 'Admin') ) )
+                $units = Functionalunit::findAll(['qms_type_id'=> $_GET['qms_type_id'], 'functional_unit_id'=>$user->profile->unit_id]);
+            else
+                $units = Functionalunit::findAll(['qms_type_id'=> $_GET['qms_type_id']]);
+
+            foreach($units as $unit){
+                //$toolbars .= Html::button($unit->code, ['value' => Url::to(['document/index', 'DocumentSearch[functional_unit_id]' => $unit->functional_unit_id]), 'title' => 'Approved', 'class' => 'btn btn-info', 'style'=>'width: 90px; margin-right: 6px;']);
+                $toolbars .= Html::a($unit->code, ['labrecordsindex?qms_type_id='.$_GET['qms_type_id'].'&category_id='.$_GET['category_id'].'&DocumentSearch[functional_unit_id]='.$unit->functional_unit_id], [
+                    'class' => 'btn btn-outline-secondary',
+                    'style' => $color[$unit->functional_unit_id],
+                    'data-pjax' => 0, 
+                ]);
+            }
+                return $this->render('labrecordsindex', [
+                    'qmstype'=>$qmstype,
+                    'category_id'=>$_GET['category_id'],
                     'category_menus'=>$category_menus,
                     'toolbars'=>$toolbars,
                     'searchModel' => $searchModel,
@@ -154,7 +249,7 @@ class DocumentController extends Controller
         }
     }
     
-        /**
+    /**
      * Lists all Document models.
      * @return mixed
      */
