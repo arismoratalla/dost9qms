@@ -2,7 +2,7 @@
 use yii\bootstrap\Modal;
 
 $this->title = 'Dashboard';
-$this->params['breadcrumbs'][] = ['label' => 'Finance', 'url' => ['index']];
+// $this->params['breadcrumbs'][] = ['label' => 'Docman', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 
 Modal::begin([
@@ -96,9 +96,9 @@ Modal::end();
           <!-- small box -->
           <div class="small-box bg-orange">
             <div class="inner">
-              <h3><?= 100 ?></h3>
+              <h3><?= $noAttachments ?></h3>
 
-              <p>FOR CHARGING</p>
+              <p>DOCUMENTS WITH NO ATTACHMENTS</p>
             </div>
             <div class="icon">
               <i class="ion ion-pie-graph"></i>
@@ -111,9 +111,9 @@ Modal::end();
           <!-- small box -->
           <div class="small-box bg-fuchsia">
             <div class="inner">
-              <h3><?= 100 ?></h3>
+              <h3><?= $zeroRevisions ?></h3>
 
-              <p>FOR DISBURSEMENT</p>
+              <p>DOCUMENTS WITH ZERO REVISIONS</p>
             </div>
             <div class="icon">
               <i class="ion ion-pie-graph"></i>

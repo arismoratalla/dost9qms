@@ -1,6 +1,7 @@
 <?php
 
 namespace common\models\docman;
+use common\models\docman\Document;
 
 use Yii;
 
@@ -93,5 +94,21 @@ class Document extends \yii\db\ActiveRecord
     public function getFunctionalunit()
     {
         return $this->hasOne(Functionalunit::className(), ['functional_unit_id' => 'functional_unit_id']);
+    }
+
+    static function noAttachments(){
+        $count = 0;
+
+        $documents = Document::find()->all();
+
+        foreach($documents as $document){
+            $doc_attachment = 0;
+            foreach($document->getAttachments() as $attachment){
+                $doc_attachment +=1;
+            }
+            if($doc_attachment == 0)
+                $count += 1;
+        }
+        return $count;
     }
 }
