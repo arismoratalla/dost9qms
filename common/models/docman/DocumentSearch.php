@@ -76,6 +76,8 @@ class DocumentSearch extends Document
             }
             // $query->andFilterWhere(['in', 'functional_unit_id', $groups]);
             $query->andFilterWhere(['=', 'functional_unit_id', Yii::$app->user->identity->profile->unit_id]);
+        }else{
+            
         }
 
         if( (Yii::$app->user->can('17025-auditor') ) ){
