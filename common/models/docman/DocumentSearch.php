@@ -70,17 +70,19 @@ class DocumentSearch extends Document
             'active' => $this->active,
         ]);
 
-        if( !(Yii::$app->user->can('17025-document-custodian') || (Yii::$app->user->identity->username == 'Admin') ) ){
+        if( !(Yii::$app->user->can('17025-auditor') || Yii::$app->user->can('17025-document-custodian') || (Yii::$app->user->identity->username == 'Admin') ) ){
             if(isset($_GET['category_id'])){
-                $query->andFilterWhere(['in', 'category_id', [1,2,3,6,7,8,9,10]]);
-            }if(isset($_GET['category_id'])){
-                $query->andFilterWhere(['=', 'functional_unit_id', $this->functional_unit_id]);
+                $query->andFilterWhere(['in', 'category_id', [1,2,3,5,6,7,8,9,10]]);
             }
+            // if(isset($_GET['category_id'])){
+                // $query->andFilterWhere(['=', 'functional_unit_id', $this->functional_unit_id]);
+            // }
         }
 
         if( (Yii::$app->user->can('17025-auditor') ) ){
             if(isset($_GET['functional_unit_id'])){
-                $query->andFilterWhere(['=', 'functional_unit_id', $this->functional_unit_id]);
+                // $query->andFilterWhere(['=', 'functional_unit_id', $this->functional_unit_id]);
+                $query->andFilterWhere(['=', 'functional_unit_id', Yii::$app->user->identity->profile->unit_id]);
             }
         }
 

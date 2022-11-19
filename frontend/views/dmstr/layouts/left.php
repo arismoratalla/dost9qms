@@ -96,11 +96,11 @@ if(Yii::$app->user->isGuest){
                         'icon' => 'book', 
                         'visible'=> ( Yii::$app->user->can('17025-auditor-access') || Yii::$app->user->can('17025-basic-role') || (Yii::$app->user->identity->username == 'Admin') ),
                         'items' => [
-                            // [
-                            //     'label' => 'Dashboard', 
-                            //     'icon' => 'dashboard text-aqua', 
-                            //     'url' => ['/docman/default/index', 'qms_type_id'=>2],
-                            // ],
+                            [
+                                'label' => 'Dashboard', 
+                                'icon' => 'dashboard text-aqua', 
+                                'url' => ['/docman/default/dashboard', 'qms_type_id'=>2],
+                            ],
                             [
                                 'label' => 'Documents', 
                                 'icon' => 'folder-open text-aqua', 
@@ -125,7 +125,7 @@ if(Yii::$app->user->isGuest){
                                     [
                                         'label' => 'Methods', 
                                         'icon' => 'gear text-aqua', 
-                                        'url' => ['/docman/document/index', 'qms_type_id'=>2, 'category_id'=>5],
+                                        'url' => ['/docman/document/index', 'qms_type_id'=>2, 'category_id'=>5, 'functional_unit_id'=>5],
                                     ],
                                 ],
                             ],

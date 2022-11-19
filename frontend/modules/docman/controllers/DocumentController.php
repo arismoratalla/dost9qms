@@ -74,7 +74,6 @@ class DocumentController extends Controller
 
             $filter_categories = Category::find()->where(['in', 'category_id', [$_GET['category_id']]])->orderBy(['num'=>SORT_ASC])->all();
             
-
             $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
             
             $qmstype = Qmstype::findOne(['qms_type_id'=> $_GET['qms_type_id']]);
@@ -144,10 +143,10 @@ class DocumentController extends Controller
     {
         $allowed = false;
 
-        if($_GET['qms_type_id'] == 1){
-            if( Yii::$app->user->can('9001-basic-role') || Yii::$app->user->can('9001-auditor') || Yii::$app->user->can('9001-document-custodian') )
-                $allowed = true;
-        }
+        // if($_GET['qms_type_id'] == 1){
+        //     if( Yii::$app->user->can('9001-basic-role') || Yii::$app->user->can('9001-auditor') || Yii::$app->user->can('9001-document-custodian') )
+        //         $allowed = true;
+        // }
 
         if($_GET['qms_type_id'] == 2){
             if( Yii::$app->user->can('17025-basic-role') || Yii::$app->user->can('17025-auditor') || Yii::$app->user->can('17025-document-custodian') )
@@ -207,7 +206,7 @@ class DocumentController extends Controller
             }
             
             $toolbars = '';
-            if( !(Yii::$app->user->can('17025-document-custodian') || (Yii::$app->user->identity->username == 'Admin') ) )
+            if( !(Yii::$app->user->can('17025-document-custodian') || Yii::$app->user->can('17025-auditor') || (Yii::$app->user->identity->username == 'Admin') ) )
                 $units = Functionalunit::findAll(['qms_type_id'=> $_GET['qms_type_id'], 'functional_unit_id'=>$user->profile->unit_id]);
             else
                 $units = Functionalunit::findAll(['qms_type_id'=> $_GET['qms_type_id']]);
