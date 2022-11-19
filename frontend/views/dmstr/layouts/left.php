@@ -57,47 +57,80 @@ if(Yii::$app->user->isGuest){
                     // ['label' => 'Menu Yii2', 'options' => ['class' => 'header']],
                     // ['label' => 'Gii', 'icon' => 'file-code-o', 'url' => ['/gii']],
                     // ['label' => 'Debug', 'icon' => 'dashboard', 'url' => ['/debug']],
-                    
                     [
-                        'label' => 'Document Management', 
-                        'icon' => 'archive', 
+                        'label' => 'ISO 9001', 
+                        'icon' => 'folder',
+                        'visible'=> ( Yii::$app->user->can('9001-basic-role') || (Yii::$app->user->identity->username == 'Admin') ),
                         'items' => [
+                            // [
+                            //     'label' => 'Dashboard', 
+                            //     'icon' => 'dashboard text-aqua', 
+                            //     'url' => ['/docman/document/index', 'qms_type_id'=>1],
+                            // ],
                             [
-                                'label' => 'ISO 9001', 
+                                'label' => 'Documents', 
                                 'icon' => 'folder text-aqua', 
                                 'url' => ['/docman/document/index', 'qms_type_id'=>1],
-                                'visible'=> ( Yii::$app->user->can('9001-basic-role') || (Yii::$app->user->identity->username == 'Admin') ),
+                                'items' => [
+                                    [
+                                        'label' => 'Quality Manual', 
+                                        'icon' => 'check text-aqua', 
+                                        'url' => ['/docman/document/index', 'qms_type_id'=>1, 'category_id'=>1],
+                                    ],
+                                    [
+                                        'label' => 'Procedure Manual', 
+                                        'icon' => 'bars text-aqua', 
+                                        'url' => ['/docman/document/index', 'qms_type_id'=>1, 'category_id'=>2],
+                                    ],
+                                    [
+                                        'label' => 'Work Instruction', 
+                                        'icon' => 'table text-aqua', 
+                                        'url' => ['/docman/document/index', 'qms_type_id'=>1, 'category_id'=>3],
+                                    ],
+                                ]
                             ],
+                        ]
+                    ],
+                    [
+                        'label' => 'ISO 17025', 
+                        'icon' => 'book', 
+                        'visible'=> ( Yii::$app->user->can('17025-auditor-access') || Yii::$app->user->can('17025-basic-role') || (Yii::$app->user->identity->username == 'Admin') ),
+                        'items' => [
+                            // [
+                            //     'label' => 'Dashboard', 
+                            //     'icon' => 'dashboard text-aqua', 
+                            //     'url' => ['/docman/default/index', 'qms_type_id'=>2],
+                            // ],
                             [
-                                'label' => 'ISO 17025', 
+                                'label' => 'Documents', 
                                 'icon' => 'folder-open text-aqua', 
                                 'url' => ['/docman/document/index', 'qms_type_id'=>2],
                                 'visible'=> ( Yii::$app->user->can('17025-auditor-access') || Yii::$app->user->can('17025-basic-role') || (Yii::$app->user->identity->username == 'Admin') ),
                                 'items' => [
                                     [
                                         'label' => 'Quality Manual', 
-                                        'icon' => 'file text-aqua', 
+                                        'icon' => 'check text-aqua', 
                                         'url' => ['/docman/document/index', 'qms_type_id'=>2, 'category_id'=>1],
                                     ],
                                     [
                                         'label' => 'Operational Procedure', 
-                                        'icon' => 'file text-aqua', 
+                                        'icon' => 'bars text-aqua', 
                                         'url' => ['/docman/document/index', 'qms_type_id'=>2, 'category_id'=>2],
                                     ],
                                     [
                                         'label' => 'Work Instruction', 
-                                        'icon' => 'file text-aqua', 
+                                        'icon' => 'table text-aqua', 
                                         'url' => ['/docman/document/index', 'qms_type_id'=>2, 'category_id'=>3],
                                     ],
                                     [
                                         'label' => 'Methods', 
-                                        'icon' => 'file text-aqua', 
+                                        'icon' => 'gear text-aqua', 
                                         'url' => ['/docman/document/index', 'qms_type_id'=>2, 'category_id'=>5],
                                     ],
                                 ],
                             ],
                             [
-                                'label' => 'Lab Records', 
+                                'label' => 'Records', 
                                 'icon' => 'folder-open text-aqua', 
                                 'url' => ['/docman/document/labrecordsindex', 'qms_type_id'=>2],
                                 'visible'=> ( Yii::$app->user->can('17025-auditor-access') || Yii::$app->user->can('17025-basic-role') || (Yii::$app->user->identity->username == 'Admin') ),

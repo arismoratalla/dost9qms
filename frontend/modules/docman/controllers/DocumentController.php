@@ -71,24 +71,9 @@ class DocumentController extends Controller
             $searchModel = new DocumentSearch();
             $searchModel->qms_type_id = $_GET['qms_type_id'];
             $searchModel->category_id = $_GET['category_id'];
-            // if(isset($_GET['functional_unit_id']))
-                // $searchModel->functional_unit_id = Yii::$app->user->identity->profile->unit_id;
 
-            /*if( !(Yii::$app->user->can('17025-document-custodian') || (Yii::$app->user->identity->username == 'Admin') ) ){
-                $searchModel->functional_unit_id = $user->profile->unit_id;
-                $searchModel->category_id = 1;
-            }*/
-            switch ($_GET['qms_type_id']) {
-                case 1:
-                    $filter_categories = Category::find()->where(['in', 'category_id', [1,2,3,11]])->orderBy(['num'=>SORT_ASC])->all();
-                    break;
-                case 2:
-                    $filter_categories = Category::find()->where(['in', 'category_id', [1,2,3,4,6,7,8,9,10]])->orderBy(['num'=>SORT_ASC])->all();
-                    
-                    break;
-                default:
-                    $filter_categories = Category::find()->orderBy(['num'=>SORT_ASC])->all();
-            }
+            $filter_categories = Category::find()->where(['in', 'category_id', [$_GET['category_id']]])->orderBy(['num'=>SORT_ASC])->all();
+            
 
             $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
             
