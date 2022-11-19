@@ -74,9 +74,8 @@ class DocumentSearch extends Document
             if(isset($_GET['category_id'])){
                 $query->andFilterWhere(['in', 'category_id', [1,2,3,5,6,7,8,9,10]]);
             }
-            // if(isset($_GET['category_id'])){
-                // $query->andFilterWhere(['=', 'functional_unit_id', $this->functional_unit_id]);
-            // }
+            // $query->andFilterWhere(['in', 'functional_unit_id', $groups]);
+            $query->andFilterWhere(['=', 'functional_unit_id', Yii::$app->user->identity->profile->unit_id]);
         }
 
         if( (Yii::$app->user->can('17025-auditor') ) ){
