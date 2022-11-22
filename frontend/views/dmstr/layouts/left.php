@@ -87,6 +87,11 @@ if(Yii::$app->user->isGuest){
                                         'icon' => 'table text-aqua', 
                                         'url' => ['/docman/document/index', 'qms_type_id'=>1, 'category_id'=>3],
                                     ],
+                                    [
+                                        'label' => 'FORMS', 
+                                        'icon' => 'folder text-aqua', 
+                                        'url' => ['/docman/document/formsindex', 'qms_type_id'=>1], 
+                                    ],
                                 ]
                             ],
                         ]

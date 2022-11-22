@@ -259,9 +259,6 @@ class DocumentController extends Controller
         }*/
             
         return $this->render('formsindex', [
-//            'qmstype'=>$qmstype,
-//            'category_menus'=>$category_menus,
-//            'toolbars'=>$toolbars,
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
