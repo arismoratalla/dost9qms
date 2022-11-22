@@ -88,7 +88,7 @@ if(Yii::$app->user->isGuest){
                                         'url' => ['/docman/document/index', 'qms_type_id'=>1, 'category_id'=>3],
                                     ],
                                     [
-                                        'label' => 'FORMS', 
+                                        'label' => 'Forms Manual', 
                                         'icon' => 'folder text-aqua', 
                                         'url' => ['/docman/document/formsindex', 'qms_type_id'=>1], 
                                     ],
