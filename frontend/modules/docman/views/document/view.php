@@ -169,7 +169,7 @@ Modal::end();
                 'header' => 'Upload',
                 'headerOptions' => ['style' => 'text-align: center;'],
                 'contentOptions' => ['style' => 'text-align: center; vertical-align: middle;'],
-                'visible' => ( (Yii::$app->user->identity->username == 'Admin') || Yii::$app->user->can('17025-document-custodian') || Yii::$app->user->can('17025-labrecords-uploading')) ? true : false,
+                'visible' => ( (Yii::$app->user->identity->username == 'Admin') || Yii::$app->user->can('17025-document-custodian') || Yii::$app->user->can('17025-labrecords-uploader')) ? true : false,
                 'format' => 'raw',
                 'width'=>'80px',
                 'value'=>function ($model, $key, $index, $widget) { 
