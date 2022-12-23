@@ -200,6 +200,36 @@ if(Yii::$app->user->isGuest){
                                         'icon' => 'file text-aqua', 
                                         'url' => ['/docman/document/labrecordsindex', 'qms_type_id'=>2, 'category_id'=>14],
                                     ],
+                                    [
+                                        'label' => 'Letters (Incoming)', 
+                                        'icon' => 'file text-aqua', 
+                                        'url' => ['/docman/document/labrecordsindex', 'qms_type_id'=>2, 'category_id'=>18],
+                                    ],
+                                    [
+                                        'label' => 'Letters (Outgoing)', 
+                                        'icon' => 'file text-aqua', 
+                                        'url' => ['/docman/document/labrecordsindex', 'qms_type_id'=>2, 'category_id'=>19],
+                                    ],
+                                    [
+                                        'label' => 'Personnel Training', 
+                                        'icon' => 'file text-aqua', 
+                                        'url' => ['/docman/document/labrecordsindex', 'qms_type_id'=>2, 'category_id'=>20],
+                                    ],
+                                    [
+                                        'label' => 'Record', 
+                                        'icon' => 'file text-aqua', 
+                                        'url' => ['/docman/document/labrecordsindex', 'qms_type_id'=>2, 'category_id'=>21],
+                                    ],
+                                    [
+                                        'label' => 'Personnel', 
+                                        'icon' => 'file text-aqua', 
+                                        'url' => ['/docman/document/labrecordsindex', 'qms_type_id'=>2, 'category_id'=>22],
+                                    ],
+                                    [
+                                        'label' => 'Competency Record', 
+                                        'icon' => 'file text-aqua', 
+                                        'url' => ['/docman/document/labrecordsindex', 'qms_type_id'=>2, 'category_id'=>23],
+                                    ],
                                 ]
                             ],
                         ]

@@ -59,6 +59,8 @@ class DocumentSearch extends Document
         }
 
         // grid filtering conditions
+        
+
         $query->andFilterWhere([
             'document_id' => $this->document_id,
             'qms_type_id' => $this->qms_type_id,
@@ -69,21 +71,24 @@ class DocumentSearch extends Document
             'user_id' => $this->user_id,
             'active' => $this->active,
         ]);
+        
 
         if( !(Yii::$app->user->can('17025-auditor') || Yii::$app->user->can('17025-document-custodian') || (Yii::$app->user->identity->username == 'Admin') ) ){
             if(isset($_GET['category_id'])){
-                $query->andFilterWhere(['in', 'category_id', [1,2,3,5,6,7,8,9,10,12,13,14,15,16,17]]);
+                $query->andFilterWhere(['in', 'category_id', [1,2,3,5,6,7,8,9,10,12,13,14,15,16,17,18,19,20,21,22,23]]);
             }
             if(isset($_GET['functional_unit_id'])){
             // $query->andFilterWhere(['in', 'functional_unit_id', $groups]);
-            $query->andFilterWhere(['=', 'functional_unit_id', Yii::$app->user->identity->profile->unit_id]);
+            // $query->andFilterWhere(['=', 'functional_unit_id', Yii::$app->user->identity->profile->unit_id]);
+            $query->andFilterWhere(['in', 'functional_unit_id', explode(',', Yii::$app->user->identity->profile->groups)]);
             }
         }
 
         if( (Yii::$app->user->can('17025-auditor') ) ){
             if(isset($_GET['functional_unit_id'])){
                 // $query->andFilterWhere(['=', 'functional_unit_id', $this->functional_unit_id]);
-                $query->andFilterWhere(['=', 'functional_unit_id', Yii::$app->user->identity->profile->unit_id]);
+                // $query->andFilterWhere(['=', 'functional_unit_id', Yii::$app->user->identity->profile->unit_id]);
+                $query->andFilterWhere(['in', 'functional_unit_id', explode(',', Yii::$app->user->identity->profile->groups)]);
             }
         }
 

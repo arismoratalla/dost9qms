@@ -113,7 +113,11 @@ class DocumentController extends Controller
             
             $toolbars = '';
             if( !(Yii::$app->user->can('17025-document-custodian') || (Yii::$app->user->identity->username == 'Admin') ) )
-                $units = Functionalunit::findAll(['qms_type_id'=> $_GET['qms_type_id'], 'functional_unit_id'=>$user->profile->unit_id]);
+                // $units = Functionalunit::findAll(['qms_type_id'=> $_GET['qms_type_id'], 'functional_unit_id'=>$user->profile->unit_id]);
+                $units = Functionalunit::find()
+                            ->where([ 'qms_type_id'=> $_GET['qms_type_id'] ])
+                            ->andWhere([ 'in', 'functional_unit_id', explode(',',$user->profile->groups) ])
+                            ->all();
             else
                 $units = Functionalunit::findAll(['qms_type_id'=> $_GET['qms_type_id']]);
 
@@ -207,7 +211,11 @@ class DocumentController extends Controller
             
             $toolbars = '';
             if( !(Yii::$app->user->can('17025-document-custodian') || Yii::$app->user->can('17025-auditor') || (Yii::$app->user->identity->username == 'Admin') ) )
-                $units = Functionalunit::findAll(['qms_type_id'=> $_GET['qms_type_id'], 'functional_unit_id'=>$user->profile->unit_id]);
+                // $units = Functionalunit::findAll(['qms_type_id'=> $_GET['qms_type_id'], 'functional_unit_id'=>$user->profile->unit_id]);
+                $units = Functionalunit::find()
+                            ->where([ 'qms_type_id'=> $_GET['qms_type_id'] ])
+                            ->andWhere([ 'in', 'functional_unit_id', explode(',',$user->profile->groups) ])
+                            ->all();
             else
                 $units = Functionalunit::findAll(['qms_type_id'=> $_GET['qms_type_id']]);
 
@@ -219,15 +227,18 @@ class DocumentController extends Controller
                     'data-pjax' => 0, 
                 ]);
             }
-                return $this->render('labrecordsindex', [
-                    'qmstype'=>$qmstype,
-                    'category_id'=>$_GET['category_id'],
-                    'category_menus'=>$category_menus,
-                    'toolbars'=>$toolbars,
-                    'searchModel' => $searchModel,
-                    'dataProvider' => $dataProvider,
-                    'filter_categories' => $filter_categories,
-                ]);
+
+            return $this->render('labrecordsindex', [
+                'user'=>$user,
+                'qmstype'=>$qmstype,
+                'category_id'=>$_GET['category_id'],
+                'category_menus'=>$category_menus,
+                'toolbars'=>$toolbars,
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+                'filter_categories' => $filter_categories,
+            ]);
+
         }else{
             return $this->render('restricted');
         }

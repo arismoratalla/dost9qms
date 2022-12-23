@@ -144,6 +144,7 @@ Modal::end();
                             [
                                 // 'content'=> $category_menus . $toolbars,
                                 'content'=> ($category_id == 5) ? $toolbars : '',
+                                // 'content'=> $toolbars,
                                 'options' => ['class' => 'btn-group mr-2 me-2']
                             ],
                             '{export}',

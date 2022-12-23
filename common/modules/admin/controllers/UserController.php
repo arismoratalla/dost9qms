@@ -133,6 +133,8 @@ class UserController extends Controller
 
         if ($profile->load(Yii::$app->request->post()))
         {
+            $profile->groups = implode(",",$_POST['Profile']['groups']);
+            
             if ($profile->save(false))
             {
                 Yii::$app->session->setFlash('kv-detail-success', 'Profile Updated!');

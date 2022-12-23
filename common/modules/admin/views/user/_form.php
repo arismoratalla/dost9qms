@@ -101,6 +101,21 @@ use common\models\docman\Position;
                     ],
                 ],
             ],
+            [
+                'attribute'=>'groups',
+                'label'=>'Groups',
+                'inputContainer' => ['class'=>'col-sm-6'],
+                'value' => $profile->groups,
+                'type'=>DetailView::INPUT_SELECT2, 
+                'widgetOptions'=>[
+                    'data'=>ArrayHelper::map(Functionalunit::find()->all(),'functional_unit_id','name'),
+                    'options' => [
+                        'id'=>'groups-id', 
+                        'placeholder' => 'Groups'
+                    ],
+                    'pluginOptions' => ['allowClear'=>true, 'width'=>'100%', 'multiple'=>true],
+                ],
+            ],
         ];?>
 
         <?= DetailView::widget([
