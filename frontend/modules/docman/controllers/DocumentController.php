@@ -99,6 +99,7 @@ class DocumentController extends Controller
                 18 => 'color: #8A9A5B',
                 19 => 'color: #00FFFF',
                 20 => 'color: #B76E79',
+                21 => 'color: #B76E79',
             ];
 
             $category_menus = '';
