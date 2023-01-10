@@ -211,22 +211,22 @@ if(Yii::$app->user->isGuest){
                                         'url' => ['/docman/document/labrecordsindex', 'qms_type_id'=>2, 'category_id'=>19],
                                     ],
                                     [
-                                        'label' => 'Personnel Training', 
+                                        'label' => 'Training Records', 
                                         'icon' => 'file text-aqua', 
                                         'url' => ['/docman/document/labrecordsindex', 'qms_type_id'=>2, 'category_id'=>20],
                                     ],
                                     [
-                                        'label' => 'Record', 
+                                        'label' => 'Competency Records', 
                                         'icon' => 'file text-aqua', 
                                         'url' => ['/docman/document/labrecordsindex', 'qms_type_id'=>2, 'category_id'=>21],
                                     ],
                                     [
-                                        'label' => 'Personnel', 
+                                        'label' => 'Personnel Resume', 
                                         'icon' => 'file text-aqua', 
                                         'url' => ['/docman/document/labrecordsindex', 'qms_type_id'=>2, 'category_id'=>22],
                                     ],
                                     [
-                                        'label' => 'Competency Record', 
+                                        'label' => 'Other Records', 
                                         'icon' => 'file text-aqua', 
                                         'url' => ['/docman/document/labrecordsindex', 'qms_type_id'=>2, 'category_id'=>23],
                                     ],
