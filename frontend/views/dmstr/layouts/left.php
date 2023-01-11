@@ -181,7 +181,7 @@ if(Yii::$app->user->isGuest){
                                         'url' => ['/docman/document/labrecordsindex', 'qms_type_id'=>2, 'category_id'=>8],
                                     ],
                                     [
-                                        'label' => 'Management Review', 
+                                        'label' => 'Laboratory Review', 
                                         'icon' => 'file text-aqua', 
                                         'url' => ['/docman/document/labrecordsindex', 'qms_type_id'=>2, 'category_id'=>15],
                                     ],
