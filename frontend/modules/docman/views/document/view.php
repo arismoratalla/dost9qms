@@ -111,7 +111,7 @@ Modal::end();
         'mode'=>DetailView::MODE_VIEW,
         'container' => ['id'=>'kv-demo'],
         //'formOptions' => ['action' => Url::current(['#' => 'kv-demo'])] // your action to delete
-        'buttons1' => ( (Yii::$app->user->identity->username == 'Admin') || Yii::$app->user->can('17025-document-custodian')) ? '{update}' : '', //hides buttons on detail view
+        'buttons1' => ( (Yii::$app->user->identity->username == 'Admin') || Yii::$app->user->can('17025-document-custodian') || Yii::$app->user->can('17025-labrecords-uploader')) ? '{update}' : '', //hides buttons on detail view
         //'buttons1' => '{update}',
         'attributes' => $attributes,
         'condensed' => true,
