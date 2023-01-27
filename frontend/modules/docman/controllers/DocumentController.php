@@ -146,7 +146,7 @@ class DocumentController extends Controller
 
     public function actionLabrecordsindex()
     {
-        $allowed = false;
+        $allowed = true;
 
         // if($_GET['qms_type_id'] == 1){
         //     if( Yii::$app->user->can('9001-basic-role') || Yii::$app->user->can('9001-auditor') || Yii::$app->user->can('9001-document-custodian') )
@@ -312,7 +312,7 @@ class DocumentController extends Controller
             }
             
             $toolbars = '';
-            if( !(Yii::$app->user->can('17025-document-custodian') || (Yii::$app->user->identity->username == 'Admin') ) )
+            if( !(Yii::$app->user->can('17025-document-custodian') || Yii::$app->user->can('17025-auditor') || (Yii::$app->user->identity->username == 'Admin') ) )
                 // $units = Functionalunit::findAll(['qms_type_id'=> $_GET['qms_type_id'], 'functional_unit_id'=>$user->profile->unit_id]);
                 $units = Functionalunit::find()
                             ->where([ 'qms_type_id'=> $_GET['qms_type_id'] ])
