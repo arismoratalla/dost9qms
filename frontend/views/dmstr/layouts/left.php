@@ -232,6 +232,39 @@ if(Yii::$app->user->isGuest){
                                     ],
                                 ]
                             ],
+                            [
+                                'label' => 'Referances', 
+                                'icon' => 'folder-open text-aqua', 
+                                'url' => ['/docman/document/index', 'qms_type_id'=>2, 'category_id'=>24],
+                                'visible'=> ( Yii::$app->user->can('17025-basic-role') || (Yii::$app->user->identity->username == 'Admin') ),
+                                // 'items' => [
+                                //     [
+                                //         'label' => 'Common', 
+                                //         'icon' => 'file text-aqua', 
+                                //         'url' => ['/docman/document/labrecordsindex', 'qms_type_id'=>2, 'category_id'=>21],
+                                //     ],
+                                //     [
+                                //         'label' => 'Chem', 
+                                //         'icon' => 'file text-aqua', 
+                                //         'url' => ['/docman/document/labrecordsindex', 'qms_type_id'=>2, 'category_id'=>22],
+                                //     ],
+                                //     [
+                                //         'label' => 'Metro', 
+                                //         'icon' => 'file text-aqua', 
+                                //         'url' => ['/docman/document/labrecordsindex', 'qms_type_id'=>2, 'category_id'=>23],
+                                //     ],
+                                //     [
+                                //         'label' => 'Micro', 
+                                //         'icon' => 'file text-aqua', 
+                                //         'url' => ['/docman/document/labrecordsindex', 'qms_type_id'=>2, 'category_id'=>22],
+                                //     ],
+                                //     [
+                                //         'label' => 'Rubber', 
+                                //         'icon' => 'file text-aqua', 
+                                //         'url' => ['/docman/document/labrecordsindex', 'qms_type_id'=>2, 'category_id'=>23],
+                                //     ],
+                                // ],
+                            ],
                         ]
                     ],
                     [
