@@ -233,7 +233,7 @@ if(Yii::$app->user->isGuest){
                                 ]
                             ],
                             [
-                                'label' => 'Referances', 
+                                'label' => 'References', 
                                 'icon' => 'folder-open text-aqua', 
                                 'url' => ['/docman/document/referenceindex', 'qms_type_id'=>2, 'category_id'=>24],
                                 'visible'=> ( Yii::$app->user->can('17025-basic-role') || (Yii::$app->user->identity->username == 'Admin') ),
