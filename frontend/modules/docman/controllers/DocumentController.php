@@ -146,7 +146,7 @@ class DocumentController extends Controller
 
     public function actionLabrecordsindex()
     {
-        $allowed = true;
+        $allowed = false;
 
         // if($_GET['qms_type_id'] == 1){
         //     if( Yii::$app->user->can('9001-basic-role') || Yii::$app->user->can('9001-auditor') || Yii::$app->user->can('9001-document-custodian') )
@@ -248,7 +248,7 @@ class DocumentController extends Controller
 
     public function actionReferenceindex()
     {
-        $allowed = false;
+        $allowed = true;
 
         // if($_GET['qms_type_id'] == 1){
         //     if( Yii::$app->user->can('9001-basic-role') || Yii::$app->user->can('9001-auditor') || Yii::$app->user->can('9001-document-custodian') )
