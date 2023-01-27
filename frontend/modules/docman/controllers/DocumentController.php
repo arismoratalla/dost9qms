@@ -248,32 +248,30 @@ class DocumentController extends Controller
 
     public function actionReferenceindex()
     {
-        $allowed = false;
+        $allowed = true;
 
         // if($_GET['qms_type_id'] == 1){
         //     if( Yii::$app->user->can('9001-basic-role') || Yii::$app->user->can('9001-auditor') || Yii::$app->user->can('9001-document-custodian') )
         //         $allowed = true;
         // }
 
-        if($_GET['qms_type_id'] == 2){
-            if( Yii::$app->user->can('17025-basic-role') || Yii::$app->user->can('17025-auditor') || Yii::$app->user->can('17025-document-custodian') )
-                $allowed = true;
-        }
+        // if($_GET['qms_type_id'] == 2){
+        //     if( Yii::$app->user->can('17025-basic-role') || Yii::$app->user->can('17025-document-custodian') )
+        //         $allowed = true;
+        // }
 
-        if(Yii::$app->user->identity->username == 'Admin'){
-            $allowed = true;
-        }
+        // if(Yii::$app->user->identity->username == 'Admin'){
+        //     $allowed = true;
+        // }
 
         if($allowed){ 
             $user = User::findOne(['user_id'=> Yii::$app->user->identity->user_id]);
 
             $searchModel = new DocumentSearch();
             $searchModel->qms_type_id = $_GET['qms_type_id'];
-            $searchModel->category_id = $_GET['category_id'];
+            // $searchModel->category_id = $_GET['category_id'];
 
             $filter_categories = Category::find()->where(['in', 'category_id', [$_GET['category_id']]])->orderBy(['num'=>SORT_ASC])->all();
-            //$filter_categories = Category::find()->where(['in', 'category_id', [4,6,7,8,9,10,12,13,14,15,16]])->orderBy(['num'=>SORT_ASC])->all();
-            //$filter_categories = Category::find()->where(['category_id' => $_GET['category_id']])->orderBy(['num'=>SORT_ASC])->all();
 
             $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
             
@@ -314,7 +312,7 @@ class DocumentController extends Controller
             }
             
             $toolbars = '';
-            if( !(Yii::$app->user->can('17025-document-custodian') || Yii::$app->user->can('17025-auditor') || (Yii::$app->user->identity->username == 'Admin') ) )
+            if( !(Yii::$app->user->can('17025-document-custodian') || (Yii::$app->user->identity->username == 'Admin') ) )
                 // $units = Functionalunit::findAll(['qms_type_id'=> $_GET['qms_type_id'], 'functional_unit_id'=>$user->profile->unit_id]);
                 $units = Functionalunit::find()
                             ->where([ 'qms_type_id'=> $_GET['qms_type_id'] ])
@@ -324,7 +322,6 @@ class DocumentController extends Controller
                 $units = Functionalunit::findAll(['qms_type_id'=> $_GET['qms_type_id']]);
 
             foreach($units as $unit){
-                //$toolbars .= Html::button($unit->code, ['value' => Url::to(['document/index', 'DocumentSearch[functional_unit_id]' => $unit->functional_unit_id]), 'title' => 'Approved', 'class' => 'btn btn-info', 'style'=>'width: 90px; margin-right: 6px;']);
                 $toolbars .= Html::a($unit->code, ['referenceindex?qms_type_id='.$_GET['qms_type_id'].'&category_id='.$_GET['category_id'].'&DocumentSearch[functional_unit_id]='.$unit->functional_unit_id], [
                     'class' => 'btn btn-outline-secondary',
                     'style' => $color[$unit->functional_unit_id],
