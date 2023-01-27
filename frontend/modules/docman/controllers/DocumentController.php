@@ -248,28 +248,28 @@ class DocumentController extends Controller
 
     public function actionReferenceindex()
     {
-        $allowed = true;
+        $allowed = false;
 
         // if($_GET['qms_type_id'] == 1){
         //     if( Yii::$app->user->can('9001-basic-role') || Yii::$app->user->can('9001-auditor') || Yii::$app->user->can('9001-document-custodian') )
         //         $allowed = true;
         // }
 
-        // if($_GET['qms_type_id'] == 2){
-        //     if( Yii::$app->user->can('17025-basic-role') || Yii::$app->user->can('17025-document-custodian') )
-        //         $allowed = true;
-        // }
+        if($_GET['qms_type_id'] == 2){
+            if( Yii::$app->user->can('17025-basic-role') || Yii::$app->user->can('17025-document-custodian') )
+                $allowed = true;
+        }
 
-        // if(Yii::$app->user->identity->username == 'Admin'){
-        //     $allowed = true;
-        // }
+        if(Yii::$app->user->identity->username == 'Admin'){
+            $allowed = true;
+        }
 
         if($allowed){ 
             $user = User::findOne(['user_id'=> Yii::$app->user->identity->user_id]);
 
             $searchModel = new DocumentSearch();
             $searchModel->qms_type_id = $_GET['qms_type_id'];
-            // $searchModel->category_id = $_GET['category_id'];
+            $searchModel->category_id = $_GET['category_id'];
 
             $filter_categories = Category::find()->where(['in', 'category_id', [$_GET['category_id']]])->orderBy(['num'=>SORT_ASC])->all();
 
