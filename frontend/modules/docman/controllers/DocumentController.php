@@ -248,7 +248,7 @@ class DocumentController extends Controller
 
     public function actionReferenceindex()
     {
-        $allowed = true;
+        $allowed = false;
 
         // if($_GET['qms_type_id'] == 1){
         //     if( Yii::$app->user->can('9001-basic-role') || Yii::$app->user->can('9001-auditor') || Yii::$app->user->can('9001-document-custodian') )
@@ -256,7 +256,7 @@ class DocumentController extends Controller
         // }
 
         if($_GET['qms_type_id'] == 2){
-            if( Yii::$app->user->can('17025-basic-role') || Yii::$app->user->can('17025-document-custodian') )
+            if( Yii::$app->user->can('17025-basic-role') || Yii::$app->user->can('17025-auditor') || Yii::$app->user->can('17025-document-custodian') )
                 $allowed = true;
         }
 
@@ -272,6 +272,8 @@ class DocumentController extends Controller
             $searchModel->category_id = $_GET['category_id'];
 
             $filter_categories = Category::find()->where(['in', 'category_id', [$_GET['category_id']]])->orderBy(['num'=>SORT_ASC])->all();
+            //$filter_categories = Category::find()->where(['in', 'category_id', [4,6,7,8,9,10,12,13,14,15,16]])->orderBy(['num'=>SORT_ASC])->all();
+            //$filter_categories = Category::find()->where(['category_id' => $_GET['category_id']])->orderBy(['num'=>SORT_ASC])->all();
 
             $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
             
