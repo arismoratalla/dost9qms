@@ -120,7 +120,7 @@ if(Yii::$app->user->isGuest){
                     ],
                     [
                         'label' => 'ISO 9001', 
-                        'icon' => 'folder',
+                        'icon' => 'book',
                         'visible'=> ( Yii::$app->user->can('9001-basic-role') || (Yii::$app->user->identity->username == 'Admin') ),
                         'items' => [
                             // [
