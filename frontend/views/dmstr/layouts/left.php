@@ -58,6 +58,67 @@ if(Yii::$app->user->isGuest){
                     // ['label' => 'Gii', 'icon' => 'file-code-o', 'url' => ['/gii']],
                     // ['label' => 'Debug', 'icon' => 'dashboard', 'url' => ['/debug']],
                     [
+                        'label' => 'Risk Management', 
+                        'icon' => 'folder',
+                        'visible'=> ( Yii::$app->user->can('riskman-basic-role') || (Yii::$app->user->identity->username == 'Admin') ),
+                        'items' => [
+                            [
+                                'label' => 'Dashboard', 
+                                'icon' => 'dashboard text-aqua', 
+                                'url' => ['/riskman/risk/registry'],
+                            ],
+                            [
+                                'label' => 'Risk Monitoring', 
+                                'icon' => 'file text-aqua', 
+                                'url' => ['/riskman/risk/monitor'],
+                                /*'items' => [
+                                    [
+                                        'label' => 'Quality Manual', 
+                                        'icon' => 'check text-aqua', 
+                                        'url' => ['/docman/document/index', 'qms_type_id'=>1, 'category_id'=>1],
+                                    ],
+                                    [
+                                        'label' => 'Procedure Manual', 
+                                        'icon' => 'bars text-aqua', 
+                                        'url' => ['/docman/document/index', 'qms_type_id'=>1, 'category_id'=>2],
+                                    ],
+                                    [
+                                        'label' => 'Work Instruction', 
+                                        'icon' => 'table text-aqua', 
+                                        'url' => ['/docman/document/index', 'qms_type_id'=>1, 'category_id'=>3],
+                                    ],
+                                    [
+                                        'label' => 'Forms Manual', 
+                                        'icon' => 'folder text-aqua', 
+                                        'url' => ['/docman/document/formsindex', 'qms_type_id'=>1], 
+                                    ],
+                                ]*/
+                            ],
+                            [
+                                'label' => 'Risk Registry', 
+                                'icon' => 'file text-aqua', 
+                                'url' => ['/riskman/risk/registry'],
+                            ],
+                            [
+                                'label' => 'Library', 
+                                'icon' => 'table text-aqua', 
+                                'url' => ['/riskman/risk/library'],
+                                'items' => [
+                                    [
+                                        'label' => 'Criteria & Appetite', 
+                                        'icon' => 'check text-aqua', 
+                                        'url' => ['/riskman/document/index', 'qms_type_id'=>1, 'category_id'=>1],
+                                    ],
+                                    [
+                                        'label' => 'Categories', 
+                                        'icon' => 'bars text-aqua', 
+                                        'url' => ['/riskman/document/index', 'qms_type_id'=>1, 'category_id'=>2],
+                                    ],
+                                ]
+                            ],
+                        ]
+                    ],
+                    [
                         'label' => 'ISO 9001', 
                         'icon' => 'folder',
                         'visible'=> ( Yii::$app->user->can('9001-basic-role') || (Yii::$app->user->identity->username == 'Admin') ),
@@ -138,7 +199,7 @@ if(Yii::$app->user->isGuest){
                                 'label' => 'Records', 
                                 'icon' => 'folder-open text-aqua', 
                                 'url' => ['/docman/document/labrecordsindex', 'qms_type_id'=>2],
-                                'visible'=> ( Yii::$app->user->can('17025-auditor-access') || Yii::$app->user->can('17025-basic-role') || (Yii::$app->user->identity->username == 'Admin') ),
+                                'visible'=> ( Yii::$app->user->can('17025-basic-role') || (Yii::$app->user->identity->username == 'Admin') ),
                                 'items' => [
                                     [
                                         'label' => 'Reports', 
