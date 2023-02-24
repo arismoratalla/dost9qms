@@ -65,12 +65,12 @@ if(Yii::$app->user->isGuest){
                             [
                                 'label' => 'Dashboard', 
                                 'icon' => 'dashboard text-aqua', 
-                                'url' => ['/riskman/risk/registry'],
+                                'url' => ['/riskman/default/dashboard'],
                             ],
                             [
                                 'label' => 'Risk Monitoring', 
                                 'icon' => 'file text-aqua', 
-                                'url' => ['/riskman/risk/monitor'],
+                                'url' => ['/riskman/registry/monitor'],
                                 /*'items' => [
                                     [
                                         'label' => 'Quality Manual', 
@@ -97,7 +97,7 @@ if(Yii::$app->user->isGuest){
                             [
                                 'label' => 'Risk Registry', 
                                 'icon' => 'file text-aqua', 
-                                'url' => ['/riskman/risk/registry'],
+                                'url' => ['/riskman/registry/index','registry_type'=>'Risk', 'year'=>2023],
                             ],
                             [
                                 'label' => 'Library', 
@@ -298,33 +298,12 @@ if(Yii::$app->user->isGuest){
                                 'icon' => 'folder-open text-aqua', 
                                 'url' => ['/docman/document/referenceindex', 'qms_type_id'=>2, 'category_id'=>24],
                                 'visible'=> ( Yii::$app->user->can('17025-basic-role') || (Yii::$app->user->identity->username == 'Admin') ),
-                                // 'items' => [
-                                //     [
-                                //         'label' => 'Common', 
-                                //         'icon' => 'file text-aqua', 
-                                //         'url' => ['/docman/document/labrecordsindex', 'qms_type_id'=>2, 'category_id'=>21],
-                                //     ],
-                                //     [
-                                //         'label' => 'Chem', 
-                                //         'icon' => 'file text-aqua', 
-                                //         'url' => ['/docman/document/labrecordsindex', 'qms_type_id'=>2, 'category_id'=>22],
-                                //     ],
-                                //     [
-                                //         'label' => 'Metro', 
-                                //         'icon' => 'file text-aqua', 
-                                //         'url' => ['/docman/document/labrecordsindex', 'qms_type_id'=>2, 'category_id'=>23],
-                                //     ],
-                                //     [
-                                //         'label' => 'Micro', 
-                                //         'icon' => 'file text-aqua', 
-                                //         'url' => ['/docman/document/labrecordsindex', 'qms_type_id'=>2, 'category_id'=>22],
-                                //     ],
-                                //     [
-                                //         'label' => 'Rubber', 
-                                //         'icon' => 'file text-aqua', 
-                                //         'url' => ['/docman/document/labrecordsindex', 'qms_type_id'=>2, 'category_id'=>23],
-                                //     ],
-                                // ],
+                            ],
+                            [
+                                'label' => 'Training Materials', 
+                                'icon' => 'folder-open text-aqua', 
+                                'url' => ['/docman/document/referenceindex', 'qms_type_id'=>2, 'category_id'=>25],
+                                'visible'=> ( Yii::$app->user->can('17025-basic-role') || (Yii::$app->user->identity->username == 'Admin') ),
                             ],
                         ]
                     ],

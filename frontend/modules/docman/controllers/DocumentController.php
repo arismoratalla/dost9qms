@@ -426,12 +426,15 @@ class DocumentController extends Controller
         $model = new Document();
         $qms_type_id = $_GET['qms_type_id'];
         
+        if(isset($_GET['category_id']))
+            $model->category_id = $_GET['category_id'];
+            
         switch ($qms_type_id) {
             case 1:
                 $categories = Category::find()->where(['in', 'category_id', [1,2,3,11]])->orderBy(['num'=>SORT_ASC])->all();
                 break;
             case 2:
-                $categories = Category::find()->where(['in', 'category_id', [1,2,3,4,5,6,7,8,9,10,12,13,14,15,16,17,18,19,20,21,22,23,24]])->orderBy(['num'=>SORT_ASC])->all();
+                $categories = Category::find()->where(['in', 'category_id', [1,2,3,4,5,6,7,8,9,10,12,13,14,15,16,17,18,19,20,21,22,23,24,25]])->orderBy(['num'=>SORT_ASC])->all();
                 break;
             default:
                 $categories = Category::find()->orderBy(['num'=>SORT_ASC])->all();
