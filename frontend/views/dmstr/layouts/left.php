@@ -68,36 +68,19 @@ if(Yii::$app->user->isGuest){
                                 'url' => ['/riskman/default/dashboard'],
                             ],
                             [
-                                'label' => 'Risk Monitoring', 
+                                'label' => 'Monitoring', 
                                 'icon' => 'file text-aqua', 
                                 'url' => ['/riskman/registry/monitor'],
-                                /*'items' => [
-                                    [
-                                        'label' => 'Quality Manual', 
-                                        'icon' => 'check text-aqua', 
-                                        'url' => ['/docman/document/index', 'qms_type_id'=>1, 'category_id'=>1],
-                                    ],
-                                    [
-                                        'label' => 'Procedure Manual', 
-                                        'icon' => 'bars text-aqua', 
-                                        'url' => ['/docman/document/index', 'qms_type_id'=>1, 'category_id'=>2],
-                                    ],
-                                    [
-                                        'label' => 'Work Instruction', 
-                                        'icon' => 'table text-aqua', 
-                                        'url' => ['/docman/document/index', 'qms_type_id'=>1, 'category_id'=>3],
-                                    ],
-                                    [
-                                        'label' => 'Forms Manual', 
-                                        'icon' => 'folder text-aqua', 
-                                        'url' => ['/docman/document/formsindex', 'qms_type_id'=>1], 
-                                    ],
-                                ]*/
                             ],
                             [
-                                'label' => 'Risk Registry', 
+                                'label' => 'Registry (v1)', 
                                 'icon' => 'file text-aqua', 
                                 'url' => ['/riskman/registry/index','registry_type'=>'Risk', 'year'=>2023],
+                            ],
+                            [
+                                'label' => 'Registry (v2)', 
+                                'icon' => 'file text-aqua', 
+                                'url' => ['/riskman/registryassessment/index','registry_type'=>'Risk', 'year'=>2023],
                             ],
                             [
                                 'label' => 'Library', 
@@ -202,7 +185,7 @@ if(Yii::$app->user->isGuest){
                                 'visible'=> ( Yii::$app->user->can('17025-basic-role') || (Yii::$app->user->identity->username == 'Admin') ),
                                 'items' => [
                                     [
-                                        'label' => 'Reports', 
+                                        'label' => 'PT Reports', 
                                         'icon' => 'file text-aqua', 
                                         'url' => ['/docman/document/labrecordsindex', 'qms_type_id'=>2, 'category_id'=>4],
                                     ],
