@@ -41,7 +41,7 @@ use dmstr\widgets\Alert;
     <div class="pull-right hidden-xs">
         <b>Version</b> 1.0
     </div>
-    <strong>Copyright &copy; 2022 <a href="https://region9.dost.gov.ph">DOST-IX ICT</a>.</strong> All rights
+    <strong>Copyright &copy; <?php echo (Yii::$app->controller->module->id == 'riskman') ? '2023' : '2022' ?> <a href="https://region9.dost.gov.ph">DOST-IX MIS</a>.</strong> All rights
     reserved.
 </footer>
 

@@ -14,7 +14,7 @@ if(Yii::$app->user->isGuest){
     $CurrentUser= User::findOne(['user_id'=> Yii::$app->user->identity->user_id]);
     $CurrentUserName=$CurrentUser->profile ? $CurrentUser->profile->fullname : $CurrentUser->username;
     // $CurrentUserAvatar=$CurrentUser->profile ? Yii::$app->params['uploadUrl'].$CurrentUser->profile->getImageUrl() : Yii::$app->params['uploadUrl'] . 'no-image.png';
-    $CurrentUserAvatar=$CurrentUser->profile ? "/images/user/photo/" . $CurrentUser->profile->avatar : "/images/user/photo/" . 'no-image.png';
+    $CurrentUserAvatar=$CurrentUser->profile->avatar ? "/images/user/photo/" . $CurrentUser->profile->avatar : "/images/user/photo/no-image.png";
     $CurrentUserDesignation=$CurrentUser->profile ? $CurrentUser->profile->designation : '';
     if($CurrentUserDesignation==''){
        $UsernameDesignation=$CurrentUserName;
@@ -26,7 +26,7 @@ if(Yii::$app->user->isGuest){
 
 <header class="main-header">
 
-    <?= Html::a('<span class="logo-lg">'.(Html::img(Yii::$app->request->baseUrl."/images/logo.png",['height'=>'45px','width'=>'100%'])) . '</span><span class="logo-mini">'.(Html::img(Yii::$app->request->baseUrl."/images/dms-portal.png",['title'=>'Document Management System','alt'=>'Document Management System','height'=>'56px','width'=>'100%'])).'</span>', Yii::$app->homeUrl, ['class' => 'logo']) ?>
+    <?= Html::a('<span class="logo-lg">'.(Html::img(Yii::$app->request->baseUrl."/images/logo.png",['height'=>'45px','width'=>'100%'])) . '</span><span class="logo-mini">'.(Html::img(Yii::$app->request->baseUrl."/images/dms-portal.png",['title'=>'Document Management System','alt'=>'Document Management System','height'=>'56px','width'=>'67%'])).'</span>', Yii::$app->homeUrl, ['class' => 'logo']) ?>
     <nav class="navbar navbar-static-top" role="navigation">
 
         <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button" onclick="toggleLogo()">
