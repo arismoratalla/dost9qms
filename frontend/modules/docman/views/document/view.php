@@ -82,7 +82,8 @@ Modal::end();
             'label'=>'Functional Unit',
             'inputContainer' => ['class'=>'col-sm-4'],
             // 'visible' => ( ($model->category_id == 4) || ($model->category_id == 5) ) ? true : false,
-            'value' => ( ($model->category_id == 4) || ($model->category_id == 5) ) ? $model->functionalunit->name : null,
+            'value' => ( ($model->category_id == 5) ) ? 
+                                $model->functionalunit->name : null,
             // 'displayOnly'=>true,
             'type'=>DetailView::INPUT_SELECT2, 
             'widgetOptions'=>[
