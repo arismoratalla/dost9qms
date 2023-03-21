@@ -72,11 +72,11 @@ if(Yii::$app->user->isGuest){
                                 'icon' => 'file text-aqua', 
                                 'url' => ['/riskman/registry/monitor'],
                             ],
-                            [
+                            /*[
                                 'label' => 'Registry (v1)', 
                                 'icon' => 'file text-aqua', 
                                 'url' => ['/riskman/registry/index','registry_type'=>'Risk', 'year'=>2023],
-                            ],
+                            ],*/
                             [
                                 'label' => 'Registry (v2)', 
                                 'icon' => 'file text-aqua', 
