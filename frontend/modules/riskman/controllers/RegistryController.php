@@ -10,6 +10,8 @@ use yii\filters\VerbFilter;
 use yii\helpers\ArrayHelper;
 
 use common\models\riskman\Registry;
+use common\models\riskman\Registryaction;
+use common\models\riskman\Registryassessment;
 use common\models\riskman\Registrymonitoring;
 use common\models\riskman\RegistrySearch;
 use common\models\docman\Functionalunit;
@@ -176,8 +178,35 @@ class RegistryController extends Controller
                 $modelRegistry->create_date = date("Y-m-d");
                 if($modelRegistry->save(false));{
                     $modelRegistrymonitoring->registry_id = $modelRegistry->registry_id;
-                    if($modelRegistrymonitoring->save(false));
-                        return $this->redirect(['index','registry_type'=>$_GET['registry_type'], 'year'=>$_GET['year']]);
+
+
+
+                    if($modelRegistrymonitoring->save(false)){
+                        for($i=1; $i<=4; $i++){
+                            $modelRegistryAssessment = new Registryassessment();
+                            $modelRegistryAssessment->registry_id = $modelRegistry->registry_id;
+                            $modelRegistryAssessment->likelihood_id = 1;
+                            $modelRegistryAssessment->benefit_consequence_id = 1;
+                            $modelRegistryAssessment->cause = '';
+                            $modelRegistryAssessment->effect = '';
+                            $modelRegistryAssessment->evaluation = 1;
+                            $modelRegistryAssessment->qtr = $i;
+                            $modelRegistryAssessment->year = date("Y");
+                            $modelRegistryAssessment->save(false);
+
+                            $modelRegistryAction = new Registryaction();
+                            $modelRegistryAction->registry_id = $modelRegistry->registry_id;
+                            $modelRegistryAction->preventive_control_initiatives = '';
+                            $modelRegistryAction->corrective_additional_action = '';
+                            $modelRegistryAction->target_date_of_completion = '0000-00-00';
+                            $modelRegistryAction->qtr = $i;
+                            $modelRegistryAction->year = date("Y");
+                            $modelRegistryAction->save(false);
+                        }
+
+                        return $this->redirect(['registryassessment/index','registry_type'=>$_GET['registry_type'], 'year'=>$_GET['year']]);
+                    }
+                        
                 }
             }
             

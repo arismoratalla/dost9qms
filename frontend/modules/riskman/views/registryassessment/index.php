@@ -132,7 +132,7 @@ Modal::end();
                     'group'=>true,  // enable grouping,
                     'groupedRow'=>true,                    // move grouped column to a single grouped row
                 ],
-                /*[
+                [
                     'attribute'=>'registry_assessment_id',
                     'headerOptions' => ['style' => 'width: 10%; text-align: center; vertical-align: middle;'.implode($paramsHeader)],
                     'label'=> '#',
@@ -140,17 +140,27 @@ Modal::end();
                     'format'=>'raw',
                     'value'=>function ($model, $key, $index, $widget) { 
                         // return '';
-                        return Html::button('<i class="fas fa-edit"></i>', 
+                        //  Html::button('<i class="fas fa-edit"></i>', 
+                        //             ['value' => Url::to(['registry/view', 'id' => $model->registry->registry_id]), 
+                        //             'title' => 'View Registry', 
+                        //             'class' => 'btn btn-info', 
+                        //             'style'=>'margin-left: 6px;', 
+                        //             'id'=>'buttonViewRegistry']) . 
+
+                         return Html::button('<i class="fas fa-edit"></i>', 
                                 ['value' => Url::to(['registryassessment/update', 
-                                                    'registry_id' => $model->registry_id, 
+                                                    'id' => $model->registry_assessment_id,
                                                     'registry_type' => $_GET['registry_type'], 
-                                                    'year' => $_GET['year'] ]), 
+                                                    'year' => $_GET['year'] 
+                                                    ]
+                                                ), 
                                 'title' => 'Update Assessment', 
                                 'class' => 'btn btn-info', 
-                                'style'=>'margin-right: 6px;', 'id'=>'buttonUpdateAssessment']);
+                                'style'=>'margin-right: 6px;', 
+                                'id'=>'buttonViewRegistry']);
                     },
-                ],*/
-                [
+                ],
+                /*[
                     'class' => kartik\grid\ActionColumn::className(),
                     'template' => '{update}',
                     'header' => '#',
@@ -167,7 +177,7 @@ Modal::end();
                                 ]);
                         },
                     ],
-                ],
+                ],*/
                 [
                     'attribute'=>'qtr',
                     'headerOptions' => ['style' => 'width: 10%; text-align: center; vertical-align: middle;'.implode($paramsHeader)],

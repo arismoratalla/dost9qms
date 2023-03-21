@@ -101,7 +101,7 @@ class RegistryassessmentController extends Controller
                             );
         $registry_types .= ' ';
         $registry_types .= Html::a('OPPORTUNITIES', ['index?registry_type=Opportunity&year='.$year], 
-                            [
+                            [   
                                 'class' => 'btn btn-success',
                                 'data-pjax' => 0,
                             ]
@@ -229,14 +229,57 @@ class RegistryassessmentController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+        // $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->registry_assessment]);
+        $modelAssessment = Registryassessment::findOne($id);
+        $modelAction = new Registryaction();
+        // $modelAction = Registryaction::findOne($modelAssessment->registry_id);
+
+        // $registry = Registry::findOne($_GET['registry_id']);
+        $registry_type = $_GET['registry_type'];
+        $modelAssessment->registry_id = $modelAssessment->registry_id;
+        $modelAssessment->qtr = ceil( date("n")/3 );
+        $modelAssessment->year = date("Y");
+        $modelAction->registry_id = $modelAssessment->registry_id;
+        $modelAction->qtr = ceil( date("n")/3 );
+        $modelAction->year = date("Y");
+
+        $likelihood = ArrayHelper::map(Likelihoodscale::find()->all(),'likelihood_id','scale');
+        $benefit = ArrayHelper::map(Benefitscale::find()->all(),'benefit_id','scale');
+        $consequence = ArrayHelper::map(Consequencescale::find()->all(),'consequence_id','scale');
+
+        if($registry_type == "Risk")
+            $benefit_consequence = $consequence;
+        elseif(($registry_type == "Opportunity"))
+            $benefit_consequence = $benefit;
+
+        if ( $modelAssessment->load(Yii::$app->request->post()) && $modelAction->load(Yii::$app->request->post()) ) {
+            $isValid = $modelAssessment->validate();
+            $isValid = $modelAction->validate() && $isValid;
+            if ($isValid) {
+                $modelAssessment->save(false);
+                $modelAction->save(false);
+                return $this->redirect(['registryassessment/index','registry_type'=>$_GET['registry_type'], 'year'=>$_GET['year']]);
+            }
+            
         } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
+            if (Yii::$app->request->isAjax) {
+                return $this->renderAjax('_form', [
+                    'modelAssessment' => $modelAssessment,
+                    'modelAction' => $modelAction,
+                    'likelihood' => $likelihood,
+                    'benefit_consequence' => $benefit_consequence,
+                    // 'registry' => $registry,
+                ]);
+            } else {
+                return $this->render('_form', [
+                    'modelAssessment' => $modelAssessment,
+                    'modelAction' => $modelAction,
+                    'likelihood' => $likelihood,
+                    'benefit_consequence' => $benefit_consequence,
+                    // 'registry' => $registry,
+                ]);
+            }
         }
     }
 

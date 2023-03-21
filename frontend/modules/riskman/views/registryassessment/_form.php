@@ -26,7 +26,6 @@ use kartik\datetime\DateTimePicker;
                 <span style="font-weight: bold; text-transform: uppercase; color: <?= ($_GET['registry_type'] == 'Risk') ? 'black' : 'success' ?>" class="alert-heading">
                 <?= $_GET['registry_type']?> Details</span>
                 <br><hr style="margin-top: -1px; margin-bottom: -1px; border-top: .5px solid <?= ($_GET['registry_type'] == 'Risk') ? 'black' : 'success' ?>;">
-                <span style="color: <?= ($_GET['registry_type'] == 'Risk') ? 'black' : 'white' ?>"><?= $registry->potential ?></span>
             </div>
         </div>
     </div>
@@ -103,12 +102,12 @@ use kartik\datetime\DateTimePicker;
         
         <div class="col-md-6"> 
             <?= $form->field($modelAssessment, 'qtr')->textInput(['readonly'=> true]) ?>
-            <?= $form->field($modelAction, 'qtr')->hiddenInput(['readonly'=> true]) ?>
+            <?= $form->field($modelAction, 'qtr')->hiddenInput(['readonly'=> true])->label(false) ?>
         </div>
         
         <div class="col-md-6"> 
             <?= $form->field($modelAssessment, 'year')->textInput(['readonly'=> true]) ?>
-            <?= $form->field($modelAction, 'year')->hiddenInput(['readonly'=> true]) ?>
+            <?= $form->field($modelAction, 'year')->hiddenInput(['readonly'=> true])->label(false) ?>
         </div>
     
     </div>
