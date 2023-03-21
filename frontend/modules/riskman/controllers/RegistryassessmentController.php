@@ -53,6 +53,30 @@ class RegistryassessmentController extends Controller
 
         $year = $_GET['year'];
         
+        $color = [
+            1 => 'color: #B76E79',
+            2 => 'color: #B76E79',
+            3 => 'color: #B76E79',
+            4 => 'color: #B76E79',
+            5 => 'color: #B76E79',
+            6 => 'color: #B76E79',
+            7 => 'color: #B76E79',
+            8 => 'color: #B76E79',
+            9 => 'color: #B76E79',
+            10 => 'color: #B76E79',
+            11 => 'color: #B76E79',
+            12 => 'color: #B76E79',
+            13 => 'color: #B76E79',
+            14 => 'color: #B76E79',
+            15 => 'color: #B76E79',
+            16 => 'color: #B76E79',
+            17 => 'color: #B76E79',
+            18 => 'color: #8A9A5B',
+            19 => 'color: #00FFFF',
+            20 => 'color: #B76E79',
+            21 => 'color: #B76E79',
+        ];
+
         $paramsHeader = [];
         if($_GET['registry_type'] == 'Risk'){
             $paramsHeader['bg-color'] = 'background-color: #F39C12;';
@@ -83,12 +107,26 @@ class RegistryassessmentController extends Controller
                             ]
                         );
 
+        $toolbars = '';
+        $units = Functionalunit::find()
+            ->where([ 'in', 'functional_unit_id', explode(',',Yii::$app->user->identity->profile->groups) ])
+            ->all();
+
+        foreach($units as $unit){
+            $toolbars .= Html::a($unit->code, ['index?registry_type='.$_GET['registry_type'].'&year='.$_GET['year'].'&RegistrySearch[unit_id]='.$unit->functional_unit_id], [
+                'class' => 'btn btn-outline-secondary',
+                'style' => $color[$unit->functional_unit_id]. ' font-weight: bold;',
+                'data-pjax' => 0, 
+            ]);
+        }
+
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
             'registry_types' => $registry_types,
             'paramsHeader' => $paramsHeader,
             'paramsContent' => $paramsContent,
+            'toolbars' => $toolbars,
         ]);
     }
 
@@ -125,7 +163,7 @@ class RegistryassessmentController extends Controller
     {
         $modelAssessment = new Registryassessment();
         $modelAction = new Registryaction();
-        
+
         $registry = Registry::findOne($_GET['registry_id']);
         $registry_type = $_GET['registry_type'];
         

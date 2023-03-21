@@ -110,7 +110,8 @@ Modal::end();
                                 'value'=>function ($model, $key, $index, $widget) { 
                                     return  '<b>'.$model->code.'</b><br/>'.
                                             '<i>'.$model->stakeholders.'</i><br/>'.
-                                            '<font color="blue"><b>'.$model->customer_requirement.'</b><br/>';
+                                            //'<font color="blue"><b>'.$model->customer_requirement.'</b><br/>';
+                                            '<font color="blue"><b>'.$model->potential.'</b><br/>';
                                             // '<i>'.$model->potential.'</i>';
                                 },
                             ],
@@ -195,28 +196,29 @@ Modal::end();
                                 'attribute'=>'evaluation_id',
                                 'headerOptions' => ['style' => 'width: 6%; text-align: center; vertical-align: middle;'.implode($paramsHeader)],
                                 'label'=>'Evaluation',
-                                'contentOptions' => ['style' => 'width: 6%; text-align: center; vertical-align: middle;'.$paramsContent],
+                                'contentOptions' => ['style' => 'font-weight: bold; width: 6%; text-align: center; vertical-align: middle;'.$paramsContent],
                                 'format'=>'raw',
                                 'value'=>function ($model, $key, $index, $widget) {
                                     if($model->assessment){
                                         $evaluation = "";
                                         foreach($model->assessment as $assessment){
-                                            if($assessment->year == $_GET['year'])
-                                            if($model->registry_type == "Risk"){
-                                                $evaluation = Riskappetite::find()
-                                                    ->where('min_rating<=:evaluation')
-                                                    ->andWhere('max_rating>=:evaluation')
-                                                    ->addParams([':evaluation' => $assessment->evaluation,])
-                                                    ->one();
-                                            }elseif($model->registry_type == "Opportunity"){
-                                                $evaluation = Opportunityappetite::find()
-                                                    ->where('min_rating<=:evaluation')
-                                                    ->andWhere('max_rating>=:evaluation')
-                                                    ->addParams([':evaluation' => $assessment->evaluation,])
-                                                    ->one();
+                                            if($assessment->year == $_GET['year']){
+                                                if($model->registry_type == "Risk"){
+                                                    $evaluation = Riskappetite::find()
+                                                        ->where('min_rating<=:evaluation')
+                                                        ->andWhere('max_rating>=:evaluation')
+                                                        ->addParams([':evaluation' => $assessment->evaluation,])
+                                                        ->one();
+                                                }elseif($model->registry_type == "Opportunity"){
+                                                    $evaluation = Opportunityappetite::find()
+                                                        ->where('min_rating<=:evaluation')
+                                                        ->andWhere('max_rating>=:evaluation')
+                                                        ->addParams([':evaluation' => $assessment->evaluation,])
+                                                        ->one();
+                                                }
                                             }
                                         }
-                                        return $evaluation->evaluation;
+                                        return explode(' ', trim($evaluation->evaluation))[0];
                                     }else{
                                         
                                     }
@@ -343,7 +345,7 @@ Modal::end();
                                         ['value' => Url::to(['registry/create', 
                                                         'registry_type' => $_GET['registry_type'], 
                                                         'year' => $_GET['year'],
-                                                        'unit_id' => isset($_GET['RegistrySearch']['unit_id']) ? $_GET['RegistrySearch']['unit_id'] : '',
+                                                        'RegistrySearch["unit_id"]' => isset($_GET['RegistrySearch']['unit_id']) ? $_GET['RegistrySearch']['unit_id'] : '',
                                                     ]), 
                                                     'title' => 'Add Registry', 
                                                     'class' => 'btn btn-info', 

@@ -130,9 +130,21 @@ class RegistryController extends Controller
      */
     public function actionView($id)
     {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
+        $model = $this->findModel($id);
+
+        if (Yii::$app->request->isAjax) {
+            return $this->renderAjax('view', [
+                'model' => $model,
+            ]);
+        } else {
+            return $this->render('view', [
+                'model' => $model,
+            ]);
+        }
+
+        // return $this->render('view', [
+        //     'model' => $this->findModel($id),
+        // ]);
     }
 
     /**
@@ -144,11 +156,10 @@ class RegistryController extends Controller
     {
         $modelRegistry = new Registry();
         $modelRegistrymonitoring = new Registrymonitoring();
-
         $modelRegistry->registry_type = $_GET['registry_type'];
 
         if(isset($_GET['unit_id']))
-            $modelRegistry->unit_id = $_GET['unit_id'];
+            $modelRegistry->unit_id = $_GET['RegistrySearch']['unit_id'];
 
         if(Yii::$app->user->identity->username == 'Admin')
             $units = ArrayHelper::map(Functionalunit::find()->all(),'functional_unit_id','name');

@@ -64,6 +64,7 @@ class RegistrySearch extends Registry
             'unit_id' => $this->unit_id,
             'group_id' => $this->group_id,
             'create_date' => $this->create_date,
+            'active' => 1,
         ]);
 
         $query->andFilterWhere(['like', 'registry_type', $this->registry_type])
@@ -71,7 +72,10 @@ class RegistrySearch extends Registry
             ->andFilterWhere(['like', 'stakeholders', $this->stakeholders])
             ->andFilterWhere(['like', 'customer_requirement', $this->customer_requirement]);
 
-        $query->andFilterWhere(['in', 'unit_id', explode(',', Yii::$app->user->identity->profile->groups)]);
+            if( (Yii::$app->user->can('riskman-manager') || Yii::$app->user->can('riskman-member') ) ){
+            $query->andFilterWhere(['in', 'unit_id', explode(',', Yii::$app->user->identity->profile->groups)]);
+        }
+        
 
         return $dataProvider;
     }

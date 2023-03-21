@@ -43,8 +43,21 @@ Modal::end();
 
 // Modal Add Assessment
 Modal::begin([
-    'header' => '<h4 id="modalCreditorHeader" style="color: #ffffff"></h4>',
+    'header' => '<h4 id="modalHeader" style="color: #ffffff"></h4>',
     'id' => 'modalAssessment',
+    'size' => 'modal-md',
+    'options'=> [
+             'tabindex'=>false,
+        ],
+]);
+
+echo "<div id='modalContent'><div style='text-align:center'><img src='/images/loading.gif'></div></div>";
+Modal::end();
+
+// Modal View Registry
+Modal::begin([
+    'header' => '<h4 id="modalHeader" style="color: #ffffff"></h4>',
+    'id' => 'modalViewRegistry',
     'size' => 'modal-md',
     'options'=> [
              'tabindex'=>false,
@@ -79,15 +92,81 @@ Modal::end();
                     'headerOptions' => ['style' => 'width: 25%; text-align: center; vertical-align: middle;'.implode($paramsHeader)],
                     // 'label'=> $_GET['registry_type'].' Details',
                     'contentOptions' => ['style' => 'text-align: left; vertical-align: middle;'.$paramsContent],
-                    'format'=>'html',
+                    'format'=>'raw',
                     'value'=>function ($model, $key, $index, $widget) { 
-                        return  '<b>'.$model->registry->code.'</b> <i>( '.$model->registry->stakeholders.' )</i><br/>'.
+                        return  
+                                '<div style="float: left; margin-left: -4px; margin-right: 15px; margin-top: 15px;">' .
+                                Html::button('<i class="fas fa-eye"></i>', 
+                                    ['value' => Url::to(['registry/view', 'id' => $model->registry->registry_id]), 
+                                    'title' => 'View Registry', 
+                                    'class' => 'btn btn-info', 
+                                    'style'=>'margin-left: 6px;', 
+                                    'id'=>'buttonViewRegistry']) . 
+                                '</div>'.
+                                // '&nbsp;&nbsp;' .  
+                                // Html::button('<i class="fas fa-edit"></i>', 
+                                // ['value' => Url::to(['registry/update', 'registry_id' => $model->registry_id]), 
+                                // 'title' => 'View Assessment', 
+                                // 'class' => 'btn btn-info', 
+                                // 'style'=>'margin-right: 6px;', 'id'=>'buttonViewRegistry']).
+
+                                '<div style="float: left;"><b>'.
+
+                                Html::a($model->registry->code, 
+                                    Url::to(['registry/view', 'id' => $model->registry_id]),
+                                    [   'style' => 'cursor:pointer; font-size: medium; font-weight: bold;', 
+                                        'id' => 'linkViewRegistry',
+                                        'target' => '_blank',
+                                    ]). 
+
+                                '</b> <i>( '.$model->registry->stakeholders.' )</i>'. 
+
                                 // '<i>'.$model->registry->stakeholders.'</i><br/>'.
-                                '<font color="blue"><b>'.$model->registry->customer_requirement.'</b><br/>'.
-                                $model->registry->potential;
+                                '<br/><font color="blue"><b>'.$model->registry->customer_requirement.'</b><br/>'.
+                                $model->registry->potential . '</div>';
+
+
+                                // Html::a($model->registry->code, ['registry/view', 'id'=>$model->registry_id], 
+                                // ['style' => 'cursor:pointer; font-size: medium; font-weight: bold;', 'id' => 'viewRegistry'])
                     },
                     'group'=>true,  // enable grouping,
                     'groupedRow'=>true,                    // move grouped column to a single grouped row
+                ],
+                /*[
+                    'attribute'=>'registry_assessment_id',
+                    'headerOptions' => ['style' => 'width: 10%; text-align: center; vertical-align: middle;'.implode($paramsHeader)],
+                    'label'=> '#',
+                    'contentOptions' => ['style' => 'text-align: center; vertical-align: middle;'],
+                    'format'=>'raw',
+                    'value'=>function ($model, $key, $index, $widget) { 
+                        // return '';
+                        return Html::button('<i class="fas fa-edit"></i>', 
+                                ['value' => Url::to(['registryassessment/update', 
+                                                    'registry_id' => $model->registry_id, 
+                                                    'registry_type' => $_GET['registry_type'], 
+                                                    'year' => $_GET['year'] ]), 
+                                'title' => 'Update Assessment', 
+                                'class' => 'btn btn-info', 
+                                'style'=>'margin-right: 6px;', 'id'=>'buttonUpdateAssessment']);
+                    },
+                ],*/
+                [
+                    'class' => kartik\grid\ActionColumn::className(),
+                    'template' => '{update}',
+                    'header' => '#',
+                    'headerOptions' => ['style' => 'width: 10%; text-align: center; vertical-align: middle;'.implode($paramsHeader)],
+                    'buttons' => [
+
+                        'view' => function ($url, $model){
+                            return Html::button('<span class="glyphicon glyphicon-edit"></span>', 
+                                [
+                                    'value' => '/finance/request/view?id=' . $model->registry_id,
+                                    'onclick'=>'location.href=this.value', 
+                                    'class' => 'btn btn-primary', 
+                                    'title' => Yii::t('app', "View Request")
+                                ]);
+                        },
+                    ],
                 ],
                 [
                     'attribute'=>'qtr',
@@ -164,7 +243,7 @@ Modal::end();
                                 ->addParams([':evaluation' => $model->evaluation,])
                                 ->one();
                         }
-                        return $evaluation->evaluation;
+                        return explode(' ', trim($evaluation->evaluation))[0];
                     },
                 ],
 
@@ -283,13 +362,16 @@ Modal::end();
                         [
                             [
                                 'content'=> 
+                                    $toolbars . 
                                     Html::button('<i class="fas fa-plus"></i>', 
                                         ['value' => Url::to(['registry/create', 
                                                         'registry_type' => $_GET['registry_type'], 
-                                                        'year' => $_GET['year']]), 
+                                                        'year' => $_GET['year'],
+                                                        'RegistrySearch["unit_id"]' => isset($_GET['RegistrySearch']['unit_id']) ? $_GET['RegistrySearch']['unit_id'] : '',
+                                                    ]), 
                                                     'title' => 'Add Registry', 
                                                     'class' => 'btn btn-info', 
-                                                    'style'=>'margin-right: 6px; '.( ( (Yii::$app->user->identity->username == 'Admin')) ? '' : 'display: none;'), 
+                                                    'style'=>'margin-right: 6px; '.( ( (Yii::$app->user->can('riskman-basic-role'))) ? '' : 'display: none;'), 
                                                     'id'=>'buttonCreateRegistry'])
                                     ,
                                 'options' => ['class' => 'btn-group mr-2 me-2']

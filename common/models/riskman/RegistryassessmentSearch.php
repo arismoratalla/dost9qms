@@ -70,9 +70,12 @@ class RegistryassessmentSearch extends Registryassessment
             'effect' => $this->effect,
             'qtr' => $this->qtr,
             'year' => $this->year,
+            'registry.registry_type' => $_GET['registry_type'],
         ]);
 
-        $query->andFilterWhere(['in', 'registry.unit_id', explode(',', Yii::$app->user->identity->profile->groups)]);
+        if( (Yii::$app->user->can('riskman-manager') || Yii::$app->user->can('riskman-member') ) ){
+            $query->andFilterWhere(['in', 'registry.unit_id', explode(',', Yii::$app->user->identity->profile->groups)]);
+        }
 
         return $dataProvider;
     }

@@ -18,3 +18,14 @@ $("body").on("click","#buttonAddAssessment",function () {
         $("#btnrefresh").click();
     },1500);
 });
+
+$("body").on("click","#buttonViewRegistry",function () {
+    $('#modalViewRegistry').modal('show')
+        .find('#modalContent')
+        .load($(this).attr('value'));
+    $('#modalHeader').html($(this).attr('title'));
+    setTimeout(function () {
+        $("#btnrefresh").click();
+    },1500);
+});
+
