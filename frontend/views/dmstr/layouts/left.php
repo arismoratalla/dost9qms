@@ -65,7 +65,7 @@ if(Yii::$app->user->isGuest){
                             [
                                 'label' => 'Dashboard', 
                                 'icon' => 'dashboard text-aqua', 
-                                'url' => ['/riskman/default/dashboard'],
+                                'url' => ['/riskman/default/dashboard','year'=>2023],
                             ],
                             [
                                 'label' => 'Monitoring', 

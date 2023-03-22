@@ -32,43 +32,14 @@ Modal::end();
     <section class="content">
       <!-- Small boxes (Stat box) -->
       <div class="row">
-        <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
-          <div class="small-box bg-aqua">
-            <div class="inner">
-              <h3><?= $qm ?></h3>
-
-              <p>QUALITY MANUALS</p>
-            </div>
-            <div class="icon">
-              <i class="ion ion-bag"></i>
-            </div>
-            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-          </div>
-        </div>
-        <!-- ./col -->
-        <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
-          <div class="small-box bg-green">
-            <div class="inner">
-              <h3><?= $op ?></h3>
-
-              <p>OPERATIONAL PROCEDURES</p>
-            </div>
-            <div class="icon">
-              <i class="ion ion-stats-bars"></i>
-            </div>
-            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-          </div>
-        </div>
-        <!-- ./col -->
-        <div class="col-lg-3 col-xs-6">
+        
+      <div class="col-lg-3 col-xs-6">
           <!-- small box -->
           <div class="small-box bg-yellow">
             <div class="inner">
-              <h3><?= $wi ?></h3>
+              <h3><?= $risks ?></h3>
 
-              <p>WORK INSTRUCTIONS</p>
+              <p>RISKS</p>
             </div>
             <div class="icon">
               <i class="ion ion-person-add"></i>
@@ -77,51 +48,22 @@ Modal::end();
           </div>
         </div>
         <!-- ./col -->
+
         <div class="col-lg-3 col-xs-6">
           <!-- small box -->
-          <div class="small-box bg-red">
+          <div class="small-box bg-green">
             <div class="inner">
-              <h3><?= $methods ?></h3>
+              <h3><?= $opportunities ?></h3>
 
-              <p>METHODS</p>
+              <p>OPPORTUNITIES</p>
             </div>
             <div class="icon">
-              <i class="ion ion-pie-graph"></i>
+              <i class="ion ion-stats-bars"></i>
             </div>
             <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
-        <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
-          <div class="small-box bg-orange">
-            <div class="inner">
-              <h3><?= $noAttachments ?></h3>
-
-              <p>DOCUMENTS WITH NO ATTACHMENTS</p>
-            </div>
-            <div class="icon">
-              <i class="ion ion-pie-graph"></i>
-            </div>
-            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-          </div>
-        </div>
-        <!-- ./col -->
-        <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
-          <div class="small-box bg-fuchsia">
-            <div class="inner">
-              <h3><?= $zeroRevisions ?></h3>
-
-              <p>DOCUMENTS WITH ZERO REVISIONS</p>
-            </div>
-            <div class="icon">
-              <i class="ion ion-pie-graph"></i>
-            </div>
-            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-          </div>
-        </div>
-        
       </div>
 
     </section>
