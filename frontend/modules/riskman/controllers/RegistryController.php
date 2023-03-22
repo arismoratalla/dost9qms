@@ -82,7 +82,8 @@ class RegistryController extends Controller
         foreach($units as $unit){
             $toolbars .= Html::a($unit->code, ['monitoring?registry_type='.$_GET['registry_type'].'&year='.$_GET['year'].'&RegistrySearch[unit_id]='.$unit->functional_unit_id], [
                 'class' => 'btn btn-outline-secondary',
-                'style' => $color[$unit->functional_unit_id]. ' font-weight: bold;',
+                // 'style' => $color[$unit->functional_unit_id]. ' font-weight: bold;',
+                'style' => 'color: #B76E79; font-weight: bold;',
                 'data-pjax' => 0, 
             ]);
         }
@@ -172,7 +173,8 @@ class RegistryController extends Controller
         foreach($units as $unit){
             $toolbars .= Html::a($unit->code, ['index?registry_type='.$_GET['registry_type'].'&year='.$_GET['year'].'&RegistrySearch[unit_id]='.$unit->functional_unit_id], [
                 'class' => 'btn btn-outline-secondary',
-                'style' => $color[$unit->functional_unit_id]. ' font-weight: bold;',
+                // 'style' => $color[$unit->functional_unit_id]. ' font-weight: bold;',
+                'style' => 'color: #B76E79; font-weight: bold;',
                 'data-pjax' => 0, 
             ]);
         }
