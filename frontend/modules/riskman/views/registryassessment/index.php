@@ -195,7 +195,7 @@ Modal::end();
                     'contentOptions' => ['style' => 'text-align: left; vertical-align: middle;'.$paramsContent],
                     'format'=>'html',
                     'value'=>function ($model, $key, $index, $widget) { 
-                        return  $model->likelihood->scale;
+                        return  $model->likelihood ? $model->likelihood->scale : '-';
                     },
                 ],
                 [
@@ -216,9 +216,9 @@ Modal::end();
                     'format'=>'html',
                     'value'=>function ($model, $key, $index, $widget) { 
                         if($_GET['registry_type'] == "Risk"){
-                            return $model->consequence->scale;
+                            return $model->consequence ? $model->consequence->scale : '-';
                         }elseif($_GET['registry_type'] == "Opportunity"){
-                            return $model->benefit->scale;
+                            return $model->benefit ? $model->benefit->scale : '-';
                         }
                     },
                 ],
@@ -253,7 +253,7 @@ Modal::end();
                                 ->addParams([':evaluation' => $model->evaluation,])
                                 ->one();
                         }
-                        return explode(' ', trim($evaluation->evaluation))[0];
+                        return $evaluation ? explode(' ', trim($evaluation->evaluation))[0] : '-';
                     },
                 ],
 

@@ -36,6 +36,67 @@ class RegistryController extends Controller
         ];
     }
 
+    function actionMonitoring()
+    {
+        $searchModel = new RegistrySearch();
+        $searchModel->registry_type = $_GET['registry_type'];
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        $year = $_GET['year'];
+
+        $paramsHeader = [];
+        if($_GET['registry_type'] == 'Risk'){
+            $paramsHeader['bg-color'] = 'background-color: #F39C12;';
+            $paramsHeader['font-color'] = 'color: #000000;';
+        }
+
+        if($_GET['registry_type'] == 'Opportunity'){
+            $paramsHeader['bg-color'] = 'background-color: #339900;';
+            $paramsHeader['font-color'] = 'color: #ffffff;';
+        }
+
+        $paramsContent = 'white-space:nowrap;text-overflow: ellipsis;overflow:hidden;';
+        
+        $registry_types = '';
+
+        $registry_types .= Html::a('RISKS', ['monitoring?registry_type=Risk&year='.$year], 
+                                // 'index?registry_type=Risk&DocumentSearch[category_id]='.$category->category_id], [
+                                [
+                                    'class' => 'btn btn-warning',
+                                    'data-pjax' => 0,
+                                ]
+                            );
+        $registry_types .= ' ';
+        $registry_types .= Html::a('OPPORTUNITIES', ['monitoring?registry_type=Opportunity&year='.$year], 
+                            [
+                                'class' => 'btn btn-success',
+                                'data-pjax' => 0,
+                            ]
+                        );
+
+        $toolbars = '';
+        $units = Functionalunit::find()
+            ->where([ 'in', 'functional_unit_id', explode(',',Yii::$app->user->identity->profile->groups) ])
+            ->all();
+
+        foreach($units as $unit){
+            $toolbars .= Html::a($unit->code, ['monitoring?registry_type='.$_GET['registry_type'].'&year='.$_GET['year'].'&RegistrySearch[unit_id]='.$unit->functional_unit_id], [
+                'class' => 'btn btn-outline-secondary',
+                'style' => $color[$unit->functional_unit_id]. ' font-weight: bold;',
+                'data-pjax' => 0, 
+            ]);
+        }
+
+        return $this->render('monitoring', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+            'registry_types' => $registry_types,
+            'paramsHeader' => $paramsHeader,
+            'paramsContent' => $paramsContent,
+            'toolbars' => $toolbars,
+        ]);
+    }
+
     /**
      * Lists all Registry models.
      * @return mixed
@@ -70,6 +131,7 @@ class RegistryController extends Controller
             19 => 'color: #00FFFF',
             20 => 'color: #B76E79',
             21 => 'color: #B76E79',
+            22 => 'color: #B76E79',
         ];
 
         $paramsHeader = [];
@@ -179,17 +241,15 @@ class RegistryController extends Controller
                 if($modelRegistry->save(false));{
                     $modelRegistrymonitoring->registry_id = $modelRegistry->registry_id;
 
-
-
                     if($modelRegistrymonitoring->save(false)){
                         for($i=1; $i<=4; $i++){
                             $modelRegistryAssessment = new Registryassessment();
                             $modelRegistryAssessment->registry_id = $modelRegistry->registry_id;
-                            $modelRegistryAssessment->likelihood_id = 1;
-                            $modelRegistryAssessment->benefit_consequence_id = 1;
+                            $modelRegistryAssessment->likelihood_id = 0;
+                            $modelRegistryAssessment->benefit_consequence_id = 0;
                             $modelRegistryAssessment->cause = '';
                             $modelRegistryAssessment->effect = '';
-                            $modelRegistryAssessment->evaluation = 1;
+                            $modelRegistryAssessment->evaluation = 0;
                             $modelRegistryAssessment->qtr = $i;
                             $modelRegistryAssessment->year = date("Y");
                             $modelRegistryAssessment->save(false);
@@ -209,10 +269,6 @@ class RegistryController extends Controller
                         
                 }
             }
-            
-            /*if($modelRegistry->save(false)){
-                    return $this->redirect(['index','registry_type'=>$_GET['registry_type'], 'year'=>$_GET['year']]);   
-            }*/
                  
         }elseif (Yii::$app->request->isAjax) {
             return $this->renderAjax('_form', [
