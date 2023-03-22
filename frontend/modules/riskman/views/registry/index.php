@@ -306,7 +306,7 @@ Modal::end();
                     ],
             'pjax' => true, // pjax is set to always true for this demo
             'panel' => [
-//                    'heading' => $this->title,
+                //    'heading' => $this->title,
                     //'heading' => '<h2 class="panel-title"><i class="fas fa-'.(($qmstype->qms_type_id == 1) ? 'folder' : 'folder-open').'"></i> '.$this->title.'</h2>',
                     'type' => GridView::TYPE_PRIMARY,
                     'before'=>  $registry_types,
