@@ -297,7 +297,8 @@ Modal::end();
                         [
                             [
                                 'content'=> 
-                                    $toolbars .
+                                    $toolbars 
+                                    /*.
                                     Html::button('<i class="fas fa-plus"></i>', 
                                         ['value' => Url::to(['registry/create', 
                                                         'registry_type' => $_GET['registry_type'], 
@@ -307,7 +308,7 @@ Modal::end();
                                                     'title' => 'Add Registry', 
                                                     'class' => 'btn btn-info', 
                                                     'style'=>'margin-right: 6px; '.( ( (Yii::$app->user->can('riskman-basic-role'))) ? '' : 'display: none;'), 
-                                                    'id'=>'buttonCreateRegistry'])
+                                                    'id'=>'buttonCreateRegistry'])*/
                                     ,
                                 'options' => ['class' => 'btn-group mr-2 me-2']
                             ],
