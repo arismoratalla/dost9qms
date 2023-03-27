@@ -232,7 +232,17 @@ class RegistryassessmentController extends Controller
         // $model = $this->findModel($id);
 
         $modelAssessment = Registryassessment::findOne($id);
+
+        // FIX THIS
         $modelAction = new Registryaction();
+        $modelAction = Registryaction::find()->where(
+            'registry_id =:registry_id AND qtr = :qtr AND year = :year',
+            [
+                ':registry_id' => $modelAssessment->registry_id,
+                ':qtr' => ceil( date("n")/3 ),
+                ':year' => date("Y")
+            ])
+            ->one();
         // $modelAction = Registryaction::findOne($modelAssessment->registry_id);
 
         // $registry = Registry::findOne($_GET['registry_id']);
