@@ -239,7 +239,7 @@ class RegistryassessmentController extends Controller
             'registry_id =:registry_id AND qtr = :qtr AND year = :year',
             [
                 ':registry_id' => $modelAssessment->registry_id,
-                ':qtr' => ceil( date("n")/3 ),
+                ':qtr' => $modelAssessment->qtr,
                 ':year' => date("Y")
             ])
             ->one();
@@ -248,10 +248,11 @@ class RegistryassessmentController extends Controller
         // $registry = Registry::findOne($_GET['registry_id']);
         $registry_type = $_GET['registry_type'];
         $modelAssessment->registry_id = $modelAssessment->registry_id;
-        $modelAssessment->qtr = ceil( date("n")/3 );
+        // $modelAssessment->qtr = ceil( date("n")/3 );
         $modelAssessment->year = date("Y");
         $modelAction->registry_id = $modelAssessment->registry_id;
-        $modelAction->qtr = ceil( date("n")/3 );
+        //$modelAction->qtr = ceil( date("n")/3 );
+        // $modelAction->target_date_of_completion = date("Y-m-d", $_POST['Registryaction']['target_date_of_completion']);
         $modelAction->year = date("Y");
 
         $likelihood = ArrayHelper::map(Likelihoodscale::find()->all(),'likelihood_id','scale');
