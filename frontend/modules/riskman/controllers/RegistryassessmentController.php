@@ -75,6 +75,15 @@ class RegistryassessmentController extends Controller
             19 => 'color: #00FFFF',
             20 => 'color: #B76E79',
             21 => 'color: #B76E79',
+            22 => 'color: #B76E79',
+            23 => 'color: #B76E79',
+            24 => 'color: #B76E79',
+            25 => 'color: #B76E79',
+            26 => 'color: #B76E79',
+            27 => 'color: #B76E79',
+            28 => 'color: #B76E79',
+            29 => 'color: #B76E79',
+            30 => 'color: #B76E79',
         ];
 
         $paramsHeader = [];
