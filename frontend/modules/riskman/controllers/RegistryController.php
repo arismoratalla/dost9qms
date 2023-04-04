@@ -14,7 +14,7 @@ use common\models\riskman\Registryaction;
 use common\models\riskman\Registryassessment;
 use common\models\riskman\Registrymonitoring;
 use common\models\riskman\RegistrySearch;
-use common\models\riskman\RegistrySource;
+use common\models\riskman\Registrysource;
 use common\models\docman\Functionalunit;
 use common\models\system\Profile;
 /**
