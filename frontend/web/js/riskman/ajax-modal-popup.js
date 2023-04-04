@@ -1,4 +1,3 @@
-
 $("body").on("click","#buttonCreateRegistry",function () {
     $('#modalRegistry').modal('show')
         .find('#modalContent')

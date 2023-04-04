@@ -27,6 +27,19 @@ use common\models\riskman\Opportunityappetite;
 $this->title = 'Draft Registries';
 $this->params['breadcrumbs'][] = $this->title;
 
+// Modal Create Registry
+Modal::begin([
+    'header' => '<h4 id="modalHeader" style="color: #ffffff"></h4>',
+    'id' => 'modalRegistry',
+    'size' => 'modal-md',
+    'options'=> [
+             'tabindex'=>false,
+        ],
+]);
+
+echo "<div id='modalContent'><div style='text-align:center'><img src='/images/loading.gif'></div></div>";
+Modal::end();
+
 // Modal Add Assessment
 Modal::begin([
     'header' => '<h4 id="modalHeader" style="color: #ffffff"></h4>',
@@ -168,7 +181,14 @@ Modal::end();
             'toolbar' => 
                         [
                             [
-                                'content'=> ''
+                                'content'=> //''
+                                    Html::button('<i class="fas fa-plus"></i>', 
+                                    ['value' => Url::to(['registry/create',
+                                                ]), 
+                                                'title' => 'Add Registry', 
+                                                'class' => 'btn btn-info', 
+                                                'style'=>'margin-right: 6px; '.( ( (Yii::$app->user->can('riskman-basic-role'))) ? '' : 'display: none;'), 
+                                                'id'=>'buttonCreateRegistry'])
                                     /*Html::button('<i class="fas fa-plus"></i>', 
                                         ['value' => Url::to(['registry/create', 
                                                         'registry_type' => $_GET['registry_type'], 

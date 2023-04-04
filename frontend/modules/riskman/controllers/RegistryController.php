@@ -290,7 +290,9 @@ class RegistryController extends Controller
     {
         $modelRegistry = new Registry();
         $modelRegistrymonitoring = new Registrymonitoring();
-        $modelRegistry->registry_type = $_GET['registry_type'];
+
+        if(isset($_GET['registry_type']))
+            $modelRegistry->registry_type = $_GET['registry_type'];
 
         $sources = ArrayHelper::map(Registrysource::find()->all(),'source_id','name');
 
@@ -340,6 +342,7 @@ class RegistryController extends Controller
                         return $this->redirect(['registryassessment/index','registry_type'=>$_GET['registry_type'], 'year'=>$_GET['year']]);
                     }
                     */
+                    return $this->redirect(['registry/draft']);
                 }
             }
                  
