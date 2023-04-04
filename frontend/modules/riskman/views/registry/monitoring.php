@@ -109,19 +109,21 @@ Modal::end();
                                 'format'=>'html',
                                 'value'=>function ($model, $key, $index, $widget) { 
                                     return  '<b>'.$model->code.'</b><br/>'.
-                                            '<i>'.$model->stakeholders.'</i><br/>'.
+                                            '<font color="blue"><b>'.$model->potential.'</b></font><br/>'.
+                                            '<i>'.$model->stakeholders.'</i><br/>';
                                             //'<font color="blue"><b>'.$model->customer_requirement.'</b><br/>';
-                                            '<font color="blue"><b>'.$model->potential.'</b><br/>';
+                                            // '<font color="blue"><b>'.$model->potential.'</b><br/>';
                                             // '<i>'.$model->potential.'</i>';
                                 },
                             ],
                             [
                                 'attribute'=>'evaluation_id',
-                                'headerOptions' => ['style' => 'width: 6%; text-align: center; vertical-align: middle;'.implode($paramsHeader)],
+                                'headerOptions' => ['style' => 'width: 12%; text-align: center; vertical-align: middle;'.implode($paramsHeader)],
                                 'label'=>'1ST QTR',
                                 'contentOptions' => ['style' => 'font-weight: bold; width: 6%; text-align: center; vertical-align: middle;'.$paramsContent],
                                 'format'=>'raw',
                                 'value'=>function ($model, $key, $index, $widget) {
+
                                     if($model->assessment){
                                         $evaluation = "";
                                         foreach($model->assessment as $assessment){
@@ -139,9 +141,11 @@ Modal::end();
                                                         ->addParams([':evaluation' => $assessment->evaluation,])
                                                         ->one();
                                                 }
+                                                $remarks = $assessment->remarks;
                                             }
                                         }
-                                        return $evaluation ? explode(' ', trim($evaluation->evaluation))[0] : '-';
+                                        return ( $evaluation ? explode(' ', trim($evaluation->evaluation))[0] : '-' ) . '<br/><br/>' . 
+                                                '<span title="'.$remarks.'">'.$remarks.'</span>';
                                     }else{
                                         
                                     }
@@ -149,7 +153,7 @@ Modal::end();
                             ],
                             [
                                 'attribute'=>'evaluation_id',
-                                'headerOptions' => ['style' => 'width: 6%; text-align: center; vertical-align: middle;'.implode($paramsHeader)],
+                                'headerOptions' => ['style' => 'width: 12%; text-align: center; vertical-align: middle;'.implode($paramsHeader)],
                                 'label'=>'2ND QTR',
                                 'contentOptions' => ['style' => 'font-weight: bold; width: 6%; text-align: center; vertical-align: middle;'.$paramsContent],
                                 'format'=>'raw',
@@ -171,9 +175,11 @@ Modal::end();
                                                         ->addParams([':evaluation' => $assessment->evaluation,])
                                                         ->one();
                                                 }
+                                                $remarks = $assessment->remarks;
                                             }
                                         }
-                                        return $evaluation ? explode(' ', trim($evaluation->evaluation))[0] : '-';
+                                        return ( $evaluation ? explode(' ', trim($evaluation->evaluation))[0] : '-' ) . '<br/><br/>' . 
+                                                '<span title="'.$remarks.'">'.$remarks.'</span>';
                                     }else{
                                         
                                     }
@@ -181,7 +187,7 @@ Modal::end();
                             ],
                             [
                                 'attribute'=>'evaluation_id',
-                                'headerOptions' => ['style' => 'width: 6%; text-align: center; vertical-align: middle;'.implode($paramsHeader)],
+                                'headerOptions' => ['style' => 'width: 12%; text-align: center; vertical-align: middle;'.implode($paramsHeader)],
                                 'label'=>'3RD QTR',
                                 'contentOptions' => ['style' => 'font-weight: bold; width: 6%; text-align: center; vertical-align: middle;'.$paramsContent],
                                 'format'=>'raw',
@@ -203,9 +209,11 @@ Modal::end();
                                                         ->addParams([':evaluation' => $assessment->evaluation,])
                                                         ->one();
                                                 }
+                                                $remarks = $assessment->remarks;
                                             }
                                         }
-                                        return $evaluation ? explode(' ', trim($evaluation->evaluation))[0] : '-';
+                                        return ( $evaluation ? explode(' ', trim($evaluation->evaluation))[0] : '-' ) . '<br/><br/>' . 
+                                                '<span title="'.$remarks.'">'.$remarks.'</span>';
                                     }else{
                                         
                                     }
@@ -213,7 +221,7 @@ Modal::end();
                             ],
                             [
                                 'attribute'=>'evaluation_id',
-                                'headerOptions' => ['style' => 'width: 6%; text-align: center; vertical-align: middle;'.implode($paramsHeader)],
+                                'headerOptions' => ['style' => 'width: 12%; text-align: center; vertical-align: middle;'.implode($paramsHeader)],
                                 'label'=>'4TH QTR',
                                 'contentOptions' => ['style' => 'font-weight: bold; width: 6%; text-align: center; vertical-align: middle;'.$paramsContent],
                                 'format'=>'raw',
@@ -235,9 +243,11 @@ Modal::end();
                                                         ->addParams([':evaluation' => $assessment->evaluation,])
                                                         ->one();
                                                 }
+                                                $remarks = $assessment->remarks;
                                             }
                                         }
-                                        return $evaluation ? explode(' ', trim($evaluation->evaluation))[0] : '-';
+                                        return ( $evaluation ? explode(' ', trim($evaluation->evaluation))[0] : '-' ) . '<br/><br/>' . 
+                                                '<span title="'.$remarks.'">'.$remarks.'</span>';
                                     }else{
                                         
                                     }

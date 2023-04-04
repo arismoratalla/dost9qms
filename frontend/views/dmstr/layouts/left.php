@@ -72,16 +72,17 @@ if(Yii::$app->user->isGuest){
                                 'icon' => 'file text-aqua', 
                                 'url' => ['/riskman/registry/monitoring','registry_type'=>'Risk', 'year'=>2023],
                             ],
-                            /*[
-                                'label' => 'Registry (v1)', 
-                                'icon' => 'file text-aqua', 
-                                'url' => ['/riskman/registry/index','registry_type'=>'Risk', 'year'=>2023],
-                            ],*/
                             [
-                                'label' => 'Registry (v2)', 
+                                'label' => 'Registry', 
                                 'icon' => 'file text-aqua', 
                                 'url' => ['/riskman/registryassessment/index','registry_type'=>'Risk', 'year'=>2023],
                             ],
+                            [
+                                'label' => 'Registry (draft)', 
+                                'icon' => 'file text-aqua', 
+                                'url' => ['/riskman/registry/draft'],
+                            ],
+                            
                             [
                                 'label' => 'Library', 
                                 'icon' => 'table text-aqua', 
@@ -90,12 +91,17 @@ if(Yii::$app->user->isGuest){
                                     [
                                         'label' => 'Criteria & Appetite', 
                                         'icon' => 'check text-aqua', 
-                                        'url' => ['/riskman/document/index', 'qms_type_id'=>1, 'category_id'=>1],
+                                        'url' => ['/riskman/document/index'],
                                     ],
                                     [
                                         'label' => 'Categories', 
                                         'icon' => 'bars text-aqua', 
-                                        'url' => ['/riskman/document/index', 'qms_type_id'=>1, 'category_id'=>2],
+                                        'url' => ['/riskman/document/index'],
+                                    ],
+                                    [
+                                        'label' => 'Badges', 
+                                        'icon' => 'bookmark text-aqua', 
+                                        'url' => ['/riskman/badge/index', 'module_id'=>'riskman'],
                                     ],
                                 ]
                             ],

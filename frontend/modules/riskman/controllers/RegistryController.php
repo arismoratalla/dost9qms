@@ -14,6 +14,7 @@ use common\models\riskman\Registryaction;
 use common\models\riskman\Registryassessment;
 use common\models\riskman\Registrymonitoring;
 use common\models\riskman\RegistrySearch;
+use common\models\riskman\RegistrySource;
 use common\models\docman\Functionalunit;
 use common\models\system\Profile;
 /**
@@ -40,6 +41,7 @@ class RegistryController extends Controller
     {
         $searchModel = new RegistrySearch();
         $searchModel->registry_type = $_GET['registry_type'];
+        $searchModel->status_id = 20;
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         $year = $_GET['year'];
@@ -189,6 +191,72 @@ class RegistryController extends Controller
         ]);
     }
 
+    public function actionDraft()
+    {
+        $searchModel = new RegistrySearch();
+        $searchModel->status_id = 10;
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        // $year = $_GET['year'];
+
+        $paramsHeader = [];
+        if(isset($_GET['registry_type'])){
+            if($_GET['registry_type'] == 'Risk'){
+                $paramsHeader['bg-color'] = 'background-color: #F39C12;';
+                $paramsHeader['font-color'] = 'color: #000000;';
+                $paramsContent['font-color'] = 'color: #F39C12;';
+            }
+
+            if($_GET['registry_type'] == 'Opportunity'){
+                $paramsHeader['bg-color'] = 'background-color: #339900;';
+                $paramsHeader['font-color'] = 'color: #ffffff;';
+                $paramsContent['font-color'] = 'color: #339900;';
+            }
+        }
+
+        $paramsContent['no-wrap'] = 'white-space:nowrap;text-overflow: ellipsis;overflow:hidden;';
+        $paramsContent['Risk'] = '#F39C12';
+        $paramsContent['Opportunity'] = '#339900';
+        $buttons = '';
+
+        $buttons .= Html::a('APPROVE ALL', ['approveall'], 
+                                [
+                                    'class' => 'btn btn-info',
+                                    'data-pjax' => 0,
+                                ]
+                            );
+        // $registry_types .= ' ';
+        // $registry_types .= Html::a('OPPORTUNITIES', ['approveall'], 
+        //                     [
+        //                         'class' => 'btn btn-success',
+        //                         'data-pjax' => 0,
+        //                     ]
+        //                 );
+
+        /*$toolbars = '';
+        $units = Functionalunit::find()
+            ->where([ 'in', 'functional_unit_id', explode(',',Yii::$app->user->identity->profile->groups) ])
+            ->all();
+
+        foreach($units as $unit){
+            $toolbars .= Html::a($unit->code, ['index?registry_type='.$_GET['registry_type'].'&year='.$_GET['year'].'&RegistrySearch[unit_id]='.$unit->functional_unit_id], [
+                'class' => 'btn btn-outline-secondary',
+                // 'style' => $color[$unit->functional_unit_id]. ' font-weight: bold;',
+                'style' => 'color: #B76E79; font-weight: bold;',
+                'data-pjax' => 0, 
+            ]);
+        }*/
+
+        return $this->render('draft', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+            'buttons' => $buttons,
+            'paramsHeader' => $paramsHeader,
+            'paramsContent' => $paramsContent,
+            // 'toolbars' => $toolbars,
+        ]);
+    }
+
     /**
      * Displays a single Registry model.
      * @param integer $id
@@ -224,6 +292,8 @@ class RegistryController extends Controller
         $modelRegistrymonitoring = new Registrymonitoring();
         $modelRegistry->registry_type = $_GET['registry_type'];
 
+        $sources = ArrayHelper::map(Registrysource::find()->all(),'source_id','name');
+
         if(isset($_GET['unit_id']))
             $modelRegistry->unit_id = $_GET['RegistrySearch']['unit_id'];
 
@@ -241,6 +311,7 @@ class RegistryController extends Controller
                 date_default_timezone_set('Asia/Manila');
                 $modelRegistry->create_date = date("Y-m-d");
                 if($modelRegistry->save(false));{
+                    /*
                     $modelRegistrymonitoring->registry_id = $modelRegistry->registry_id;
 
                     if($modelRegistrymonitoring->save(false)){
@@ -268,7 +339,7 @@ class RegistryController extends Controller
 
                         return $this->redirect(['registryassessment/index','registry_type'=>$_GET['registry_type'], 'year'=>$_GET['year']]);
                     }
-                        
+                    */
                 }
             }
                  
@@ -277,15 +348,102 @@ class RegistryController extends Controller
                         'modelRegistry' => $modelRegistry,
                         'modelRegistrymonitoring' => $modelRegistrymonitoring,
                         'units' => $units,
+                        'sources' => $sources,
             ]);
         } else {
             return $this->render('_form', [
                         'modelRegistry' => $modelRegistry,
                         'modelRegistrymonitoring' => $modelRegistrymonitoring,
                         'units' => $units,
+                        'sources' => $sources,
             ]);
         }
         
+    }
+
+    public function actionApprove($id){
+
+        $modelRegistry = Registry::findOne($id);
+
+        $modelRegistrymonitoring = new Registrymonitoring();
+
+        $modelAction = Registrymonitoring::find()->where(
+            'registry_id =:registry_id',
+            [
+                ':registry_id' => $modelRegistry->registry_id,
+            ])
+            ->one();
+
+        // $modelRegistry->registry_type = $_GET['registry_type'];
+
+        $sources = ArrayHelper::map(Registrysource::find()->all(),'source_id','name');
+
+        if(isset($_GET['unit_id']))
+            $modelRegistry->unit_id = $_GET['RegistrySearch']['unit_id'];
+
+        if(Yii::$app->user->identity->username == 'Admin')
+            $units = ArrayHelper::map(Functionalunit::find()->all(),'functional_unit_id','name');
+        else{
+            $groups = Profile::findOne(Yii::$app->user->identity->user_id)->groups;
+            $units = ArrayHelper::map(Functionalunit::find()->where(['in', 'functional_unit_id', explode(',', $groups)])->all(),'functional_unit_id','name');
+        }
+
+        if ($modelRegistry->load(Yii::$app->request->post()) && $modelRegistrymonitoring->load(Yii::$app->request->post()) ) {
+            $isValid = $modelRegistry->validate();
+            $isValid = $modelRegistrymonitoring->validate() && $isValid;
+            if ($isValid) {
+                date_default_timezone_set('Asia/Manila');
+                $modelRegistry->approved_date = date("Y-m-d H:i:s");
+                $modelRegistry->status_id = 20;
+                if($modelRegistry->save(false));{
+                    
+                    $modelRegistrymonitoring->registry_id = $modelRegistry->registry_id;
+
+                    if($modelRegistrymonitoring->save(false)){
+                        for($i=1; $i<=4; $i++){
+                            $modelRegistryAssessment = new Registryassessment();
+                            $modelRegistryAssessment->registry_id = $modelRegistry->registry_id;
+                            $modelRegistryAssessment->likelihood_id = 0;
+                            $modelRegistryAssessment->benefit_consequence_id = 0;
+                            $modelRegistryAssessment->cause = '';
+                            $modelRegistryAssessment->effect = '';
+                            $modelRegistryAssessment->remarks = '';
+                            $modelRegistryAssessment->evaluation = 0;
+                            $modelRegistryAssessment->qtr = $i;
+                            $modelRegistryAssessment->year = date("Y");
+                            $modelRegistryAssessment->save(false);
+
+                            $modelRegistryAction = new Registryaction();
+                            $modelRegistryAction->registry_id = $modelRegistry->registry_id;
+                            $modelRegistryAction->preventive_control_initiatives = '';
+                            $modelRegistryAction->corrective_additional_action = '';
+                            $modelRegistryAction->target_date_of_completion = '0000-00-00';
+                            $modelRegistryAction->qtr = $i;
+                            $modelRegistryAction->year = date("Y");
+                            $modelRegistryAction->save(false);
+                        }
+
+                        return $this->redirect(['registry/draft']);
+                    }
+                    
+                }
+            }
+                 
+        }elseif (Yii::$app->request->isAjax) {
+            return $this->renderAjax('_form', [
+                        'modelRegistry' => $modelRegistry,
+                        'modelRegistrymonitoring' => $modelRegistrymonitoring,
+                        'units' => $units,
+                        'sources' => $sources,
+            ]);
+        } else {
+            return $this->render('_form', [
+                        'modelRegistry' => $modelRegistry,
+                        'modelRegistrymonitoring' => $modelRegistrymonitoring,
+                        'units' => $units,
+                        'sources' => $sources,
+            ]);
+        }
     }
 
     /**

@@ -65,6 +65,7 @@ class RegistrySearch extends Registry
             'group_id' => $this->group_id,
             'create_date' => $this->create_date,
             'active' => 1,
+            'status_id' => $this->status_id,
         ]);
 
         $query->andFilterWhere(['like', 'registry_type', $this->registry_type])

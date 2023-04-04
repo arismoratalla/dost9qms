@@ -99,6 +99,13 @@ use kartik\datetime\DateTimePicker;
     </div>
 
     <div class="row">
+        <div class="col-md-12"> 
+        <?= $form->field($modelAssessment, 'remarks')
+                ->textarea(['rows' => 2])->label('Remarks') ?>
+        </div>
+    </div>
+
+    <div class="row">
         
         <div class="col-md-6"> 
             <?= $form->field($modelAssessment, 'qtr')->textInput(['readonly'=> true]) ?>

@@ -35,9 +35,10 @@ class Registryassessment extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['registry_id', 'likelihood_id', 'benefit_consequence_id', 'cause', 'effect', 'evaluation', 'qtr', 'year'], 'required'],
+            [['registry_id', 'likelihood_id', 'benefit_consequence_id', 'cause', 'effect', 'remarks' ,'evaluation', 'qtr', 'year'], 'required'],
             [['registry_id', 'likelihood_id', 'benefit_consequence_id', 'evaluation', 'qtr', 'year'], 'integer'],
             [['cause', 'effect'], 'string', 'max' => 100],
+            [['remarks'], 'string'],
         ];
     }
 

@@ -46,7 +46,17 @@ use yii\helpers\Url;
 
     <div class="row">
         <div class="col-md-6"> 
-        <?= $form->field($modelRegistry, 'code')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($modelRegistry, 'source_id')->widget(Select2::classname(), [
+                'data' => $sources,
+                'language' => 'en',
+                'options' => [
+                    'placeholder' => 'Select Registry Source',
+                    // 'disabled' => true,
+                ],
+                'pluginOptions' => [
+                    'allowClear' => false
+                ],
+            ])->label('Source'); ?>
         </div>
         <div class="col-md-6"> 
             <?= $form->field($modelRegistry, 'stakeholders')->textInput(['maxlength' => true]) ?>
@@ -54,10 +64,10 @@ use yii\helpers\Url;
     </div>
 
     <div class="row">
-        <div class="col-md-6"> 
-            <?= $form->field($modelRegistry, 'customer_requirement')->textarea(['rows' => 2]) ?>
-        </div>
-        <div class="col-md-6"> 
+        <!-- <div class="col-md-6">  -->
+            <!--?= $form->field($modelRegistry, 'customer_requirement')->textarea(['rows' => 2]) ?-->
+        <!-- </div> -->
+        <div class="col-md-12"> 
             <?= $form->field($modelRegistry, 'potential')->textarea(['rows' => 2]) ?>
         </div>
     </div>
@@ -92,9 +102,13 @@ use yii\helpers\Url;
             ])->label('Target Date');?>
         </div>
         
-        <div style="text-align: right; padding-top: 25px; padding-right: 35px;" class="col-md-6"> 
+        <div style="text-align: right; padding-top: 25px; padding-right: 25px;" class="col-md-6"> 
             <div class="form-group">
-                <?= Html::submitButton($modelRegistry->isNewRecord ? 'Create' : 'Update', ['class' => $modelRegistry->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+                <!--?= Html::submitButton($modelRegistry->isNewRecord ? 'Create' : 'Update', ['class' => $modelRegistry->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?-->
+                <?= Html::submitButton($modelRegistry->isNewRecord ? 'Create' : ucfirst(Yii::$app->controller->action->id), 
+                        [   'class' => $modelRegistry->isNewRecord ? 'btn btn-success' : 'btn btn-primary',
+                            'style' => 'width: 120px; border-radius: 10px;'
+                        ]) ?>
             </div>
         </div>
     </div>

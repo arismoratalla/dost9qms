@@ -122,8 +122,9 @@ Modal::end();
                                 '</b> <i>( '.$model->registry->stakeholders.' )</i>'. 
 
                                 // '<i>'.$model->registry->stakeholders.'</i><br/>'.
-                                '<br/><font color="blue"><b>'.$model->registry->customer_requirement.'</b><br/>'.
-                                $model->registry->potential . '</div>';
+                                '<br/><font color="blue"><b>'.$model->registry->potential.'</b><br/>';
+                                // '<br/><font color="blue"><b>'.$model->registry->customer_requirement.'</b><br/>'.
+                                // $model->registry->potential . '</div>';
 
 
                                 // Html::a($model->registry->code, ['registry/view', 'id'=>$model->registry_id], 
@@ -211,7 +212,7 @@ Modal::end();
                 [
                     'attribute'=>'benefit_consequence_id',
                     'headerOptions' => ['style' => 'width: 15%; text-align: center; vertical-align: middle;'.implode($paramsHeader)],
-                    'label'=> ( ($_GET['registry_type'] == "Risk") ? "Benefit" : "Consequence"),
+                    'label'=> ( ($_GET['registry_type'] == "Risk") ? "Consequence" : "Benefit"),
                     'contentOptions' => ['style' => 'text-align: left; vertical-align: middle;'.$paramsContent],
                     'format'=>'html',
                     'value'=>function ($model, $key, $index, $widget) { 

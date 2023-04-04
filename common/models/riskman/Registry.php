@@ -44,7 +44,7 @@ class Registry extends \yii\db\ActiveRecord
     {
         return [
             [['registry_type', 'customer_requirement', 'potential'], 'string'],
-            [['code', 'unit_id', 'stakeholders', 'customer_requirement', 'potential'], 'required'],
+            [['source_id', 'unit_id', 'stakeholders', 'potential'], 'required'],
             [['unit_id', 'group_id', 'active'], 'integer'],
             [['code','previous_evaluation', 'assessment_id', 'evaluation_id','create_date'], 'safe'],
             [['code'], 'string', 'max' => 50],
@@ -60,6 +60,7 @@ class Registry extends \yii\db\ActiveRecord
         return [
             'registry_id' => 'Registry ID',
             'registry_type' => 'Registry Type',
+            'source_id' => 'Source',
             'code' => 'Code',
             'unit_id' => 'Unit ID',
             'group_id' => 'Group ID',
@@ -92,6 +93,11 @@ class Registry extends \yii\db\ActiveRecord
     public function getMonitoring()
     {
         return $this->hasOne(Registrymonitoring::className(), ['registry_id' => 'registry_id']);
+    }
+
+    public function getSource()
+    {
+        return $this->hasOne(Registrysource::className(), ['source_id' => 'source_id']);
     }
 
 }
