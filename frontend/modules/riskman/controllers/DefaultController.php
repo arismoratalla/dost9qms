@@ -21,8 +21,8 @@ class DefaultController extends Controller
 
     public function actionDashboard()
     {
-        $risks = Registry::find()->where('registry_type =:registry_type AND YEAR(`create_date`) =:year AND status_id =10',[':registry_type'=>'Risk', ':year'=>$_GET['year']])->count();
-        $opportunities = Registry::find()->where('registry_type =:registry_type AND YEAR(`create_date`) =:year AND status_id =10',[':registry_type'=>'Opportunity', ':year'=>$_GET['year']])->count();
+        $risks = Registry::find()->where('registry_type =:registry_type AND YEAR(`create_date`) =:year AND status_id =20',[':registry_type'=>'Risk', ':year'=>$_GET['year']])->count();
+        $opportunities = Registry::find()->where('registry_type =:registry_type AND YEAR(`create_date`) =:year AND status_id =20',[':registry_type'=>'Opportunity', ':year'=>$_GET['year']])->count();
 
         return $this->render('dashboard', [
             'risks'=>$risks,
