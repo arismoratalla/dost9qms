@@ -12,13 +12,14 @@ use common\models\riskman\Registryassessment;
  */
 class RegistryassessmentSearch extends Registryassessment
 {
+    public $unit_id;
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['registry_assessment_id', 'registry_id', 'likelihood_id', 'benefit_consequence_id', 'evaluation', 'cause', 'effect','qtr', 'year'], 'integer'],
+            [['registry_assessment_id', 'registry_id', 'likelihood_id', 'benefit_consequence_id', 'evaluation', 'cause', 'effect','qtr', 'year', 'unit_id'], 'integer'],
         ];
     }
 
@@ -73,10 +74,12 @@ class RegistryassessmentSearch extends Registryassessment
             'registry.registry_type' => $_GET['registry_type'],
         ]);
 
-        if( (Yii::$app->user->can('riskman-manager') || Yii::$app->user->can('riskman-member') ) ){
-            $query->andFilterWhere(['in', 'registry.unit_id', explode(',', Yii::$app->user->identity->profile->groups)]);
-        }
-
+        
+        // if( (Yii::$app->user->can('riskman-manager') || Yii::$app->user->can('riskman-member') ) ){
+        //     $query->andFilterWhere(['in', 'registry.unit_id', explode(',', Yii::$app->user->identity->profile->groups)]);
+        // }
+        
+        $query->andFilterWhere(['like', 'registry.unit_id', $this->unit_id]);
         return $dataProvider;
     }
 }

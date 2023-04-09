@@ -9,8 +9,12 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\helpers\ArrayHelper;
 
+use common\models\riskman\Functionalunitgoalitem;
+use common\models\riskman\Goal;
+use common\models\riskman\Goalitem;
 use common\models\riskman\Registry;
 use common\models\riskman\Registryaction;
+use common\models\riskman\Registryarea;
 use common\models\riskman\Registryassessment;
 use common\models\riskman\Registrymonitoring;
 use common\models\riskman\RegistrySearch;
@@ -136,6 +140,14 @@ class RegistryController extends Controller
             20 => 'color: #B76E79',
             21 => 'color: #B76E79',
             22 => 'color: #B76E79',
+            23 => 'color: #B76E79',
+            24 => 'color: #B76E79',
+            25 => 'color: #B76E79',
+            26 => 'color: #B76E79',
+            27 => 'color: #B76E79',
+            28 => 'color: #B76E79',
+            29 => 'color: #B76E79',
+            30 => 'color: #B76E79',
         ];
 
         $paramsHeader = [];
@@ -273,6 +285,7 @@ class RegistryController extends Controller
             $modelRegistry->registry_type = $_GET['registry_type'];
 
         $sources = ArrayHelper::map(Registrysource::find()->all(),'source_id','name');
+        $areas = ArrayHelper::map(Registryarea::find()->all(),'area_id','name');
 
         if(isset($_GET['unit_id']))
             $modelRegistry->unit_id = $_GET['RegistrySearch']['unit_id'];
@@ -290,8 +303,10 @@ class RegistryController extends Controller
             if ($isValid) {
                 date_default_timezone_set('Asia/Manila');
                 $modelRegistry->create_date = date("Y-m-d");
-                if($modelRegistry->save(false));{
-                    
+                if($modelRegistry->save(false)){
+                    $modelRegistrymonitoring->registry_id = $modelRegistry->registry_id;
+                    $modelRegistrymonitoring->save(false);
+
                     $funtional_unit = Functionalunit::findOne($modelRegistry->unit_id);
 
                     $notification = new Notification();
@@ -321,6 +336,7 @@ class RegistryController extends Controller
                         'modelRegistrymonitoring' => $modelRegistrymonitoring,
                         'units' => $units,
                         'sources' => $sources,
+                        'areas' => $areas,
             ]);
         } else {
             return $this->render('_form', [
@@ -328,6 +344,7 @@ class RegistryController extends Controller
                         'modelRegistrymonitoring' => $modelRegistrymonitoring,
                         'units' => $units,
                         'sources' => $sources,
+                        'areas' => $areas,
             ]);
         }
         
@@ -337,9 +354,9 @@ class RegistryController extends Controller
 
         $modelRegistry = Registry::findOne($id);
 
-        $modelRegistrymonitoring = new Registrymonitoring();
+        // $modelRegistrymonitoring = new Registrymonitoring();
 
-        $modelAction = Registrymonitoring::find()->where(
+        $modelRegistrymonitoring = Registrymonitoring::find()->where(
             'registry_id =:registry_id',
             [
                 ':registry_id' => $modelRegistry->registry_id,
@@ -349,6 +366,7 @@ class RegistryController extends Controller
         // $modelRegistry->registry_type = $_GET['registry_type'];
 
         $sources = ArrayHelper::map(Registrysource::find()->all(),'source_id','name');
+        $areas = ArrayHelper::map(Registryarea::find()->all(),'area_id','name');
 
         if(isset($_GET['unit_id']))
             $modelRegistry->unit_id = $_GET['RegistrySearch']['unit_id'];
@@ -365,13 +383,18 @@ class RegistryController extends Controller
             $isValid = $modelRegistrymonitoring->validate() && $isValid;
             if ($isValid) {
                 date_default_timezone_set('Asia/Manila');
+                $modelRegistry->code = $this->generateRegistryCode($modelRegistry->source_id, $modelRegistry->unit_id);
                 $modelRegistry->approved_date = date("Y-m-d H:i:s");
                 $modelRegistry->status_id = 20;
+
                 if($modelRegistry->save(false));{
                     
                     $modelRegistrymonitoring->registry_id = $modelRegistry->registry_id;
 
                     if($modelRegistrymonitoring->save(false)){
+
+                        $this->countRegistries($modelRegistry);
+
                         for($i=1; $i<=4; $i++){
                             $modelRegistryAssessment = new Registryassessment();
                             $modelRegistryAssessment->registry_id = $modelRegistry->registry_id;
@@ -389,11 +412,13 @@ class RegistryController extends Controller
                             $modelRegistryAction->registry_id = $modelRegistry->registry_id;
                             $modelRegistryAction->preventive_control_initiatives = '';
                             $modelRegistryAction->corrective_additional_action = '';
-                            $modelRegistryAction->target_date_of_completion = '0000-00-00';
+                            $modelRegistryAction->target_date_of_completion = date("Y-m-d");
                             $modelRegistryAction->qtr = $i;
                             $modelRegistryAction->year = date("Y");
                             $modelRegistryAction->save(false);
                         }
+
+
 
                         return $this->redirect(['registry/draft']);
                     }
@@ -407,6 +432,7 @@ class RegistryController extends Controller
                         'modelRegistrymonitoring' => $modelRegistrymonitoring,
                         'units' => $units,
                         'sources' => $sources,
+                        'areas' => $areas,
             ]);
         } else {
             return $this->render('_form', [
@@ -414,6 +440,7 @@ class RegistryController extends Controller
                         'modelRegistrymonitoring' => $modelRegistrymonitoring,
                         'units' => $units,
                         'sources' => $sources,
+                        'areas' => $areas,
             ]);
         }
     }
@@ -463,6 +490,42 @@ class RegistryController extends Controller
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
+    private function generateRegistryCode($source_id, $unit_id){
+        $source = Registrysource::findOne($source_id);
+        $unit = Functionalunit::findOne($unit_id);
+        $year = date("Y");
+        $month = date("m");
+        $count = Registry::find()->where(['YEAR(`approved_date`)' => $year, 'unit_id'=>$unit_id])->orderBy(['approved_date' => SORT_DESC])->count();
+        $count += 1;
+
+        return $year.'-'.$month.'-'.$unit->code.'-'.$source->code.'-'.str_pad($count, 2, '0', STR_PAD_LEFT);
+    }
+
+    private function countRegistries($registry){
+
+        date_default_timezone_set('Asia/Manila');
+        $unit_goal = Functionalunitgoalitem::find()
+            ->where(['goal_item_id' => 15])
+            ->andWhere(['unit_id' => $registry->unit_id])
+            ->one();
+
+        if($unit_goal){
+            $count = $unit_goal->count + 1;
+            $unit_goal->count = $count;
+            if($count == $unit_goal->target)
+                $unit_goal->date_achieved = date("Y-m-d H:i:s");
+
+            $unit_goal->save(false);
+        }else{
+            $unit_goal = new Functionalunitgoalitem();
+            $unit_goal->goal_item_id = 15;
+            $unit_goal->unit_id = $registry->unit_id;
+            $unit_goal->count = 1;
+            $unit_goal->target = Goalitem::findOne(15)->goal_target;
+            $unit_goal->save(false);
         }
     }
 }

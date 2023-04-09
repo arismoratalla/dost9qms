@@ -42,7 +42,38 @@ use yii\helpers\Url;
     
     </div>
 
-    
+    <div class="row">
+        
+        <div class="col-md-6"> 
+            <?= $form->field($modelRegistry, 'area_id')->widget(Select2::classname(), [
+                    'data' => $areas,
+                    'language' => 'en',
+                    'options' => [
+                        'placeholder' => 'Select Area',
+                    ],
+                    'pluginOptions' => [
+                        'allowClear' => false
+                    ],
+                    'pluginEvents'=>[
+                        "change" => 'function() { 
+                            var areaId=this.value;
+                            if(areaId == 7){
+                                $("#registry-sub_area").prop("disabled", false);
+                            }else{
+                                $("#registry-sub_area").prop("disabled", "disabled");
+                            }
+                        }
+                    ',]
+                ])->label('Area'); ?>
+        </div>
+
+        <div class="col-md-6"> 
+            
+            <?= $form->field($modelRegistry, 'sub_area')
+                ->dropDownList(['National' => 'National', 'Regional' => 'Regional', 'Local' => 'Local'], ['disabled' => 'disabled', 'allowClear' => true]) ?>
+        </div>
+           
+    </div>
 
     <div class="row">
         <div class="col-md-6"> 
@@ -64,9 +95,6 @@ use yii\helpers\Url;
     </div>
 
     <div class="row">
-        <!-- <div class="col-md-6">  -->
-            <!--?= $form->field($modelRegistry, 'customer_requirement')->textarea(['rows' => 2]) ?-->
-        <!-- </div> -->
         <div class="col-md-12"> 
             <?= $form->field($modelRegistry, 'potential')->textarea(['rows' => 2]) ?>
         </div>

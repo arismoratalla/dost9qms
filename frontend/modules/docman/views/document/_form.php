@@ -41,7 +41,7 @@ use common\models\docman\Functionalunit;
                             }
                         }
                     ',]
-                ])->label('Cetegory'); ?>
+                ])->label('Category'); ?>
         </div>
         
         <div class="col-md-6"> 

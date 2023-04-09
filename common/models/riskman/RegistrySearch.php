@@ -18,7 +18,7 @@ class RegistrySearch extends Registry
     public function rules()
     {
         return [
-            [['registry_id', 'unit_id', 'group_id'], 'integer'],
+            [['registry_id', 'unit_id', 'area_id'], 'integer'],
             [['registry_type', 'code', 'stakeholders', 'customer_requirement', 'create_date'], 'safe'],
         ];
     }
@@ -62,7 +62,7 @@ class RegistrySearch extends Registry
         $query->andFilterWhere([
             'registry_id' => $this->registry_id,
             'unit_id' => $this->unit_id,
-            'group_id' => $this->group_id,
+            'area_id' => $this->area_id,
             'create_date' => $this->create_date,
             'active' => 1,
             'status_id' => $this->status_id,

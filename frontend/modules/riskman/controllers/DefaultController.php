@@ -24,6 +24,14 @@ class DefaultController extends Controller
     {
         //$query->andFilterWhere(['in', 'unit_id', explode(',', Yii::$app->user->identity->profile->groups)]);
 
+        $drafts = Registry::find()
+            ->where([ 'status_id'=> 10 ])
+            // ->andWhere([ 'registry_type'=> 'Risk' ])
+            // ->where('registry_type =:registry_type AND YEAR(`create_date`) =:year AND status_id =20',
+                // [':registry_type'=>'Risk', ':year'=>$_GET['year']])
+            ->andWhere(['in', 'unit_id', explode(',', Yii::$app->user->identity->profile->groups)])
+            ->count();
+
         $risks = Registry::find()
             ->where([ 'status_id'=> 20 ])
             ->andWhere([ 'registry_type'=> 'Risk' ])
@@ -44,6 +52,7 @@ class DefaultController extends Controller
         return $this->render('dashboard', [
             'risks'=>$risks,
             'opportunities'=>$opportunities,
+            'drafts'=>$drafts,
         ]);
     }
 }

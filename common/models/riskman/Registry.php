@@ -11,7 +11,7 @@ use Yii;
  * @property string $registry_type
  * @property string $code
  * @property integer $unit_id
- * @property integer $group_id
+ * @property integer $area_id
  * @property string $stakeholders
  * @property string $customer_requirement
  * @property string $potential
@@ -44,8 +44,8 @@ class Registry extends \yii\db\ActiveRecord
     {
         return [
             [['registry_type', 'customer_requirement', 'potential'], 'string'],
-            [['source_id', 'unit_id', 'stakeholders', 'potential'], 'required'],
-            [['unit_id', 'group_id', 'active'], 'integer'],
+            [['source_id', 'unit_id', 'area_id','stakeholders', 'potential'], 'required'],
+            [['unit_id', 'area_id', 'active'], 'integer'],
             [['code','previous_evaluation', 'assessment_id', 'evaluation_id','create_date'], 'safe'],
             [['code'], 'string', 'max' => 50],
             [['stakeholders'], 'string', 'max' => 100],
@@ -63,7 +63,8 @@ class Registry extends \yii\db\ActiveRecord
             'source_id' => 'Source',
             'code' => 'Code',
             'unit_id' => 'Unit ID',
-            'group_id' => 'Group ID',
+            'area_id' => 'Area ID',
+            'sub_area' => 'Sub Area',
             'stakeholders' => 'Stakeholders',
             'customer_requirement' => 'Customer Requirement',
             'potential' => 'Potential',
@@ -100,4 +101,8 @@ class Registry extends \yii\db\ActiveRecord
         return $this->hasOne(Registrysource::className(), ['source_id' => 'source_id']);
     }
 
+    public function getArea()
+    {
+        return $this->hasOne(Registryarea::className(), ['area_id' => 'area_id']);
+    }
 }

@@ -49,9 +49,13 @@ class RegistryassessmentController extends Controller
     public function actionIndex()
     {
         $searchModel = new RegistryassessmentSearch();
+        $year = $_GET['year'];
+        if(isset($_GET['unit_id']))
+            $searchModel->unit_id = $_GET['unit_id'];
+
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        $year = $_GET['year'];
+        
         
         $color = [
             1 => 'color: #B76E79',
@@ -122,7 +126,7 @@ class RegistryassessmentController extends Controller
             ->all();
 
         foreach($units as $unit){
-            $toolbars .= Html::a($unit->code, ['index?registry_type='.$_GET['registry_type'].'&year='.$_GET['year'].'&RegistrySearch[unit_id]='.$unit->functional_unit_id], [
+            $toolbars .= Html::a($unit->code, ['index?registry_type='.$_GET['registry_type'].'&year='.$_GET['year'].'&RegistryassessmentSearch[unit_id]='.$unit->functional_unit_id], [
                 'class' => 'btn btn-outline-secondary',
                 'style' => $color[$unit->functional_unit_id]. ' font-weight: bold;',
                 'data-pjax' => 0, 

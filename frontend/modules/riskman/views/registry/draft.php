@@ -77,6 +77,7 @@ Modal::end();
                                 'headerOptions' => ['style' => 'width: 2%; text-align: center; vertical-align: middle;'.implode($paramsHeader)],
                                 'label'=> '#',
                                 'contentOptions' => ['style' => 'width: 2%; text-align: center; vertical-align: middle;'],
+                                'visible' => Yii::$app->user->can('riskman-manager'),
                                 'format'=>'raw',
                                 'value'=>function ($model, $key, $index, $widget) { 
                                     return Html::button('<i class="fas fa-edit"></i>', 
@@ -151,7 +152,7 @@ Modal::end();
                    'heading' => $this->title,
                     //'heading' => '<h2 class="panel-title"><i class="fas fa-'.(($qmstype->qms_type_id == 1) ? 'folder' : 'folder-open').'"></i> '.$this->title.'</h2>',
                     'type' => GridView::TYPE_PRIMARY,
-                    'before'=>  $buttons,
+                    'before'=>  '',//$buttons,
                     'after'=>false,
                 ],
 

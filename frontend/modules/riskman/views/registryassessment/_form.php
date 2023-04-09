@@ -150,7 +150,7 @@ use kartik\datetime\DateTimePicker;
                     'autoclose' => true,
                     'format' => 'yyyy-mm-dd'
                 ]
-            ])->label('Effectivity Date');?>
+            ])->label('Target Date of Completion');?>
         </div>
 
         <div style="text-align: right; padding-top: 25px; padding-right: 35px;" class="col-md-6"> 
