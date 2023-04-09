@@ -182,22 +182,14 @@ Modal::end();
             'toolbar' => 
                         [
                             [
-                                'content'=> //''
-                                    Html::button('<i class="fas fa-plus"></i>', 
+                                'content'=> ''//(date("Y-m-d") >= date_format(date_create("2023-04-11"),"Y-m-d") ) ?
+                                    /*Html::button('<i class="fas fa-plus"></i>', 
                                     ['value' => Url::to(['registry/create',
                                                 ]), 
                                                 'title' => 'Add Registry', 
                                                 'class' => 'btn btn-info', 
                                                 'style'=>'margin-right: 6px; '.( ( (Yii::$app->user->can('riskman-basic-role'))) ? '' : 'display: none;'), 
-                                                'id'=>'buttonCreateRegistry'])
-                                    /*Html::button('<i class="fas fa-plus"></i>', 
-                                        ['value' => Url::to(['registry/create', 
-                                                        'registry_type' => $_GET['registry_type'], 
-                                                        'year' => $_GET['year']]), 
-                                                    'title' => 'Add Registry', 
-                                                    'class' => 'btn btn-info', 
-                                                    'style'=>'margin-right: 6px; '.( ( (Yii::$app->user->identity->username == 'Admin')) ? '' : 'display: none;'), 
-                                                    'id'=>'buttonCreateRegistry'])*/
+                                                'id'=>'buttonCreateRegistry'])*/ //: ''
                                     ,
                                 'options' => ['class' => 'btn-group mr-2 me-2']
                             ],
