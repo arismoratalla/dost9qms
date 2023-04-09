@@ -418,8 +418,6 @@ class RegistryController extends Controller
                             $modelRegistryAction->save(false);
                         }
 
-
-
                         return $this->redirect(['registry/draft']);
                     }
                     
@@ -498,7 +496,7 @@ class RegistryController extends Controller
         $unit = Functionalunit::findOne($unit_id);
         $year = date("Y");
         $month = date("m");
-        $count = Registry::find()->where(['YEAR(`approved_date`)' => $year, 'unit_id'=>$unit_id])->orderBy(['approved_date' => SORT_DESC])->count();
+        $count = Registry::find()->where(['YEAR(`approved_date`)' => $year, 'unit_id'=>$unit_id, 'status_id'=>20])->orderBy(['approved_date' => SORT_DESC])->count();
         $count += 1;
 
         return $year.'-'.$month.'-'.$unit->code.'-'.$source->code.'-'.str_pad($count, 2, '0', STR_PAD_LEFT);
