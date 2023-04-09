@@ -16,6 +16,7 @@ use common\models\riskman\Registrymonitoring;
 use common\models\riskman\RegistrySearch;
 use common\models\riskman\Registrysource;
 use common\models\docman\Functionalunit;
+use common\models\system\Notification;
 use common\models\system\Profile;
 /**
  * RegistryController implements the CRUD actions for Registry model.
@@ -225,35 +226,12 @@ class RegistryController extends Controller
                                     'data-pjax' => 0,
                                 ]
                             );
-        // $registry_types .= ' ';
-        // $registry_types .= Html::a('OPPORTUNITIES', ['approveall'], 
-        //                     [
-        //                         'class' => 'btn btn-success',
-        //                         'data-pjax' => 0,
-        //                     ]
-        //                 );
-
-        /*$toolbars = '';
-        $units = Functionalunit::find()
-            ->where([ 'in', 'functional_unit_id', explode(',',Yii::$app->user->identity->profile->groups) ])
-            ->all();
-
-        foreach($units as $unit){
-            $toolbars .= Html::a($unit->code, ['index?registry_type='.$_GET['registry_type'].'&year='.$_GET['year'].'&RegistrySearch[unit_id]='.$unit->functional_unit_id], [
-                'class' => 'btn btn-outline-secondary',
-                // 'style' => $color[$unit->functional_unit_id]. ' font-weight: bold;',
-                'style' => 'color: #B76E79; font-weight: bold;',
-                'data-pjax' => 0, 
-            ]);
-        }*/
-
         return $this->render('draft', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
             'buttons' => $buttons,
             'paramsHeader' => $paramsHeader,
             'paramsContent' => $paramsContent,
-            // 'toolbars' => $toolbars,
         ]);
     }
 
@@ -313,35 +291,26 @@ class RegistryController extends Controller
                 date_default_timezone_set('Asia/Manila');
                 $modelRegistry->create_date = date("Y-m-d");
                 if($modelRegistry->save(false));{
-                    /*
-                    $modelRegistrymonitoring->registry_id = $modelRegistry->registry_id;
+                    
+                    $funtional_unit = Functionalunit::findOne($modelRegistry->unit_id);
 
-                    if($modelRegistrymonitoring->save(false)){
-                        for($i=1; $i<=4; $i++){
-                            $modelRegistryAssessment = new Registryassessment();
-                            $modelRegistryAssessment->registry_id = $modelRegistry->registry_id;
-                            $modelRegistryAssessment->likelihood_id = 0;
-                            $modelRegistryAssessment->benefit_consequence_id = 0;
-                            $modelRegistryAssessment->cause = '';
-                            $modelRegistryAssessment->effect = '';
-                            $modelRegistryAssessment->evaluation = 0;
-                            $modelRegistryAssessment->qtr = $i;
-                            $modelRegistryAssessment->year = date("Y");
-                            $modelRegistryAssessment->save(false);
+                    $notification = new Notification();
+                    $notification->notification_type = Notification::TYPE_NOTIF;
+                    $notification->notification_scope = Notification::SCOPE_APPROVE;
+                    $notification->message =    "Draft Registry submission by "
+                                                .Profile::findOne(Yii::$app->user->identity->user_id)->fullname
+                                                ." for \r\n"
+                                                .$funtional_unit->name
+                                                .": \r\n"
+                                                .$modelRegistry->registry_type
+                                                ." - \r\n"
+                                                .$modelRegistry->potential
+                                                ;
+                    $notification->group_id = $modelRegistry->unit_id;
+                    $notification->user_id = $funtional_unit->unit_head;
+                    $notification->sender_id = Yii::$app->user->identity->user_id;
+                    $notification->save(false);
 
-                            $modelRegistryAction = new Registryaction();
-                            $modelRegistryAction->registry_id = $modelRegistry->registry_id;
-                            $modelRegistryAction->preventive_control_initiatives = '';
-                            $modelRegistryAction->corrective_additional_action = '';
-                            $modelRegistryAction->target_date_of_completion = '0000-00-00';
-                            $modelRegistryAction->qtr = $i;
-                            $modelRegistryAction->year = date("Y");
-                            $modelRegistryAction->save(false);
-                        }
-
-                        return $this->redirect(['registryassessment/index','registry_type'=>$_GET['registry_type'], 'year'=>$_GET['year']]);
-                    }
-                    */
                     return $this->redirect(['registry/draft']);
                 }
             }

@@ -18,6 +18,9 @@ echo "<div id='modalContent'><div style='text-align:center'><img src='/images/lo
 Modal::end();
 
 //echo $model->status_id.'<br/>';
+// echo Yii::$app->user->identity->profile->groups;
+// echo '<br/>';
+// print_r( explode(',', Yii::$app->user->identity->profile->groups) );
 //echo Os::generateOsNumber($model->request->obligation_type_id,$model->request->request_date);
 ?>   
     <!-- Content Header (Page header) -->

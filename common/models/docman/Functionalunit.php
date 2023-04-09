@@ -4,6 +4,8 @@ namespace common\models\docman;
 
 use Yii;
 
+use common\models\system\User;
+
 /**
  * This is the model class for table "tbl_functional_unit".
  *
@@ -54,5 +56,10 @@ class Functionalunit extends \yii\db\ActiveRecord
             'name' => 'Name',
             'code' => 'Code',
         ];
+    }
+
+    public function getUnithead()
+    {
+        return $this->hasOne(User::className(), ['user_id' => 'unit_head']);
     }
 }

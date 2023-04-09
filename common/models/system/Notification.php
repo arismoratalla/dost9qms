@@ -3,24 +3,28 @@
 namespace common\models\system;
 
 use Yii;
+use common\models\docman\Functionalunit;
 
 /**
  * This is the model class for table "tbl_notification".
  *
  * @property integer $notification_id
- * @property string $hash
- * @property integer $sender
- * @property integer $recipient
- * @property integer $status
- * @property string $title
+ * @property integer $notification_type
  * @property string $message
- * @property string $via
- * @property string $created_at
- * @property string $module
- * @property string $action
+ * @property integer $group_id
+ * @property integer $user_id
+ * @property integer $sender_id
  */
 class Notification extends \yii\db\ActiveRecord
 {
+    const TYPE_MSG = 10;   
+    const TYPE_NOTIF = 20; 
+    const TYPE_TASK = 30;  
+
+    const SCOPE_APPROVE = 10;  // For REGISTRY DRAFTS
+    const SCOPE_REVIEW = 20;  // For QTR Evualation
+    const SCOPE_MISC = 30;  // Others
+
     /**
      * @inheritdoc
      */
@@ -28,41 +32,16 @@ class Notification extends \yii\db\ActiveRecord
     {
         return 'tbl_notification';
     }
-    
-    public function afterSave($insert, $changedAttributes)
-    {
-        if ($insert === true) {
-            switch ($this->via) {
-                case 'sms':
-                    $this->createSMS();
-                    break;
-                case 'email':
-                    $this->createEmail();
-                    break;
-                case 'sms,email':
-                    $this->createSMS();
-                    $this->createEmail();
-                    break;
-                default:
-                    return '';
-            }
-        }
-        return parent::afterSave($insert, $changedAttributes);
-     }
-    
+
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['hash', 'sender', 'recipient', 'status', 'title', 'message', 'via', 'created_at', 'module', 'action'], 'required'],
-            [['sender', 'recipient', 'status'], 'integer'],
+            [['notification_type', 'notification_scope', 'message'], 'required'],
+            [['notification_type', 'notification_type', 'group_id', 'user_id', 'sender_id'], 'integer'],
             [['message'], 'string'],
-            [['created_at'], 'safe'],
-            [['hash'], 'string', 'max' => 32],
-            [['title'], 'string', 'max' => 200],
-            [['via', 'module', 'action'], 'string', 'max' => 100],
         ];
     }
 
@@ -73,32 +52,45 @@ class Notification extends \yii\db\ActiveRecord
     {
         return [
             'notification_id' => 'Notification ID',
-            'hash' => 'Hash',
-            'sender' => 'Sender',
-            'recipient' => 'Recipient',
-            'status' => 'Status',
-            'title' => 'Title',
+            'notification_type' => 'Notification Type',
+            'notification_scope' => 'Notification Scope',
             'message' => 'Message',
-            'via' => 'Via',
-            'created_at' => 'Created At',
-            'module' => 'Module',
-            'action' => 'Action',
+            'group_id' => 'Group ID',
+            'user_id' => 'User ID',
+            'sender_id' => 'Sender ID',
         ];
     }
-    
-    public function createSMS()
+
+    public function afterSave($insert, $changedAttributes)
     {
-        $myfile = fopen("sms/qwerty1", "w") or die("Unable to open file!");
-        $txt = "To: 639177975944 \r\n \r\n";
-        fwrite($myfile, $txt);
-        $txt = 'Message FAIMS';
-        fwrite($myfile, $txt);
-        fclose($myfile);
-        copy('sms/qwerty', '/var/spool/sms/modem1');
+        if ($insert === true) {
+            //Yii::$app->Notification->sendEmail('', 2, 'arismoratalla@gmail.com', 'Aftersave', 'Test Email', 'DMS', '', '');
+            $recipient = Functionalunit::findOne($this->group_id);
+            Yii::$app->Notification->sendEmail(
+                '',                                     // $hash
+                $this->sender_id,                       // $sender
+                $recipient->unithead->email,                      // $recipient
+                'Risk and Opportunity Management App',  // $title
+                $this->message,                         // $message
+                'Document Management System',           // $via
+                '',                      // $module
+                '');                     // $action
+        }
+        
+        // $recipient = Functionalunit::findOne($this->group_id);
+        /*if ($this->isNewRecord) {
+            Yii::$app->Notification->sendEmail(
+                '',                                     // $hash
+                2,                                      // $sender
+                'arismoratalla@gmail.com',   // $recipient
+                //$recipient->unithead->profile->email,   // $recipient
+                'Risk and Opportunity Management App',  // $title
+                $this->message,                         // $message
+                'Document Management System',           // $via
+                $this->module->id,                      // $module
+                $this->action->id);                     // $action
+        }*/
+
+        return parent::afterSave($insert, $changedAttributes);
     }
-    
-    public function createEmail()
-    {
-        return '';
-    } 
 }

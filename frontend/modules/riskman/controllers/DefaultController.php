@@ -1,6 +1,7 @@
 <?php
 
 namespace frontend\modules\riskman\controllers;
+use Yii;
 use common\models\riskman\Registry;
 
 use yii\web\Controller;
@@ -21,8 +22,24 @@ class DefaultController extends Controller
 
     public function actionDashboard()
     {
-        $risks = Registry::find()->where('registry_type =:registry_type AND YEAR(`create_date`) =:year AND status_id =20',[':registry_type'=>'Risk', ':year'=>$_GET['year']])->count();
-        $opportunities = Registry::find()->where('registry_type =:registry_type AND YEAR(`create_date`) =:year AND status_id =20',[':registry_type'=>'Opportunity', ':year'=>$_GET['year']])->count();
+        //$query->andFilterWhere(['in', 'unit_id', explode(',', Yii::$app->user->identity->profile->groups)]);
+
+        $risks = Registry::find()
+            ->where([ 'status_id'=> 20 ])
+            ->andWhere([ 'registry_type'=> 'Risk' ])
+            // ->where('registry_type =:registry_type AND YEAR(`create_date`) =:year AND status_id =20',
+                // [':registry_type'=>'Risk', ':year'=>$_GET['year']])
+            ->andWhere(['in', 'unit_id', explode(',', Yii::$app->user->identity->profile->groups)])
+            ->count();
+
+        $opportunities = Registry::find()
+            ->where([ 'status_id'=> 20 ])
+            ->andWhere([ 'registry_type'=> 'Risk' ])
+            ->andWhere(['in', 'unit_id', explode(',', Yii::$app->user->identity->profile->groups)])
+            ->count();
+
+        //Yii::$app->Notification->sendEmail('', 2, 'arismoratalla@gmail.com', 'Dashboard', 'Test Email', 'DMS', $this->module->id, $this->action->id);
+        // Yii::$app->Notification->sendSMS('', 2, $recipient->primary->sms, 'Request for Obligation', $content, 'FAIMS', $this->module->id, $this->action->id);
 
         return $this->render('dashboard', [
             'risks'=>$risks,

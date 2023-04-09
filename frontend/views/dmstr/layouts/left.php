@@ -320,6 +320,7 @@ if(Yii::$app->user->isGuest){
                                 ],
                                 'visible'=> Yii::$app->user->can('access-rbac')
                             ],
+                            ['label' => 'Functional units', 'icon' => 'fa file-users', 'url' => ['/docman/functionalunit/index'],'visible'=> Yii::$app->user->can('access-gii')],
                         ],
                     ],
                     ['label' => 'Login', 'url' => ['site/login'], 'visible' => Yii::$app->user->isGuest],

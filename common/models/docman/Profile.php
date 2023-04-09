@@ -74,4 +74,9 @@ class Profile extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Functionalunit::className(), ['functional_unit_id' => 'unit_id']);
     }
+
+    public function getuser()
+    {
+        return $this->hasOne(User::className(), ['user_id' => 'user_id']);
+    }
 }

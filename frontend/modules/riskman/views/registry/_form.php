@@ -107,7 +107,8 @@ use yii\helpers\Url;
                 <!--?= Html::submitButton($modelRegistry->isNewRecord ? 'Create' : 'Update', ['class' => $modelRegistry->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?-->
                 <?= Html::submitButton($modelRegistry->isNewRecord ? 'Create' : ucfirst(Yii::$app->controller->action->id), 
                         [   'class' => $modelRegistry->isNewRecord ? 'btn btn-success' : 'btn btn-primary',
-                            'style' => 'width: 120px; border-radius: 10px;'
+                            'style' => 'width: 120px; border-radius: 10px;',
+                            'id'=>'submitDraft',
                         ]) ?>
             </div>
         </div>
@@ -118,3 +119,12 @@ use yii\helpers\Url;
     <?php ActiveForm::end(); ?>
 
 </div>
+
+<script>
+$(".registry-form").on("beforeSubmit",function(e){
+    e.preventDefault();
+    $("#submitDraft").css({pointerEvents:'none'});
+    return true;
+});
+
+</script>
