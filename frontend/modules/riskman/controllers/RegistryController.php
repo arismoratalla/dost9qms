@@ -419,6 +419,27 @@ class RegistryController extends Controller
                             $modelRegistryAction->save(false);
                         }
 
+                        $notification = new Notification();
+                        $notification->notification_type = Notification::TYPE_NOTIF;
+                        $notification->notification_scope = Notification::SCOPE_APPROVE;
+                        $notification->message =    "Your Registry submission has been APPROVED and assigned code: "
+                                                    .$modelRegistry->code.'.'
+                                                    ;
+                        $notification->group_id = $modelRegistry->unit_id;
+                        $notification->user_id = $modelRegistry->created_by;
+                        $notification->sender_id = Yii::$app->user->identity->user_id;
+                        $notification->save(false);
+
+                        // Yii::$app->Notification->sendEmail(
+                        //     '',                                     // $hash
+                        //     Yii::$app->user->identity->user_id,      // $sender
+                        //     Profile::findOne($modelRegistry->created_by)->email,                      // $recipient
+                        //     'Risk and Opportunity Management App',  // $title
+                        //     'Your Registry submission has been approve',  // $message
+                        //     'Document Management System',           // $via
+                        //     '',                      // $module
+                        // '');
+
                         return $this->redirect(['registry/draft']);
                     }
                     
