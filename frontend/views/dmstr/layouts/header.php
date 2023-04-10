@@ -1,6 +1,8 @@
 <?php
 use yii\helpers\Html;
 
+use common\models\system\Notification;
+use common\models\system\Profile;
 use common\models\system\User;
 /* @var $this \yii\web\View */
 /* @var $content string */
@@ -22,6 +24,10 @@ if(Yii::$app->user->isGuest){
        $UsernameDesignation=$CurrentUserDesignation;
     }
 }
+
+// $tasks = Notification::find()
+// ->where([ 'in', 'functional_unit_id', explode(',',Yii::$app->user->identity->profile->groups) ])
+// ->all();
 ?>
 
 <header class="main-header">
@@ -39,10 +45,10 @@ if(Yii::$app->user->isGuest){
 
                 <!-- Messages: style can be found in dropdown.less-->
                 <li class="dropdown messages-menu">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    <!-- <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <i class="fa fa-envelope-o"></i>
                         <span class="label label-success">4</span>
-                    </a>
+                    </a> -->
                     <ul class="dropdown-menu">
                         <li class="header">You have 4 messages</li>
                         <li>

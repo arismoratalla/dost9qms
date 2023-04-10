@@ -42,7 +42,7 @@ class DefaultController extends Controller
 
         $opportunities = Registry::find()
             ->where([ 'status_id'=> 20 ])
-            ->andWhere([ 'registry_type'=> 'Risk' ])
+            ->andWhere([ 'registry_type'=> 'Opportunity' ])
             ->andWhere(['in', 'unit_id', explode(',', Yii::$app->user->identity->profile->groups)])
             ->count();
 
