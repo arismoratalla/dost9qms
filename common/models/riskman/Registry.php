@@ -44,8 +44,8 @@ class Registry extends \yii\db\ActiveRecord
     {
         return [
             [['registry_type', 'customer_requirement', 'potential'], 'string'],
-            [['source_id', 'unit_id', 'area_id','stakeholders', 'potential'], 'required'],
-            [['unit_id', 'area_id', 'active'], 'integer'],
+            [['source_id', 'unit_id', 'created_by', 'area_id','stakeholders', 'potential'], 'required'],
+            [['unit_id', 'area_id','created_by',  'active'], 'integer'],
             [['code','previous_evaluation', 'assessment_id', 'evaluation_id','create_date'], 'safe'],
             [['code'], 'string', 'max' => 50],
             [['stakeholders'], 'string', 'max' => 100],
@@ -73,6 +73,7 @@ class Registry extends \yii\db\ActiveRecord
             'potential' => 'Potential',
             'create_date' => 'Create Date',
             'active' => 'Active', 
+            'created_by' => 'Created By', 
         ];
     }
 

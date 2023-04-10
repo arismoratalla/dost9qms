@@ -303,6 +303,7 @@ class RegistryController extends Controller
             if ($isValid) {
                 date_default_timezone_set('Asia/Manila');
                 $modelRegistry->create_date = date("Y-m-d");
+                $modelRegistry->created_by = Yii::$app->user->identity->user_id;
                 if($modelRegistry->save(false)){
                     $modelRegistrymonitoring->registry_id = $modelRegistry->registry_id;
                     $modelRegistrymonitoring->save(false);
