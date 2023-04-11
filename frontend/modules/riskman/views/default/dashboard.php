@@ -1,5 +1,7 @@
 <?php 
 use yii\bootstrap\Modal;
+use miloschuman\highcharts\Highcharts;
+use yii\web\JsExpression;
 
 $this->title = 'Dashboard';
 // $this->params['breadcrumbs'][] = ['label' => 'Docman', 'url' => ['index']];
@@ -88,12 +90,67 @@ Modal::end();
           </div>
         </div>
         
-        
-
-
-
       </div>
+</section>
 
+<section class="content">
+  <div class="row">
+    <div class="col-lg-4 col-xs-6">
+      <?php
+        echo Highcharts::widget([
+          'scripts' => [
+              // 'modules/exporting',
+              // 'themes/grid-light',
+          ],
+          'options' => [
+              'title' => [
+                  'text' => 'Risks by Area',
+              ],
+              'series' => [
+                  [
+                      'type' => 'pie',
+                      'name' => 'Total',
+                      'data' => $pieRisks,
+                      'center' => [200, 100],
+                      'size' => 200,
+                      'showInLegend' => false,
+                      'dataLabels' => [
+                          'enabled' => true,
+                      ],
+                  ],
+              ],
+          ]
+        ]);
+      ?>
+    </div>
 
-      
-    </section>
+    <div class="col-lg-4 col-xs-6">
+      <?php
+        echo Highcharts::widget([
+          'scripts' => [
+              // 'modules/exporting',
+              // 'themes/grid-light',
+          ],
+          'options' => [
+              'title' => [
+                  'text' => 'Opportunities by Area',
+              ],
+              'series' => [
+                  [
+                      'type' => 'pie',
+                      'name' => 'Total',
+                      'data' => $pieOpportunities,
+                      'center' => [200, 100],
+                      'size' => 200,
+                      'showInLegend' => false,
+                      'dataLabels' => [
+                          'enabled' => true,
+                      ],
+                  ],
+              ],
+          ]
+        ]);
+      ?>
+    </div>
+  </div>
+</section>

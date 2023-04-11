@@ -4,10 +4,11 @@ namespace frontend\modules\riskman\controllers;
 use Yii;
 use kartik\helpers\Html;
 use yii\web\Controller;
+use yii\web\JsExpression;
+
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\helpers\ArrayHelper;
-
 use common\models\docman\Functionalunit;
 use common\models\riskman\Registry;
 
@@ -77,12 +78,30 @@ class DefaultController extends Controller
                 // ->andWhere(['in', 'unit_id', explode(',', Yii::$app->user->identity->profile->groups)])
                 ->count();
 
+            $pieRisks = Registry::find()
+                ->with(['area'])
+                ->select('area_id, count(*) as count')
+                ->groupBy('area_id')
+                ->where([ 'status_id'=> 20 ])
+                ->andWhere([ 'registry_type'=> 'Risk' ])
+                ->andWhere([ 'unit_id'=> $unit_id ])
+                ->asArray()->all();
+
             $opportunities = Registry::find()
                 ->where([ 'status_id'=> 20 ])
                 ->andWhere([ 'registry_type'=> 'Opportunity' ])
                 ->andWhere([ 'unit_id'=> $unit_id ])
                 // ->andWhere(['in', 'unit_id', explode(',', Yii::$app->user->identity->profile->groups)])
                 ->count();
+
+            $pieOpportunities = Registry::find()
+                ->with(['area'])
+                ->select('area_id, count(*) as count')
+                ->groupBy('area_id')
+                ->where([ 'status_id'=> 20 ])
+                ->andWhere([ 'registry_type'=> 'Opportunity' ])
+                ->andWhere([ 'unit_id'=> $unit_id ])
+                ->asArray()->all();
         }else{
             $drafts = Registry::find()
                 ->where([ 'status_id'=> 10 ])
@@ -100,19 +119,63 @@ class DefaultController extends Controller
                 // ->andWhere(['in', 'unit_id', explode(',', Yii::$app->user->identity->profile->groups)])
                 ->count();
 
+            $pieRisks = Registry::find()
+                ->with(['area'])
+                ->select('area_id, count(*) as count')
+                ->groupBy('area_id')
+                ->where([ 'status_id'=> 20 ])
+                ->andWhere([ 'registry_type'=> 'Risk' ])
+                // ->andWhere([ 'unit_id'=> $unit_id ])
+                ->asArray()->all();
+
             $opportunities = Registry::find()
                 ->where([ 'status_id'=> 20 ])
                 ->andWhere([ 'registry_type'=> 'Opportunity' ])
                 // ->andWhere(['in', 'unit_id', explode(',', Yii::$app->user->identity->profile->groups)])
                 ->count();
+            
+            $pieOpportunities = Registry::find()
+                ->with(['area'])
+                ->select('area_id, count(*) as count')
+                ->groupBy('area_id')
+                ->where([ 'status_id'=> 20 ])
+                ->andWhere([ 'registry_type'=> 'Opportunity' ])
+                // ->andWhere([ 'unit_id'=> $unit_id ])
+                ->asArray()->all();
         }
         
+        // $pieRisk = [];
+        // $pieOpportunity = [];
+
+        for($i=0; $i<count($pieRisks); $i++){
+            $pieRisks[$i] = [
+                'name' => (String)$pieRisks[$i]['area']['name'],
+                'y' => (int)$pieRisks[$i]['count'],
+                'color' => new JsExpression('Highcharts.getOptions().colors['.$i.']'), 
+            ];
+        }
+        
+        for($i=0; $i<count($pieOpportunities); $i++){
+            $pieOpportunities[$i] = [
+                'name' => (String)$pieOpportunities[$i]['area']['name'],
+                'y' => (int)$pieOpportunities[$i]['count'],
+                'color' => new JsExpression('Highcharts.getOptions().colors['.$i.']'), 
+            ];
+        }
 
         return $this->render('dashboard', [
             'risks'=>$risks,
             'opportunities'=>$opportunities,
             'drafts'=>$drafts,
             'toolbars'=>$toolbars,
+            'pieRisks'=>$pieRisks,
+            'pieOpportunities'=>$pieOpportunities,
+        ]);
+    }
+
+    public function actionCharts()
+    {
+        return $this->render('charts', [
         ]);
     }
 }
