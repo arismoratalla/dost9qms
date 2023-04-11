@@ -29,6 +29,8 @@ Modal::end();
         Registry Dashboard
         <small>Statistics</small>
       </h1>
+      <br />
+      <?= $toolbars ?>
     </section>
 
     <!-- Main content -->
@@ -36,7 +38,7 @@ Modal::end();
       <!-- Small boxes (Stat box) -->
       <div class="row">
         
-        <div class="col-lg-2 col-xs-6">
+        <div class="col-lg-3 col-xs-6">
           <!-- small box -->
           <div class="small-box bg-yellow">
             <div class="inner">
@@ -53,7 +55,7 @@ Modal::end();
         </div>
         <!-- ./col -->
 
-        <div class="col-lg-2 col-xs-6">
+        <div class="col-lg-3 col-xs-6">
           <!-- small box -->
           <div class="small-box bg-green">
             <div class="inner">
@@ -70,7 +72,7 @@ Modal::end();
         </div>
         <!-- ./col -->
 
-        <div class="col-lg-2 col-xs-6">
+        <div class="col-lg-3 col-xs-6">
           <!-- small box -->
           <div class="small-box bg-red">
             <div class="inner">
@@ -86,48 +88,7 @@ Modal::end();
           </div>
         </div>
         
-        <div class="col-lg-6 col-xs-6">
-        <div class="col-lg-6 col-xs-6">
-          <!-- /.info-box -->
-          <div class="info-box bg-yellow">
-            <span class="info-box-icon"><i class="ion ion-ios-heart-outline"></i></span>
-
-            <div class="info-box-content">
-              <span class="info-box-text">Mastery in Risk Management</span>
-              <span class="info-box-number">At least 2 in all areas</span>
-
-              <div class="progress">
-                <div class="progress-bar" style="width: 20%"></div>
-              </div>
-              <span class="progress-description">
-                    20% Increase in 30 Days
-                  </span>
-            </div>
-            <!-- /.info-box-content -->
-          <!-- </div> -->
-          </div>
-          </div>
-          <div class="col-lg-6 col-xs-6">
-          <!-- /.info-box -->
-          <div class="info-box bg-green">
-            <span class="info-box-icon"><i class="ion ion-ios-heart-outline"></i></span>
-
-            <div class="info-box-content">
-              <span class="info-box-text">Mastery in Opportunity Management</span>
-              <span class="info-box-number">At least 1 in all areas</span>
-
-              <div class="progress">
-                <div class="progress-bar" style="width: 80%"></div>
-              </div>
-              <span class="progress-description">
-                    20% Increase in 30 Days
-                  </span>
-            </div>
-            <!-- /.info-box-content -->
-          </div>
-          </div>
-          <!-- /.info-box -->
-        </div>
+        
 
 
 
