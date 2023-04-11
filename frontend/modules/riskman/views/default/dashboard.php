@@ -111,7 +111,7 @@ Modal::end();
                       'type' => 'pie',
                       'name' => 'Total',
                       'data' => $pieRisks,
-                      'center' => [200, 150],
+                      'center' => [250, 150],
                       'size' => 200,
                       'showInLegend' => false,
                       'dataLabels' => [
@@ -140,7 +140,7 @@ Modal::end();
                       'type' => 'pie',
                       'name' => 'Total',
                       'data' => $pieOpportunities,
-                      'center' => [200, 150],
+                      'center' => [250, 150],
                       'size' => 200,
                       'showInLegend' => false,
                       'dataLabels' => [
