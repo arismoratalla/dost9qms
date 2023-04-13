@@ -494,7 +494,7 @@ class RegistryController extends Controller
     {
         $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+        return $this->redirect(['draft']);
     }
 
     /**

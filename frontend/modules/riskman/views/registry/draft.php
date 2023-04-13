@@ -103,7 +103,7 @@ Modal::end();
                             ],
                             [
                                 'attribute'=>'code',
-                                'headerOptions' => ['style' => 'width: 25%; text-align: center; vertical-align: middle;'.implode($paramsHeader)],
+                                'headerOptions' => ['style' => 'width: 50%; text-align: center; vertical-align: middle;'.implode($paramsHeader)],
                                 'label'=> (isset($_GET['registry_type']) ? $_GET['registry_type'] : '').' Details',
                                 'contentOptions' => ['style' => 'text-align: left; vertical-align: middle;'.$paramsContent['no-wrap']],
                                 'format'=>'html',
@@ -118,9 +118,9 @@ Modal::end();
                             //$frequency, $target_date, $monitoring_team
                             [
                                 'attribute'=>'frequency',
-                                'headerOptions' => ['style' => 'width: 6%; text-align: center; vertical-align: middle;'.implode($paramsHeader)],
+                                'headerOptions' => ['style' => 'width: 8%; text-align: center; vertical-align: middle;'.implode($paramsHeader)],
                                 'label'=> 'Frequency',
-                                'contentOptions' => ['style' => 'width: 6%; text-align: center; vertical-align: middle;'],
+                                'contentOptions' => ['style' => 'width: 8%; text-align: center; vertical-align: middle;'],
                                 'format'=>'raw',
                                 'value'=>function ($model, $key, $index, $widget) { 
                                     return $model->monitoring ? $model->monitoring->frequency : '-';
@@ -128,9 +128,9 @@ Modal::end();
                             ],
                             [
                                 'attribute'=>'target_date',
-                                'headerOptions' => ['style' => 'width: 6%; text-align: center; vertical-align: middle;'.implode($paramsHeader)],
+                                'headerOptions' => ['style' => 'width: 8%; text-align: center; vertical-align: middle;'.implode($paramsHeader)],
                                 'label'=> 'Target Date',
-                                'contentOptions' => ['style' => 'width: 6%; text-align: center; vertical-align: middle;'],
+                                'contentOptions' => ['style' => 'width: 8%; text-align: center; vertical-align: middle;'],
                                 'format'=>'raw',
                                 'value'=>function ($model, $key, $index, $widget) { 
                                     return $model->monitoring ? $model->monitoring->target_date : '-';
@@ -138,13 +138,24 @@ Modal::end();
                             ],
                             [
                                 'attribute'=>'monitoring_team',
-                                'headerOptions' => ['style' => 'width: 6%; text-align: center; vertical-align: middle;'.implode($paramsHeader)],
+                                'headerOptions' => ['style' => 'width: 8%; text-align: center; vertical-align: middle;'.implode($paramsHeader)],
                                 'label'=> 'Monitoring Team',
-                                'contentOptions' => ['style' => 'width: 6%; text-align: center; vertical-align: middle;'.$paramsContent['no-wrap']],
+                                'contentOptions' => ['style' => 'width: 8%; text-align: center; vertical-align: middle;'.$paramsContent['no-wrap']],
                                 'format'=>'raw',
                                 'value'=>function ($model, $key, $index, $widget) { 
                                     return $model->monitoring ? $model->monitoring->monitoring_team : '-';
                                 },
+                            ],
+                            [
+                                'class' => kartik\grid\ActionColumn::className(),
+                                'headerOptions' => ['style' => 'width: 50px; text-align: center; vertical-align: middle;'],
+                                'visible' => Yii::$app->user->can('riskman-manager'),
+                                'template' => '{delete}',
+                                // 'buttons' => [
+                                //     'view' => function ($url, $model){
+                                //         return Html::button('<span class="glyphicon glyphicon-eye-open"></span>', ['value' => '/riskman/registry/delete?id=' . $model->registry_id,'onclick'=>'location.href=this.value', 'class' => 'btn btn-primary', 'title' => Yii::t('app', "Delete Draft")]);
+                                //     },
+                                // ],
                             ],
                     ],
             'pjax' => true, // pjax is set to always true for this demo
