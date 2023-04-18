@@ -37,7 +37,7 @@ class Registryassessment extends \yii\db\ActiveRecord
         return [
             [['registry_id', 'likelihood_id', 'benefit_consequence_id', 'cause', 'effect', 'remarks' ,'evaluation', 'qtr', 'year'], 'required'],
             [['registry_id', 'likelihood_id', 'benefit_consequence_id', 'evaluation', 'qtr', 'year'], 'integer'],
-            [['cause', 'effect'], 'string', 'max' => 100],
+            [['cause', 'effect'], 'string'],
             [['remarks'], 'string'],
         ];
     }
@@ -86,4 +86,27 @@ class Registryassessment extends \yii\db\ActiveRecord
             // ->andOnCondition(['qtr' => 'qtr']);
         //    ->where('year = :year', [':year' => $year]);
     // }
+
+    static function checkEnabled($year, $qtr)
+    {
+        $currentDate = getdate(date("U"));
+        $currentDay = (int)"$currentDate[mday]";
+        $currentMonth = date('n');
+        $currentQtr = ceil($currentMonth / 3);
+        $currentYear = date('Y');
+
+        // if( ($currentYear == $year) && ($currentQtr <= $qtr) && ($currentDay <= 16))
+        if($currentYear == $year){
+            if($currentQtr < $qtr){
+                return false;
+            }elseif($currentQtr > $qtr){
+                return false;
+            }else{
+                return true;
+            }
+        }else{
+            return false;
+        }
+            
+    }
 }
