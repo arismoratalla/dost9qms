@@ -34,7 +34,7 @@ class Registryaction extends \yii\db\ActiveRecord
             [['registry_id', 'preventive_control_initiatives', 'corrective_additional_action', 'target_date_of_completion', 'qtr', 'year'], 'required'],
             [['registry_id', 'qtr', 'year'], 'integer'],
             [['target_date_of_completion'], 'safe'],
-            [['preventive_control_initiatives', 'corrective_additional_action'], 'string', 'max' => 150],
+            [['preventive_control_initiatives', 'corrective_additional_action'], 'string'],
         ];
     }
 
