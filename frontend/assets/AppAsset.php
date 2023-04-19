@@ -26,6 +26,7 @@ class AppAsset extends AssetBundle
     public $js = [
         'js/bootbox.min.js',
         'js/main.js',
+        'js/sweetalert.min.js',
         'js/docman/ajax-modal-popup.js',
         'js/riskman/ajax-modal-popup.js',
     ];
