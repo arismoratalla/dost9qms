@@ -68,6 +68,11 @@ if(Yii::$app->user->isGuest){
                                 'url' => ['/riskman/default/dashboard','year'=>2023],
                             ],
                             [
+                                'label' => 'Goals and Awards', 
+                                'icon' => 'dashboard text-aqua', 
+                                'url' => ['/riskman/default/awards'],
+                            ],
+                            [
                                 'label' => 'Monitoring', 
                                 'icon' => 'file text-aqua', 
                                 'url' => ['/riskman/registry/monitoring','registry_type'=>'Risk', 'year'=>2023],

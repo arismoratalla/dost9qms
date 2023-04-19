@@ -3,6 +3,7 @@
 namespace common\models\riskman;
 
 use Yii;
+use common\models\docman\Functionalunit;
 
 /**
  * This is the model class for table "tbl_functional_unit_goal_item".
@@ -46,5 +47,10 @@ class Functionalunitgoalitem extends \yii\db\ActiveRecord
             'count' => 'Count',
             'target' => 'Target',
         ];
+    }
+
+    public function getFunctionalunit()
+    {
+        return $this->hasOne(Functionalunit::className(), ['functional_unit_id' => 'unit_id']);
     }
 }

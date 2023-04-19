@@ -2,6 +2,8 @@
 use yii\bootstrap\Modal;
 use miloschuman\highcharts\Highcharts;
 use yii\web\JsExpression;
+use yii\widgets\Pjax;
+use kartik\grid\GridView;
 
 $this->title = 'Dashboard';
 // $this->params['breadcrumbs'][] = ['label' => 'Docman', 'url' => ['index']];
@@ -18,7 +20,21 @@ Modal::begin([
 
 echo "<div id='modalContent'><div style='text-align:center'><img src='/images/loading.gif'></div></div>";
 Modal::end();
-
+/*
+$date = date('Y-m-d');
+echo $date;
+echo '<br/>';
+$month = date('n');
+echo $month;
+echo '<br/>';
+$day = getdate(date("U"));
+echo "$day[mday]";
+echo '<br/>';
+$qtr = ceil($month / 3);
+echo $qtr;
+echo '<br/>';
+echo date('Y');
+*/
 //echo $model->status_id.'<br/>';
 // echo Yii::$app->user->identity->profile->groups;
 // echo '<br/>';

@@ -2,6 +2,8 @@
 
 namespace frontend\modules\riskman\controllers;
 use Yii;
+use yii\base\Model;
+use yii\data\ActiveDataProvider;
 use kartik\helpers\Html;
 use yii\web\Controller;
 use yii\web\JsExpression;
@@ -10,6 +12,7 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\helpers\ArrayHelper;
 use common\models\docman\Functionalunit;
+use common\models\riskman\Functionalunitgoalitem;
 use common\models\riskman\Registry;
 
 /**
@@ -163,6 +166,11 @@ class DefaultController extends Controller
             ];
         }
 
+        $timelinessCompleteness = new ActiveDataProvider([
+            'query' => Functionalunitgoalitem::find(),
+            'sort'=> ['defaultOrder' => ['date_achieved'=>SORT_ASC]]
+        ]);
+
         return $this->render('dashboard', [
             'risks'=>$risks,
             'opportunities'=>$opportunities,
@@ -170,6 +178,19 @@ class DefaultController extends Controller
             'toolbars'=>$toolbars,
             'pieRisks'=>$pieRisks,
             'pieOpportunities'=>$pieOpportunities,
+            'timelinessCompleteness'=>$timelinessCompleteness,
+        ]);
+    }
+
+    public function actionAwards()
+    {
+        $timelinessCompleteness = new ActiveDataProvider([
+            'query' => Functionalunitgoalitem::find(),
+            'sort'=> ['defaultOrder' => ['date_achieved'=>SORT_ASC]]
+        ]);
+
+        return $this->render('awards', [
+            'timelinessCompleteness' => $timelinessCompleteness
         ]);
     }
 
