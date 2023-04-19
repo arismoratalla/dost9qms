@@ -243,31 +243,26 @@ use dmstr\widgets\Alert;
 </style>
 
 <script>
-// if( localStorage.getItem("initialLoad") == null)
-//         localStorage.setItem("initialLoad", false);
 
 if( sessionStorage.getItem("loadMessage") == null )
     sessionStorage.setItem("loadMessage", false)
-// sessionStorage.getItem("loadMessage");
 
 $(document).ready(function () {
     //fix bug for select2 mozilla firefox
     $.fn.modal.Constructor.prototype.enforceFocus = function () {};
     $.fn.modal.Constructor.prototype._enforceFocus = function() {};
 
-    // alert( sessionStorage.getItem("loadMessage") );
+    moduleName = "<?php echo Yii::$app->controller->module->id; ?>"
+    // alert(moduleName);
+    if(moduleName === 'riskman'){
+        if( sessionStorage.getItem("loadMessage") == 'false' ){
+            swal(
+                "Improving the DOST IX Risk and Opportunity Management Process Through Digitalization", 
+                "To all DOST IX Employees!\n\nWe would like to take this opportunity to inform you that our online system on managing risk and opportunity is a non-discriminatory and inclusive platform. We welcome and encourage all employees to use the system, regardless of their employment status, gender, race, ethnicity, religion, sexual orientation, or any other personal characteristic.\n\nOur goal is to provide a safe and fair space for everyone to manage their risks and opportunities effectively. We believe that diversity and inclusivity are essential for the success of our organization, and we are committed to ensuring that our platform reflects these values.\n\nWe want to assure you that any form of discrimination or exclusion will not be tolerated within our system. We encourage all employees to report any incidents of discrimination or exclusion to our project team immediately.\n\nThank you for your attention and understanding.\n\nSincerely yours,\n\nTHELMA E. DIEGO\nProject Lead",
+                "info");
 
-    // if((localStorage.getItem("initialLoad") == false ) && (Yii::$app->controller->module->id == 'riskman')){
-
-    if( sessionStorage.getItem("loadMessage") == 'false' ){
-        swal(
-            "Improving the DOST IX Risk and Opportunity Management Process Through Digitalization", 
-            "To all DOST IX Employees!\n\nWe would like to take this opportunity to inform you that our online system on managing risk and opportunity is a non-discriminatory and inclusive platform. We welcome and encourage all employees to use the system, regardless of their employment status, gender, race, ethnicity, religion, sexual orientation, or any other personal characteristic.\n\nOur goal is to provide a safe and fair space for everyone to manage their risks and opportunities effectively. We believe that diversity and inclusivity are essential for the success of our organization, and we are committed to ensuring that our platform reflects these values.\n\nWe want to assure you that any form of discrimination or exclusion will not be tolerated within our system. We encourage all employees to report any incidents of discrimination or exclusion to our project team immediately.\n\nThank you for your attention and understanding.\n\nSincerely yours,\n\nTHELMA E. DIEGO\nProject Lead",
-            "info");
-
-        sessionStorage.setItem("loadMessage", true);
+            sessionStorage.setItem("loadMessage", true);
+        }
     }
-
-    <?php //$session->set('loadMessage', false); ?>
 });
 </script>
