@@ -106,4 +106,28 @@ class Registry extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Registryarea::className(), ['area_id' => 'area_id']);
     }
+
+    public function getInitialEvaluation(){
+        $initialAssessment = Registryassessment::find()
+            ->where(['registry_id' =>$this->registry_id])
+            ->andWhere(['qtr' => 0])
+            ->one();
+
+        if($initialAssessment)
+            return true;
+        else
+            return false;
+    }
+
+    public function getAllowedUnit(){
+        $llowedUnits = Registry::find()
+            ->where(['registry_id' =>$this->registry_id])
+            ->andWhere([ 'in', 'unit_id', explode(',',Yii::$app->user->identity->profile->groups) ])
+            ->all();
+
+        if($llowedUnits)
+            return true;
+        else
+            return false;
+    }
 }
