@@ -32,7 +32,7 @@ use yii\helpers\Url;
                     'language' => 'en',
                     'options' => [
                         'placeholder' => 'Select Functional Unit',
-                        // 'disabled' => true,
+                        'disabled' => $disabled,
                     ],
                     'pluginOptions' => [
                         'allowClear' => false

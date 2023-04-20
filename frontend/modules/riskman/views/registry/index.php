@@ -75,32 +75,41 @@ Modal::end();
             'columns' => [
                             [
                                 'attribute'=>'registry_id',
-                                'headerOptions' => ['style' => 'width: 3%; text-align: center; vertical-align: middle;'.implode($paramsHeader)],
+                                'headerOptions' => ['style' => 'width: 6%; text-align: center; vertical-align: middle;'.implode($paramsHeader)],
                                 'label'=> '#',
-                                'contentOptions' => ['style' => 'width: 3%; text-align: center; vertical-align: middle;'],
+                                'contentOptions' => ['style' => 'width: 6%; text-align: center; vertical-align: middle;'],
+                                'visible' => ( Yii::$app->user->can('riskman-project-team') || Yii::$app->user->can('riskman-manager') || (Yii::$app->user->identity->username == 'Admin') ),
                                 'format'=>'raw',
                                 'value'=>function ($model, $key, $index, $widget) { 
-                                    if($model->assessment){
-                                        return Html::button('<i class="fas fa-edit"></i>', 
-                                            ['value' => Url::to(['registryassessment/update', 
-                                                                'registry_id' => $model->registry_id, 
-                                                                'registry_type' => $model->registry_type, 
-                                                                'year' => $_GET['year'] ]), 
-                                            'title' => 'Add Registry', 
+                                        return Html::button('<i class="far fa-edit"></i>', 
+                                            ['value' => Url::to(['registry/update', 'id' => $model->registry_id]), 
+                                            'title' => 'Update Registry', 
                                             'class' => 'btn btn-info', 
-                                            'style'=>'margin-right: 6px;', 'id'=>'buttonAddAssessment']);
-                                    }else{
-                                        return Html::button('<i class="fas fa-plus"></i>', 
-                                            ['value' => Url::to(['registryassessment/create', 
-                                                                'registry_id' => $model->registry_id, 
-                                                                'registry_type' => $model->registry_type, 
-                                                                'year' => $_GET['year'] ]), 
-                                            'title' => 'Add Registry', 
-                                            'class' => 'btn btn-info', 
-                                            'style'=>'margin-right: 6px;', 'id'=>'buttonAddAssessment']);
-                                    }
+                                            'style'=>'margin-right: 6px;', 'id'=>'buttonCreateRegistry']);
                                 },
                             ],
+                            /*[
+                                'attribute'=>'registry_id',
+                                'headerOptions' => ['style' => 'width: 6%; text-align: center; vertical-align: middle;'.implode($paramsHeader)],
+                                'label'=> 'Initial Eval',
+                                'contentOptions' => ['style' => 'width: 6%; text-align: center; vertical-align: middle;'],
+                                'format'=>'raw',
+                                'value'=>function ($model, $key, $index, $widget) { 
+                                    if(!$model->initialEvaluation){
+                                        return Html::button('<i class="fas fa-book-reader"></i>', 
+                                            ['value' => Url::to(['registryassessment/initial', 'id' => $model->registry_id, 'registry_type' => $model->registry_type, 'year' => date('Y', strtotime($model->approved_date))]), 
+                                            'title' => 'Initial Evaluation', 
+                                            'class' => 'btn btn-warning', 
+                                            'style'=>'margin-right: 6px;', 'id'=>'buttonCreateRegistry']);
+                                    }else{
+                                        return Html::button('<i class="fas fa-book-reader"></i>', 
+                                            ['value' => Url::to(['registryassessment/evaluate', 'id' => $model->registry_id, 'registry_type' => $model->registry_type, 'year' => date('Y', strtotime($model->approved_date))]), 
+                                            'title' => 'Evaluate', 
+                                            'class' => 'btn btn-success', 
+                                            'style'=>'margin-right: 6px;', 'id'=>'buttonCreateRegistry']);
+                                    }
+                                },
+                            ],*/
                             [
                                 'attribute'=>'code',
                                 'headerOptions' => ['style' => 'width: 25%; text-align: center; vertical-align: middle;'.implode($paramsHeader)],
@@ -129,14 +138,12 @@ Modal::end();
                                 'contentOptions' => ['style' => 'width: 68%; text-align: center; vertical-align: middle;'.$paramsContent],
                                 'format'=>'raw',
                                 'value'=>function ($model, $key, $index, $widget) { 
-                                    // return $model->assessment->registry_assessment_id;
                                     $likelihood = "";
                                     foreach($model->assessment as $assessment){
                                         if($assessment->year == $_GET['year'])
-                                            $likelihood = Likelihoodscale::findOne($assessment->likelihood_id)->scale;
+                                            $likelihood = $assessment->likelihood_id ? Likelihoodscale::findOne($assessment->likelihood_id)->scale : "";
                                     }
                                     return $likelihood;
-                                    // return '<p class="data-toggle="tooltip" title="Disabled tooltip">'.$likelihood.'<p>';
                                 },
                             ],
                             [
@@ -167,9 +174,9 @@ Modal::end();
                                     foreach($model->assessment as $assessment){
                                         if($assessment->year == $_GET['year']){
                                             if($_GET['registry_type'] == "Risk"){
-                                                $benefit_consequence = Consequencescale::findOne($assessment->benefit_consequence_id)->scale;
+                                                $benefit_consequence = $assessment->benefit_consequence_id ? Consequencescale::findOne($assessment->benefit_consequence_id)->scale : '';
                                             }elseif($_GET['registry_type'] == "Opportunity"){
-                                                $benefit_consequence = Benefitscale::findOne($assessment->benefit_consequence_id)->scale;
+                                                $benefit_consequence = $assessment->benefit_consequence_id ? Benefitscale::findOne($assessment->benefit_consequence_id)->scale : '';
                                             }
                                         }
                                     }
@@ -218,7 +225,7 @@ Modal::end();
                                                 }
                                             }
                                         }
-                                        return explode(' ', trim($evaluation->evaluation))[0];
+                                        return $evaluation ? explode(' ', trim($evaluation->evaluation))[0] : '';
                                     }else{
                                         
                                     }
@@ -340,8 +347,8 @@ Modal::end();
                         [
                             [
                                 'content'=> 
-                                    $toolbars .
-                                    Html::button('<i class="fas fa-plus"></i>', 
+                                    $toolbars . ''
+                                    /*Html::button('<i class="fas fa-plus"></i>', 
                                         ['value' => Url::to(['registry/create', 
                                                         'registry_type' => $_GET['registry_type'], 
                                                         'year' => $_GET['year'],
@@ -350,7 +357,7 @@ Modal::end();
                                                     'title' => 'Add Registry', 
                                                     'class' => 'btn btn-info', 
                                                     'style'=>'margin-right: 6px; '.( ( (Yii::$app->user->can('riskman-basic-role'))) ? '' : 'display: none;'), 
-                                                    'id'=>'buttonCreateRegistry'])
+                                                    'id'=>'buttonCreateRegistry'])*/
                                     ,
                                 'options' => ['class' => 'btn-group mr-2 me-2']
                             ],

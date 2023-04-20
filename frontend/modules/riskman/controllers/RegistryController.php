@@ -117,39 +117,6 @@ class RegistryController extends Controller
 
         $year = $_GET['year'];
 
-        $color = [
-            1 => 'color: #B76E79',
-            2 => 'color: #B76E79',
-            3 => 'color: #B76E79',
-            4 => 'color: #B76E79',
-            5 => 'color: #B76E79',
-            6 => 'color: #B76E79',
-            7 => 'color: #B76E79',
-            8 => 'color: #B76E79',
-            9 => 'color: #B76E79',
-            10 => 'color: #B76E79',
-            11 => 'color: #B76E79',
-            12 => 'color: #B76E79',
-            13 => 'color: #B76E79',
-            14 => 'color: #B76E79',
-            15 => 'color: #B76E79',
-            16 => 'color: #B76E79',
-            17 => 'color: #B76E79',
-            18 => 'color: #8A9A5B',
-            19 => 'color: #00FFFF',
-            20 => 'color: #B76E79',
-            21 => 'color: #B76E79',
-            22 => 'color: #B76E79',
-            23 => 'color: #B76E79',
-            24 => 'color: #B76E79',
-            25 => 'color: #B76E79',
-            26 => 'color: #B76E79',
-            27 => 'color: #B76E79',
-            28 => 'color: #B76E79',
-            29 => 'color: #B76E79',
-            30 => 'color: #B76E79',
-        ];
-
         $paramsHeader = [];
         if($_GET['registry_type'] == 'Risk'){
             $paramsHeader['bg-color'] = 'background-color: #F39C12;';
@@ -166,7 +133,6 @@ class RegistryController extends Controller
         $registry_types = '';
 
         $registry_types .= Html::a('RISKS', ['index?registry_type=Risk&year='.$year], 
-                                // 'index?registry_type=Risk&DocumentSearch[category_id]='.$category->category_id], [
                                 [
                                     'class' => 'btn btn-warning',
                                     'data-pjax' => 0,
@@ -188,7 +154,6 @@ class RegistryController extends Controller
         foreach($units as $unit){
             $toolbars .= Html::a($unit->code, ['index?registry_type='.$_GET['registry_type'].'&year='.$_GET['year'].'&RegistrySearch[unit_id]='.$unit->functional_unit_id], [
                 'class' => 'btn btn-outline-secondary',
-                // 'style' => $color[$unit->functional_unit_id]. ' font-weight: bold;',
                 'style' => 'color: #B76E79; font-weight: bold;',
                 'data-pjax' => 0, 
             ]);
@@ -281,6 +246,8 @@ class RegistryController extends Controller
         $modelRegistry = new Registry();
         $modelRegistrymonitoring = new Registrymonitoring();
 
+        $disabled = (Yii::$app->controller->action->id == 'update') ? true : false;
+
         if(isset($_GET['registry_type']))
             $modelRegistry->registry_type = $_GET['registry_type'];
 
@@ -338,6 +305,7 @@ class RegistryController extends Controller
                         'units' => $units,
                         'sources' => $sources,
                         'areas' => $areas,
+                        'disabled' => $disabled,
             ]);
         } else {
             return $this->render('_form', [
@@ -346,6 +314,7 @@ class RegistryController extends Controller
                         'units' => $units,
                         'sources' => $sources,
                         'areas' => $areas,
+                        'disabled' => $disabled,
             ]);
         }
         
@@ -354,8 +323,6 @@ class RegistryController extends Controller
     public function actionApprove($id){
 
         $modelRegistry = Registry::findOne($id);
-
-        // $modelRegistrymonitoring = new Registrymonitoring();
 
         $modelRegistrymonitoring = Registrymonitoring::find()->where(
             'registry_id =:registry_id',
@@ -475,11 +442,59 @@ class RegistryController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->registry_id]);
+        $sources = ArrayHelper::map(Registrysource::find()->all(),'source_id','name');
+        $areas = ArrayHelper::map(Registryarea::find()->all(),'area_id','name');
+
+        if(Yii::$app->user->identity->username == 'Admin')
+            $units = ArrayHelper::map(Functionalunit::find()->all(),'functional_unit_id','name');
+        else{
+            $groups = Profile::findOne(Yii::$app->user->identity->user_id)->groups;
+            $units = ArrayHelper::map(Functionalunit::find()->where(['in', 'functional_unit_id', explode(',', $groups)])->all(),'functional_unit_id','name');
+        }
+
+        $modelRegistrymonitoring = Registrymonitoring::find()->where(
+            'registry_id =:registry_id',
+            [
+                ':registry_id' => $model->registry_id,
+            ])
+            ->one();
+            
+        $disabled = (Yii::$app->controller->action->id == 'update') ? true : false;
+
+        if ($model->load(Yii::$app->request->post()) && $modelRegistrymonitoring->load(Yii::$app->request->post()) ) {
+            $isValid = $model->validate();
+            $isValid = $modelRegistrymonitoring->validate() && $isValid;
+            if ($isValid) {
+                if($model->save(false)){
+                    $modelRegistrymonitoring->registry_id = $model->registry_id;
+                    $modelRegistrymonitoring->save(false);
+
+                    // $funtional_unit = Functionalunit::findOne($modelRegistry->unit_id);
+
+                    // $notification = new Notification();
+                    // $notification->notification_type = Notification::TYPE_NOTIF;
+                    // $notification->notification_scope = Notification::SCOPE_REVIEW;
+                    // $notification->message =    "Your Registry has been updated ".$model->code." by \r\n"
+                    //                             .Profile::findOne(Yii::$app->user->identity->user_id)->fullname;
+                    // $notification->group_id = $model->unit_id;
+                    // $notification->user_id = $$model->created_by;
+                    // $notification->sender_id = Yii::$app->user->identity->user_id;
+                    // $notification->save(false);
+
+                    return $this->redirect(['registry/index', 'registry_type'=>$model->registry_type, 'year'=>date('Y', strtotime($model->approved_date))]);
+                }
+            }
+
+        // if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            // return $this->redirect(['index', 'registry_type'=>$_GET['registry_type'], 'year'=>$_GET['year']]);
         } else {
-            return $this->render('update', [
-                'model' => $model,
+            return $this->renderAjax('_form', [
+                'modelRegistry' => $model,
+                'modelRegistrymonitoring' => $modelRegistrymonitoring,
+                'units' => $units,
+                'sources' => $sources,
+                'areas' => $areas,
+                'disabled' => $disabled, 
             ]);
         }
     }

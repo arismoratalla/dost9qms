@@ -55,8 +55,6 @@ class RegistryassessmentController extends Controller
 
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        
-        
         $color = [
             1 => 'color: #B76E79',
             2 => 'color: #B76E79',
@@ -234,6 +232,68 @@ class RegistryassessmentController extends Controller
         
     }
 
+    public function actionInitial()
+    {
+        $modelAssessment = new Registryassessment();
+        $modelAction = new Registryaction();
+
+        $registry = Registry::findOne($_GET['id']);
+        $registry_type = $registry->registry_type;
+        
+        $modelAssessment->registry_id = $_GET['id'];
+        $modelAssessment->qtr = 0;
+        $modelAssessment->year = date("Y");
+
+        $modelAction->registry_id = $_GET['id'];
+        $modelAction->qtr = 0;
+        $modelAction->year = date("Y");
+
+            $likelihood = ArrayHelper::map(Likelihoodscale::find()->all(),'likelihood_id','scale');
+            $benefit = ArrayHelper::map(Benefitscale::find()->all(),'benefit_id','scale');
+            $consequence = ArrayHelper::map(Consequencescale::find()->all(),'consequence_id','scale');
+
+            if($registry_type == "Risk")
+                $benefit_consequence = $consequence;
+            elseif(($registry_type == "Opportunity"))
+                $benefit_consequence = $benefit;
+                
+            //$groups = Profile::findOne(Yii::$app->user->identity->user_id)->groups;
+            //$units = ArrayHelper::map(Functionalunit::find()->where(['in', 'functional_unit_id', [groups]])->all(),'functional_unit_id','name');
+
+
+        if ( $modelAssessment->load(Yii::$app->request->post()) && $modelAction->load(Yii::$app->request->post()) ) {
+            $isValid = $modelAssessment->validate();
+            $isValid = $modelAction->validate() && $isValid;
+            if ($isValid) {
+                $modelAssessment->save(false);
+                $modelAction->save(false);
+                return $this->redirect(['/riskman/registry/index','registry_type'=>$_GET['registry_type'], 'year'=>$_GET['year']]);  
+            }
+            
+            // if($modelAssessment->save(false)){
+            //     return $this->redirect(['/riskman/registry/index','registry_type'=>$_GET['registry_type'], 'year'=>$_GET['year']]);   
+            // }
+                 
+        }elseif (Yii::$app->request->isAjax) {
+            return $this->renderAjax('_form', [
+                        'modelAssessment' => $modelAssessment,
+                        'modelAction' => $modelAction,
+                        'likelihood' => $likelihood,
+                        'benefit_consequence' => $benefit_consequence,
+                        'registry' => $registry,
+            ]);
+        } else {
+            return $this->render('_form', [
+                        'modelAssessment' => $modelAssessment,
+                        'modelAction' => $modelAction,
+                        'likelihood' => $likelihood,
+                        'benefit_consequence' => $benefit_consequence,
+                        'registry' => $registry,
+            ]);
+        }
+        
+    }
+
     /**
      * Updates an existing Registryassessment model.
      * If update is successful, the browser will be redirected to the 'view' page.
@@ -334,5 +394,32 @@ class RegistryassessmentController extends Controller
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
+    }
+
+    private function checkEnabled($year, $qtr)
+    {
+        $currentDate = getdate(date("U"));
+        $currentDay = (int)"$day[mday]";
+        $currentMonth = date('n');
+        $currentQtr = ceil($currentMonth / 3);
+        $currentYear = date('Y');
+
+        if( ($currentYear == $year) && ($currentQtr == $qtr) && ($currentDay <= 16))
+            return true;
+        else
+            return false;
+        
+        // $date = date('Y-m-d');
+        // echo $date;
+        // echo '<br/>';
+        // $month = date('n');
+        // echo $month;
+        // echo '<br/>';
+        // $day = getdate(date("U"));
+        // echo "$day[mday]";
+        // echo '<br/>';
+        // $qtr = ceil($month / 3);
+        // echo $qtr;
+        // echo '<br/>'
     }
 }

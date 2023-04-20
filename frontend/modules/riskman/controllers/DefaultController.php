@@ -40,10 +40,13 @@ class DefaultController extends Controller
         ]);
 
         if(Yii::$app->user->can('riskman-manager') || (Yii::$app->user->identity->username == 'Admin')){
-            $units = Functionalunit::find()->all();
+            $units = Functionalunit::find()
+                ->where([ 'like', 'modules', 'riskman'])
+                ->all();
         }else{
             $units = Functionalunit::find()
-                ->where([ 'in', 'functional_unit_id', explode(',',Yii::$app->user->identity->profile->groups) ])
+                //->where([ 'in', 'functional_unit_id', explode(',',Yii::$app->user->identity->profile->groups) ])
+                ->where([ 'like', 'modules', 'riskman'])
                 ->all();
         }
         

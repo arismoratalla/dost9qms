@@ -78,9 +78,15 @@ if(Yii::$app->user->isGuest){
                                 'url' => ['/riskman/registry/monitoring','registry_type'=>'Risk', 'year'=>2023],
                             ],
                             [
-                                'label' => 'Registry', 
+                                'label' => 'Registry (old)', 
                                 'icon' => 'file text-aqua', 
                                 'url' => ['/riskman/registryassessment/index','registry_type'=>'Risk', 'year'=>2023],
+                                'visible' => (Yii::$app->user->identity->username == 'Admin'),
+                            ],
+                            [
+                                'label' => 'Registry', 
+                                'icon' => 'file text-aqua', 
+                                'url' => ['/riskman/registry/index','registry_type'=>'Risk', 'year'=>2023],
                             ],
                             [
                                 'label' => 'Registry (draft)', 
