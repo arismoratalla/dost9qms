@@ -346,6 +346,7 @@ class RegistryController extends Controller
             ->one();
 
         // $modelRegistry->registry_type = $_GET['registry_type'];
+        $disabled = false;
 
         $sources = ArrayHelper::map(Registrysource::find()->all(),'source_id','name');
         $areas = ArrayHelper::map(Registryarea::find()->all(),'area_id','name');
@@ -434,6 +435,7 @@ class RegistryController extends Controller
                         'units' => $units,
                         'sources' => $sources,
                         'areas' => $areas,
+                        'disabled' => $disabled,
             ]);
         } else {
             return $this->render('_form', [
@@ -442,6 +444,7 @@ class RegistryController extends Controller
                         'units' => $units,
                         'sources' => $sources,
                         'areas' => $areas,
+                        'disabled' => $disabled,
             ]);
         }
     }

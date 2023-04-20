@@ -291,7 +291,67 @@ class RegistryassessmentController extends Controller
                         'registry' => $registry,
             ]);
         }
-        
+    }
+
+    public function actionEvaluate($id)
+    {
+        // $model = $this->findModel($id);
+        $modelAssessment = Registryassessment::findOne($id);
+
+        // FIX THIS
+        $modelAction = new Registryaction();
+        $modelAction = Registryaction::find()->where(
+            'registry_id =:registry_id AND qtr = :qtr AND year = :year',
+            [
+                ':registry_id' => $modelAssessment->registry_id,
+                ':qtr' => $modelAssessment->qtr,
+                ':year' => date("Y")
+            ])
+            ->one();
+
+        $registry_type = $_GET['registry_type'];
+        $modelAssessment->registry_id = $modelAssessment->registry_id;
+        $modelAssessment->year = date("Y");
+        $modelAction->registry_id = $modelAssessment->registry_id;
+        $modelAction->year = date("Y");
+
+        $likelihood = ArrayHelper::map(Likelihoodscale::find()->all(),'likelihood_id','scale');
+        $benefit = ArrayHelper::map(Benefitscale::find()->all(),'benefit_id','scale');
+        $consequence = ArrayHelper::map(Consequencescale::find()->all(),'consequence_id','scale');
+
+        if($registry_type == "Risk")
+            $benefit_consequence = $consequence;
+        elseif(($registry_type == "Opportunity"))
+            $benefit_consequence = $benefit;
+
+        if ( $modelAssessment->load(Yii::$app->request->post()) && $modelAction->load(Yii::$app->request->post()) ) {
+            $isValid = $modelAssessment->validate();
+            $isValid = $modelAction->validate() && $isValid;
+            if ($isValid) {
+                $modelAssessment->save(false);
+                $modelAction->save(false);
+                return $this->redirect(['registry/index','registry_type'=>$_GET['registry_type'], 'year'=>$_GET['year']]);
+            }
+            
+        } else {
+            if (Yii::$app->request->isAjax) {
+                return $this->renderAjax('_form', [
+                    'modelAssessment' => $modelAssessment,
+                    'modelAction' => $modelAction,
+                    'likelihood' => $likelihood,
+                    'benefit_consequence' => $benefit_consequence,
+                    // 'registry' => $registry,
+                ]);
+            } else {
+                return $this->render('_form', [
+                    'modelAssessment' => $modelAssessment,
+                    'modelAction' => $modelAction,
+                    'likelihood' => $likelihood,
+                    'benefit_consequence' => $benefit_consequence,
+                    // 'registry' => $registry,
+                ]);
+            }
+        }
     }
 
     /**

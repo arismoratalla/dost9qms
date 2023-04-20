@@ -82,12 +82,25 @@ Modal::end();
                                 'contentOptions' => ['style' => 'width: 6%; text-align: center; vertical-align: middle;'],
                                 'visible' => ( Yii::$app->user->can('riskman-project-team') || Yii::$app->user->can('riskman-manager') || (Yii::$app->user->identity->username == 'Admin') ),
                                 'format'=>'raw',
-                                'value'=>function ($model, $key, $index, $widget) { 
+                                'value'=>function ($model, $key, $index, $widget) {
+                                    if(Yii::$app->user->can('riskman-manager')){
+                                        if($model->allowedUnit){
+                                            return Html::button('<i class="far fa-edit"></i>', 
+                                                ['value' => Url::to(['registry/update', 'id' => $model->registry_id]), 
+                                                'title' => 'Update Registry', 
+                                                'class' => 'btn btn-info', 
+                                                'style'=>'margin-right: 6px;', 'id'=>'buttonCreateRegistry']);
+                                        }else{
+                                            return '';
+                                        }
+                                    }else{
                                         return Html::button('<i class="far fa-edit"></i>', 
                                             ['value' => Url::to(['registry/update', 'id' => $model->registry_id]), 
                                             'title' => 'Update Registry', 
                                             'class' => 'btn btn-info', 
                                             'style'=>'margin-right: 6px;', 'id'=>'buttonCreateRegistry']);
+                                    }
+                                        
                                 },
                             ],
                             [

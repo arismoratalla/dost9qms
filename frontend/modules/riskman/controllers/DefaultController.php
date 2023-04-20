@@ -45,7 +45,6 @@ class DefaultController extends Controller
                 ->all();
         }else{
             $units = Functionalunit::find()
-                //->where([ 'in', 'functional_unit_id', explode(',',Yii::$app->user->identity->profile->groups) ])
                 ->where([ 'like', 'modules', 'riskman'])
                 ->all();
         }
@@ -111,7 +110,7 @@ class DefaultController extends Controller
         }else{
             $drafts = Registry::find()
                 ->where([ 'status_id'=> 10 ])
-                ->andWhere([ 'registry_type'=> 'Risk' ])
+                //->andWhere([ 'registry_type'=> 'Risk' ])
                 // ->where('registry_type =:registry_type AND YEAR(`create_date`) =:year AND status_id =20',
                     // [':registry_type'=>'Risk', ':year'=>$_GET['year']])
                 // ->andWhere(['in', 'unit_id', explode(',', Yii::$app->user->identity->profile->groups)])

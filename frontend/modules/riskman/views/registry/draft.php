@@ -74,28 +74,32 @@ Modal::end();
             'columns' => [
                             [
                                 'attribute'=>'registry_id',
-                                'headerOptions' => ['style' => 'width: 2%; text-align: center; vertical-align: middle;'.implode($paramsHeader)],
+                                'headerOptions' => ['style' => 'width: 4%; text-align: center; vertical-align: middle;'.implode($paramsHeader)],
                                 'label'=> '#',
-                                'contentOptions' => ['style' => 'width: 2%; text-align: center; vertical-align: middle;'],
+                                'contentOptions' => ['style' => 'width: 4%; text-align: center; vertical-align: middle;'],
                                 'visible' => Yii::$app->user->can('riskman-manager'),
                                 'format'=>'raw',
                                 'value'=>function ($model, $key, $index, $widget) { 
-                                    return Html::button('<i class="fas fa-edit"></i>', 
-                                        ['value' => Url::to(['registry/approve', 
-                                                            'id' => $model->registry_id, 
-                                                            // 'registry_type' => $model->registry_type, 
-                                                            //'year' => $_GET['year'] 
-                                                        ]), 
-                                        'title' => 'Approve Registry', 
-                                        'class' => 'btn btn-info', 
-                                        'style'=>'margin-right: 6px;', 'id'=>'buttonApproveRegistry']);
-                                    },
+                                    if($model->allowedUnit){
+                                        return Html::button('<i class="fas fa-edit"></i>', 
+                                            ['value' => Url::to(['registry/approve', 
+                                                                'id' => $model->registry_id, 
+                                                                // 'registry_type' => $model->registry_type, 
+                                                                //'year' => $_GET['year'] 
+                                                            ]), 
+                                            'title' => 'Approve Registry', 
+                                            'class' => 'btn btn-info', 
+                                            'style'=>'margin-right: 6px;', 'id'=>'buttonApproveRegistry']);
+                                    }else{
+                                        return '';
+                                    }
+                                }
                             ],
                             [
                                 'attribute'=>'registry_type',
                                 'headerOptions' => ['style' => 'width: 4%; text-align: center; vertical-align: middle;'],
                                 'label'=> 'Registry Type',
-                                'contentOptions' => ['style' => 'width: 4%; text-align: left; vertical-align: middle;'],
+                                'contentOptions' => ['style' => 'width: 4%; text-align: center; vertical-align: middle;'],
                                 'format'=>'raw',
                                 'value'=>function ($model, $key, $index, $widget) use ($paramsContent){ 
                                     return '<font color="'.$paramsContent[$model->registry_type].'"><b>'.strtoupper($model->registry_type).'</font></b>';
