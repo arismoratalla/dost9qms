@@ -147,14 +147,27 @@ class RegistryController extends Controller
                         );
 
         $toolbars = '';
-        $units = Functionalunit::find()
-            ->where([ 'in', 'functional_unit_id', explode(',',Yii::$app->user->identity->profile->groups) ])
-            ->all();
+        
+        $units_filter = Functionalunit::find()
+                ->where([ 'like', 'modules', 'riskman'])
+                ->all();
+        
+        // $units = Functionalunit::find()->all();
 
-        foreach($units as $unit){
+        // $units = Functionalunit::find()
+        //     ->where([ 'in', 'functional_unit_id', explode(',',Yii::$app->user->identity->profile->groups) ])
+        //     ->all();
+
+
+        foreach($units_filter as $unit){
+            if(isset($_GET['RegistrySearch']['unit_id']))
+                $underline = ( $_GET['RegistrySearch']['unit_id'] == $unit->functional_unit_id) ? 'text-decoration: underline; font-weight: bold; color: green;' : '';
+            else
+                $underline = '';
+
             $toolbars .= Html::a($unit->code, ['index?registry_type='.$_GET['registry_type'].'&year='.$_GET['year'].'&RegistrySearch[unit_id]='.$unit->functional_unit_id], [
                 'class' => 'btn btn-outline-secondary',
-                'style' => 'color: #B76E79; font-weight: bold;',
+                'style' => 'color: #B76E79; font-weight: bold; '.$underline,
                 'data-pjax' => 0, 
             ]);
         }
@@ -166,6 +179,7 @@ class RegistryController extends Controller
             'paramsHeader' => $paramsHeader,
             'paramsContent' => $paramsContent,
             'toolbars' => $toolbars,
+            'units_filter' => $units_filter,
         ]);
     }
 

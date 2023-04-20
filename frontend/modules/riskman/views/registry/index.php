@@ -52,6 +52,8 @@ Modal::begin([
 
 echo "<div id='modalContent'><div style='text-align:center'><img src='/images/loading.gif'></div></div>";
 Modal::end();
+
+
 ?>
 
 <div class="registry-index">
@@ -88,41 +90,47 @@ Modal::end();
                                             'style'=>'margin-right: 6px;', 'id'=>'buttonCreateRegistry']);
                                 },
                             ],
-                            /*[
+                            [
                                 'attribute'=>'registry_id',
                                 'headerOptions' => ['style' => 'width: 6%; text-align: center; vertical-align: middle;'.implode($paramsHeader)],
                                 'label'=> 'Initial Eval',
                                 'contentOptions' => ['style' => 'width: 6%; text-align: center; vertical-align: middle;'],
                                 'format'=>'raw',
                                 'value'=>function ($model, $key, $index, $widget) { 
-                                    if(!$model->initialEvaluation){
-                                        return Html::button('<i class="fas fa-book-reader"></i>', 
-                                            ['value' => Url::to(['registryassessment/initial', 'id' => $model->registry_id, 'registry_type' => $model->registry_type, 'year' => date('Y', strtotime($model->approved_date))]), 
-                                            'title' => 'Initial Evaluation', 
-                                            'class' => 'btn btn-warning', 
-                                            'style'=>'margin-right: 6px;', 'id'=>'buttonCreateRegistry']);
+                                    if($model->allowedUnit){
+                                        if(!$model->initialEvaluation){
+                                            return Html::button('<i class="fas fa-book-reader"></i>', 
+                                                ['value' => Url::to(['registryassessment/initial', 'id' => $model->registry_id, 'registry_type' => $model->registry_type, 'year' => date('Y', strtotime($model->approved_date))]), 
+                                                'title' => 'Initial Evaluation', 
+                                                'class' => 'btn btn-warning', 
+                                                'style'=>'margin-right: 6px;', 'id'=>'buttonCreateRegistry']);
+                                        }else{
+                                            return Html::button('<i class="fas fa-book-reader"></i>', 
+                                                ['value' => Url::to(['registryassessment/evaluate', 'id' => $model->registry_id, 'registry_type' => $model->registry_type, 'year' => date('Y', strtotime($model->approved_date))]), 
+                                                'title' => 'Evaluate', 
+                                                'class' => 'btn btn-success', 
+                                                'style'=>'margin-right: 6px;', 'id'=>'buttonCreateRegistry']);
+                                        }
                                     }else{
-                                        return Html::button('<i class="fas fa-book-reader"></i>', 
-                                            ['value' => Url::to(['registryassessment/evaluate', 'id' => $model->registry_id, 'registry_type' => $model->registry_type, 'year' => date('Y', strtotime($model->approved_date))]), 
-                                            'title' => 'Evaluate', 
-                                            'class' => 'btn btn-success', 
-                                            'style'=>'margin-right: 6px;', 'id'=>'buttonCreateRegistry']);
+                                        return '';
                                     }
                                 },
-                            ],*/
+                            ],
                             [
                                 'attribute'=>'code',
                                 'headerOptions' => ['style' => 'width: 25%; text-align: center; vertical-align: middle;'.implode($paramsHeader)],
                                 'label'=> $_GET['registry_type'].' Details',
                                 'contentOptions' => ['style' => 'text-align: left; vertical-align: middle;'.$paramsContent],
                                 'format'=>'html',
-                                'value'=>function ($model, $key, $index, $widget) { 
+                                'value'=>function ($model, $key, $index, $widget) use ($units_filter) { 
                                     return  '<b>'.$model->code.'</b><br/>'.
                                             '<i>'.$model->stakeholders.'</i><br/>'.
                                             //'<font color="blue"><b>'.$model->customer_requirement.'</b><br/>';
                                             '<font color="blue"><b>'.$model->potential.'</b><br/>';
                                             // '<i>'.$model->potential.'</i>';
                                 },
+                                'filterType' => GridView::FILTER_SELECT2,
+                                'filter' => ArrayHelper::map($units_filter, 'functional_unit_id', 'name'), 
                             ],
                             [
                                 'attribute'=>'previous_evaluation',
