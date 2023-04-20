@@ -93,7 +93,7 @@ Modal::end();
                             [
                                 'attribute'=>'registry_id',
                                 'headerOptions' => ['style' => 'width: 6%; text-align: center; vertical-align: middle;'.implode($paramsHeader)],
-                                'label'=> 'Initial Eval',
+                                'label'=> 'Evaluation',
                                 'contentOptions' => ['style' => 'width: 6%; text-align: center; vertical-align: middle;'],
                                 'format'=>'raw',
                                 'value'=>function ($model, $key, $index, $widget) { 
