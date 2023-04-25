@@ -15,6 +15,8 @@ use yii\bootstrap\Modal;
 use common\models\riskman\Benefitscale;
 use common\models\riskman\Consequencescale;
 use common\models\riskman\Likelihoodscale;
+use common\models\riskman\Registryaction;
+use common\models\riskman\Registryassessment;
 use common\models\riskman\Riskappetite;
 use common\models\riskman\Opportunityappetite;
 // use common\models\docman\Category;
@@ -52,7 +54,7 @@ Modal::begin([
 
 echo "<div id='modalContent'><div style='text-align:center'><img src='/images/loading.gif'></div></div>";
 Modal::end();
-
+// echo ceil( date("n")/3 );
 
 ?>
 
@@ -159,11 +161,22 @@ Modal::end();
                                 'contentOptions' => ['style' => 'width: 68%; text-align: center; vertical-align: middle;'.$paramsContent],
                                 'format'=>'raw',
                                 'value'=>function ($model, $key, $index, $widget) { 
-                                    $likelihood = "";
-                                    foreach($model->assessment as $assessment){
-                                        if($assessment->year == $_GET['year'])
-                                            $likelihood = $assessment->likelihood_id ? Likelihoodscale::findOne($assessment->likelihood_id)->scale : "";
-                                    }
+                                    $assessment = Registryassessment::find()->where(
+                                        'registry_id =:registry_id AND evaluation > 0 AND year = :year ORDER BY qtr DESC',
+                                        [
+                                            ':registry_id' => $model->registry_id,
+                                            ':year' => date("Y")
+                                        ])->one();
+                                    
+                                    $likelihood = isset($assessment->likelihood_id) ? 
+                                                    Likelihoodscale::findOne($assessment->likelihood_id)->scale : 
+                                                    "";
+
+                                    // $likelihood = "";
+                                    // foreach($model->assessment as $assessment){
+                                    //     if($assessment->year == $_GET['year'])
+                                    //         $likelihood = $assessment->likelihood_id ? Likelihoodscale::findOne($assessment->likelihood_id)->scale : "";
+                                    // }
                                     return $likelihood;
                                 },
                             ],
@@ -175,12 +188,20 @@ Modal::end();
                                 'format'=>'raw',
                                 'value'=>function ($model, $key, $index, $widget) { 
                                     // return $model->assessment->registry_assessment_id;
-                                    $cause = "";
-                                    foreach($model->assessment as $assessment){
-                                        if($assessment->year == $_GET['year'])
-                                            $cause = $assessment->cause;
-                                    }
-                                    return $cause;
+                                    // $cause = "";
+                                    // foreach($model->assessment as $assessment){
+                                    //     if($assessment->year == $_GET['year'])
+                                    //         $cause = $assessment->cause;
+                                    // }
+
+                                    $assessment = Registryassessment::find()->where(
+                                        'registry_id =:registry_id AND evaluation > 0 AND year = :year ORDER BY qtr DESC',
+                                        [
+                                            ':registry_id' => $model->registry_id,
+                                            ':year' => date("Y")
+                                        ])->one();
+
+                                    return isset($assessment->cause) ? $assessment->cause : "";
                                 },
                             ],
                             [
@@ -191,17 +212,32 @@ Modal::end();
                                 'format'=>'raw',
                                 'value'=>function ($model, $key, $index, $widget) { 
                                     // return $model->assessment->registry_assessment_id;
+
+                                    $assessment = Registryassessment::find()->where(
+                                        'registry_id =:registry_id AND evaluation > 0 AND year = :year ORDER BY qtr DESC',
+                                        [
+                                            ':registry_id' => $model->registry_id,
+                                            ':year' => date("Y")
+                                        ])->one();
+                                    
                                     $benefit_consequence = "";
-                                    foreach($model->assessment as $assessment){
-                                        if($assessment->year == $_GET['year']){
-                                            if($_GET['registry_type'] == "Risk"){
-                                                $benefit_consequence = $assessment->benefit_consequence_id ? Consequencescale::findOne($assessment->benefit_consequence_id)->scale : '';
-                                            }elseif($_GET['registry_type'] == "Opportunity"){
-                                                $benefit_consequence = $assessment->benefit_consequence_id ? Benefitscale::findOne($assessment->benefit_consequence_id)->scale : '';
-                                            }
-                                        }
+                                    if($_GET['registry_type'] == "Risk"){
+                                        $benefit_consequence = isset($assessment->benefit_consequence_id) ? Consequencescale::findOne($assessment->benefit_consequence_id)->scale : '';
+                                    }elseif($_GET['registry_type'] == "Opportunity"){
+                                        $benefit_consequence = isset($assessment->benefit_consequence_id) ? Benefitscale::findOne($assessment->benefit_consequence_id)->scale : '';
                                     }
-                                    return $benefit_consequence;
+
+                                    // $benefit_consequence = "";
+                                    // foreach($model->assessment as $assessment){
+                                    //     if($assessment->year == $_GET['year']){
+                                    //         if($_GET['registry_type'] == "Risk"){
+                                    //             $benefit_consequence = $assessment->benefit_consequence_id ? Consequencescale::findOne($assessment->benefit_consequence_id)->scale : '';
+                                    //         }elseif($_GET['registry_type'] == "Opportunity"){
+                                    //             $benefit_consequence = $assessment->benefit_consequence_id ? Benefitscale::findOne($assessment->benefit_consequence_id)->scale : '';
+                                    //         }
+                                    //     }
+                                    // }
+                                    return isset($benefit_consequence) ? $benefit_consequence : '';
                                 },
                             ],
                             [
@@ -212,12 +248,20 @@ Modal::end();
                                 'format'=>'raw',
                                 'value'=>function ($model, $key, $index, $widget) { 
                                     // return $model->assessment->registry_assessment_id;
-                                    $effects = "";
-                                    foreach($model->assessment as $assessment){
-                                        if($assessment->year == $_GET['year'])
-                                            $effects = $assessment->effect;
-                                    }
-                                    return $effects;
+                                    // $effects = "";
+                                    // foreach($model->assessment as $assessment){
+                                    //     if($assessment->year == $_GET['year'])
+                                    //         $effects = $assessment->effect;
+                                    // }
+
+                                    $assessment = Registryassessment::find()->where(
+                                        'registry_id =:registry_id AND evaluation > 0 AND year = :year ORDER BY qtr DESC',
+                                        [
+                                            ':registry_id' => $model->registry_id,
+                                            ':year' => date("Y")
+                                        ])->one();
+
+                                    return isset($assessment->effect) ? $assessment->effect : '';
                                 },
                             ],
                             [
@@ -227,10 +271,16 @@ Modal::end();
                                 'contentOptions' => ['style' => 'font-weight: bold; width: 6%; text-align: center; vertical-align: middle;'.$paramsContent],
                                 'format'=>'raw',
                                 'value'=>function ($model, $key, $index, $widget) {
-                                    if($model->assessment){
+                                    $assessment = Registryassessment::find()->where(
+                                        'registry_id =:registry_id AND evaluation > 0 AND year = :year ORDER BY qtr DESC',
+                                        [
+                                            ':registry_id' => $model->registry_id,
+                                            ':year' => date("Y")
+                                        ])->one();
+                                    // if($model->assessment){
                                         $evaluation = "";
-                                        foreach($model->assessment as $assessment){
-                                            if($assessment->year == $_GET['year']){
+                                        // foreach($model->assessment as $assessment){
+                                            if(isset($assessment->evaluation)){
                                                 if($model->registry_type == "Risk"){
                                                     $evaluation = Riskappetite::find()
                                                         ->where('min_rating<=:evaluation')
@@ -244,12 +294,14 @@ Modal::end();
                                                         ->addParams([':evaluation' => $assessment->evaluation,])
                                                         ->one();
                                                 }
+                                            }else{
+                                                return '';
                                             }
-                                        }
+                                        // }
                                         return $evaluation ? explode(' ', trim($evaluation->evaluation))[0] : '';
-                                    }else{
+                                    // }else{
                                         
-                                    }
+                                    // }
                                 },
                             ],
 
@@ -261,12 +313,20 @@ Modal::end();
                                 'contentOptions' => ['style' => 'width: 6%; text-align: center; vertical-align: middle;'.$paramsContent],
                                 'format'=>'raw',
                                 'value'=>function ($model, $key, $index, $widget) { 
-                                    $preventive_control_initiatives = "";
-                                    foreach($model->action as $action){
-                                        if($action->year == $_GET['year'])
-                                            $preventive_control_initiatives = $action->preventive_control_initiatives;
-                                    }
-                                    return $preventive_control_initiatives;
+                                    $action = Registryaction::find()->where(
+                                        'registry_id =:registry_id AND qtr = :qtr AND year = :year',
+                                        [
+                                            ':registry_id' => $model->registry_id,
+                                            ':qtr' => (ceil( date("n")/3 )  - 1 ),
+                                            ':year' => date("Y")
+                                        ])->one();
+
+                                    // $preventive_control_initiatives = "";
+                                    // foreach($model->action as $action){
+                                    //     if($action->year == $_GET['year'])
+                                    //         $preventive_control_initiatives = $action->preventive_control_initiatives;
+                                    // }
+                                    return isset($action->preventive_control_initiatives) ? $action->preventive_control_initiatives : '';
                                 },
                             ],
                             [
@@ -276,12 +336,20 @@ Modal::end();
                                 'contentOptions' => ['style' => 'width: 6%; text-align: center; vertical-align: middle;'.$paramsContent],
                                 'format'=>'raw',
                                 'value'=>function ($model, $key, $index, $widget) { 
-                                    $corrective_additional_action = "";
-                                    foreach($model->action as $action){
-                                        if($action->year == $_GET['year'])
-                                            $corrective_additional_action = $action->corrective_additional_action;
-                                    }
-                                    return $corrective_additional_action;
+                                    $action = Registryaction::find()->where(
+                                        'registry_id =:registry_id AND qtr = :qtr AND year = :year',
+                                        [
+                                            ':registry_id' => $model->registry_id,
+                                            ':qtr' => (ceil( date("n")/3 )  - 1 ),
+                                            ':year' => date("Y")
+                                        ])->one();
+
+                                    // $corrective_additional_action = "";
+                                    // foreach($model->action as $action){
+                                    //     if($action->year == $_GET['year'])
+                                    //         $corrective_additional_action = $action->corrective_additional_action;
+                                    // }
+                                    return isset($action->corrective_additional_action) ? $action->corrective_additional_action : '';
                                 },
                             ],
                             [
@@ -291,12 +359,20 @@ Modal::end();
                                 'contentOptions' => ['style' => 'width: 6%; text-align: center; vertical-align: middle;'.$paramsContent],
                                 'format'=>'raw',
                                 'value'=>function ($model, $key, $index, $widget) { 
-                                    $target_date_of_completion = "";
-                                    foreach($model->action as $action){
-                                        if($action->year == $_GET['year'])
-                                            $target_date_of_completion = $action->target_date_of_completion;
-                                    }
-                                    return $target_date_of_completion;
+                                    $action = Registryaction::find()->where(
+                                        'registry_id =:registry_id AND qtr = :qtr AND year = :year',
+                                        [
+                                            ':registry_id' => $model->registry_id,
+                                            ':qtr' => (ceil( date("n")/3 )  - 1 ),
+                                            ':year' => date("Y")
+                                        ])->one();
+                                    
+                                    // $target_date_of_completion = "";
+                                    // foreach($model->action as $action){
+                                    //     if($action->year == $_GET['year'])
+                                    //         $target_date_of_completion = $action->target_date_of_completion;
+                                    // }
+                                    return isset($action->target_date_of_completion) ? $action->target_date_of_completion : '';
                                 },
                             ],
 
