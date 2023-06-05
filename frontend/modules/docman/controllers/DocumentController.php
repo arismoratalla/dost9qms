@@ -333,7 +333,8 @@ class DocumentController extends Controller
             foreach($units as $unit){
                 $toolbars .= Html::a($unit->code, ['referenceindex?qms_type_id='.$_GET['qms_type_id'].'&category_id='.$_GET['category_id'].'&DocumentSearch[functional_unit_id]='.$unit->functional_unit_id], [
                     'class' => 'btn btn-outline-secondary',
-                    'style' => $color[$unit->functional_unit_id],
+                    // 'style' => $color[$unit->functional_unit_id],
+                    'style' => 'color: #B76E79',
                     'data-pjax' => 0, 
                 ]);
             }
@@ -354,6 +355,55 @@ class DocumentController extends Controller
         }
     }
     
+    public function actionTechnicalrecordsindex()
+    {
+        $allowed = false;
+
+        if($_GET['qms_type_id'] == 2){
+            if( Yii::$app->user->can('17025-technical-records') || Yii::$app->user->can('17025-document-custodian') )
+                $allowed = true;
+        }
+
+        if(Yii::$app->user->identity->username == 'Admin'){
+            $allowed = true;
+        }
+
+        if($allowed){ 
+            $user = User::findOne(['user_id'=> Yii::$app->user->identity->user_id]);
+
+            $searchModel = new DocumentSearch();
+            $searchModel->qms_type_id = $_GET['qms_type_id'];
+            
+            $toolbars = '';
+            if( !(Yii::$app->user->can('17025-document-custodian') || (Yii::$app->user->identity->username == 'Admin') ) )
+                $units = Functionalunit::find()
+                            ->where([ 'qms_type_id'=> $_GET['qms_type_id'] ])
+                            ->andWhere([ 'in', 'functional_unit_id', explode(',',$user->profile->groups) ])
+                            ->all();
+            else
+                $units = Functionalunit::findAll(['qms_type_id'=> $_GET['qms_type_id']]);
+
+            $filter_categories = Category::find()->where(['code' => 'TR'])->orderBy(['num'=>SORT_ASC])->all();
+            
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+            
+            $qmstype = Qmstype::findOne(['qms_type_id'=> $_GET['qms_type_id']]);
+
+            return $this->render('technicalrecordsindex', [
+                'user'=>$user,
+                'qmstype'=>$qmstype,
+                
+                // 'category_menus'=>$category_menus,
+                'toolbars'=>$toolbars,
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+                'filter_categories' => $filter_categories,
+            ]);
+
+        }else{
+            return $this->render('restricted');
+        }
+    }
     /**
      * Lists all Document models.
      * @return mixed
@@ -483,6 +533,75 @@ class DocumentController extends Controller
                         'model' => $model,
                         'qms_type_id' => $qms_type_id,
                         'categories' => $categories,
+            ]);
+        }
+        
+    }
+
+    public function actionCreatetechnicalrecord()
+    {
+        $model = new Document();
+        $qms_type_id = $_GET['qms_type_id'];
+        
+        // if(isset($_GET['category_id']))
+        //     $model->category_id = $_GET['category_id'];
+            
+        $categories = Category::find()
+            ->where([ 'like','code', 'TR' ])
+            ->asArray()
+            ->all();
+
+        $functional_units = Functionalunit::find()->where(['qms_type_id'=> $_GET['qms_type_id']])->all();
+
+        $user_units = explode(',', Yii::$app->user->identity->profile->groups);
+        $options = [];
+        foreach($functional_units as $unit){
+            if ( array_search($unit->functional_unit_id, $user_units) )
+                $options[$unit->functional_unit_id] = ['disabled' => false];
+            else
+                $options[$unit->functional_unit_id] = ['disabled' => true];
+        }
+        // $options => [
+        //     18 => ['disabled' => true],
+        //     19 => ['disabled' => true]
+        // ];
+        if ($model->load(Yii::$app->request->post())) {
+            $model->user_id = Yii::$app->user->identity->user_id;
+            if( isset($_POST['Document']['functional_unit_id']) )
+                $model->functional_unit_id = $_POST['Document']['functional_unit_id'];
+            else
+                $model->functional_unit_id = NULL;
+
+            $model->active = 1;
+            
+                if($model->save(false)){
+                $doc_types = Documenttype::find()->where('active =:active',[':active'=>1])->all();
+                    foreach($doc_types as $doc_type){
+                        $attachment = new Documentattachment();
+                        $attachment->document_id = $model->document_id;
+                        $attachment->filename = '';
+                        $attachment->document_type = $doc_type->document_type_id;
+                        $attachment->last_update = $doc_type->document_type_id;
+                        $attachment->save(false);
+                    }
+
+                return $this->redirect(['view', 'id' => $model->document_id]);   
+            }
+                 
+        }elseif (Yii::$app->request->isAjax) {
+            return $this->renderAjax('_formTechnicalRecord', [
+                        'model' => $model,
+                        'qms_type_id' => $qms_type_id,
+                        'categories' => $categories,
+                        'functional_units'=>$functional_units,
+                        'options'=>$options,
+            ]);
+        } else {
+            return $this->render('_formTechnicalRecord', [
+                        'model' => $model,
+                        'qms_type_id' => $qms_type_id,
+                        'categories' => $categories,
+                        'options'=>$options,
             ]);
         }
         

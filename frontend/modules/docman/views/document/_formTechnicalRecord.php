@@ -31,45 +31,20 @@ use common\models\docman\Functionalunit;
                     'pluginOptions' => [
                         'allowClear' => false
                     ],
-                    'pluginEvents'=>[
-                        "change" => 'function() { 
-                            var categoryId=this.value;
-                            if((categoryId == 4) || (categoryId == 5)){
-                                $("#document-functional_unit_id").prop("disabled", false);
-                            }else{
-                                $("#document-functional_unit_id").prop("disabled", "disabled");
-                            }
-                        }
-                    ',]
                 ])->label('Category'); ?>
         </div>
         
         <div class="col-md-6"> 
                 <?= $form->field($model, 'functional_unit_id')->widget(Select2::classname(), [
-                    'data' => ArrayHelper::map(Functionalunit::find()->where(['qms_type_id'=> $_GET['qms_type_id']])->all(),'functional_unit_id','name'),
+                    'data' => ArrayHelper::map($functional_units,'functional_unit_id','name'),
                     'language' => 'en',
                     'options' => [
                         'placeholder' => 'Select Functional Unit',
-                        'disabled' => true,
+                        'options' => $options,
                     ],
                     'pluginOptions' => [
                         'allowClear' => false
                     ],
-                    'pluginEvents'=>[
-                        "change" => 'function() { 
-                            var categoryId=this.value;
-                            $.post("/docman/document/updateunits/", 
-                                {
-                                    categoryId: categoryId
-                                }, 
-                                function(response){
-                                    if(response){
-                                       $("#document-content").val(response.default_text);
-                                    }
-                                }
-                            );
-                        }
-                    ',]
                 ])->label('Unit'); ?>
         </div>
     

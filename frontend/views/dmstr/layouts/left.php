@@ -196,6 +196,12 @@ if(Yii::$app->user->isGuest){
                                 ],
                             ],
                             [
+                                'label' => 'Techinical Records', 
+                                'icon' => 'folder-open text-aqua', 
+                                'url' => ['/docman/document/technicalrecordsindex', 'qms_type_id'=>2],
+                                'visible'=> ( Yii::$app->user->can('17025-technical-records') || (Yii::$app->user->identity->username == 'Admin') ),
+                            ],
+                            [
                                 'label' => 'Records', 
                                 'icon' => 'folder-open text-aqua', 
                                 'url' => ['/docman/document/labrecordsindex', 'qms_type_id'=>2],
