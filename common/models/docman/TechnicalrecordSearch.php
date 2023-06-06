@@ -11,7 +11,7 @@ use common\models\docman\Document;
 /**
  * DocumentSearch represents the model behind the search form about `common\models\docman\Document`.
  */
-class DocumentSearch extends Document
+class TechnicalrecordSearch extends Document
 {
     /**
      * @inheritdoc
@@ -90,17 +90,17 @@ class DocumentSearch extends Document
             }
         }
 
-        // if( (Yii::$app->user->can('17025-technical-records') ) ){
-        //     $categories = Category::find()
-        //                     ->where([ 'like','code', 'TR' ])
-        //                     ->asArray()
-        //                     ->all();
-        //     $query->andFilterWhere(['in', 'category_id', $categories]);
+        if( (Yii::$app->user->can('17025-technical-records') ) ){
+            $categories = Category::find()
+                            ->where([ 'like','code', 'TR' ])
+                            ->asArray()
+                            ->all();
+            $query->andFilterWhere(['in', 'category_id', $categories]);
 
-        //     if(isset($_GET['functional_unit_id'])){
-        //         $query->andFilterWhere(['in', 'functional_unit_id', explode(',', Yii::$app->user->identity->profile->groups)]);
-        //     }
-        // }
+            if(isset($_GET['functional_unit_id'])){
+                $query->andFilterWhere(['in', 'functional_unit_id', explode(',', Yii::$app->user->identity->profile->groups)]);
+            }
+        }
 
         $query->andFilterWhere(['like', 'subject', $this->subject])
             ->andFilterWhere(['like', 'filename', $this->filename])

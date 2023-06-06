@@ -11,6 +11,7 @@ use common\models\docman\Documenttype;
 use common\models\docman\Category;
 use common\models\docman\Functionalunit;
 use common\models\docman\Qmstype;
+use common\models\docman\TechnicalrecordSearch;
 
 use kartik\helpers\Html;
 use yii\helpers\Url;
@@ -371,7 +372,7 @@ class DocumentController extends Controller
         if($allowed){ 
             $user = User::findOne(['user_id'=> Yii::$app->user->identity->user_id]);
 
-            $searchModel = new DocumentSearch();
+            $searchModel = new TechnicalrecordSearch();
             $searchModel->qms_type_id = $_GET['qms_type_id'];
             
             $toolbars = '';
@@ -382,6 +383,14 @@ class DocumentController extends Controller
                             ->all();
             else
                 $units = Functionalunit::findAll(['qms_type_id'=> $_GET['qms_type_id']]);
+
+            foreach($units as $unit){
+                $toolbars .= Html::a($unit->code, ['technicalrecordsindex?qms_type_id='.'&DocumentSearch[functional_unit_id]='.$unit->functional_unit_id], [
+                    'class' => 'btn btn-outline-secondary',
+                    'style' => 'color: #B76E79',
+                    'data-pjax' => 0, 
+                ]);
+            }
 
             $filter_categories = Category::find()->where(['code' => 'TR'])->orderBy(['num'=>SORT_ASC])->all();
             
@@ -561,10 +570,7 @@ class DocumentController extends Controller
             else
                 $options[$unit->functional_unit_id] = ['disabled' => true];
         }
-        // $options => [
-        //     18 => ['disabled' => true],
-        //     19 => ['disabled' => true]
-        // ];
+
         if ($model->load(Yii::$app->request->post())) {
             $model->user_id = Yii::$app->user->identity->user_id;
             if( isset($_POST['Document']['functional_unit_id']) )
