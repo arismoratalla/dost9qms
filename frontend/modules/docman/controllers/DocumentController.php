@@ -209,6 +209,7 @@ class DocumentController extends Controller
                 19 => 'color: #00FFFF',
                 20 => 'color: #B76E79',
                 21 => 'color: #B76E79',
+                29 => 'color: #B76E79',
             ];
 
             $category_menus = '';
@@ -235,7 +236,7 @@ class DocumentController extends Controller
                 //$toolbars .= Html::button($unit->code, ['value' => Url::to(['document/index', 'DocumentSearch[functional_unit_id]' => $unit->functional_unit_id]), 'title' => 'Approved', 'class' => 'btn btn-info', 'style'=>'width: 90px; margin-right: 6px;']);
                 $toolbars .= Html::a($unit->code, ['labrecordsindex?qms_type_id='.$_GET['qms_type_id'].'&category_id='.$_GET['category_id'].'&DocumentSearch[functional_unit_id]='.$unit->functional_unit_id], [
                     'class' => 'btn btn-outline-secondary',
-                    'style' => $color[$unit->functional_unit_id],
+                    'style' => 'color: #B76E79',
                     'data-pjax' => 0, 
                 ]);
             }
