@@ -10,6 +10,7 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\helpers\ArrayHelper;
 
+use common\models\riskman\Appsetting;
 use common\models\riskman\Benefitscale;
 use common\models\riskman\Consequencescale;
 use common\models\riskman\Likelihoodscale;
@@ -297,6 +298,7 @@ class RegistryassessmentController extends Controller
     {
         // $model = $this->findModel($id);
         $modelAssessment = Registryassessment::findOne($id);
+        $activeQuarter = Appsetting::findOne(1); //setting variable for quatert = 1
 
         // FIX THIS
         $modelAction = new Registryaction();
@@ -304,7 +306,8 @@ class RegistryassessmentController extends Controller
             'registry_id =:registry_id AND qtr = :qtr AND year = :year',
             [
                 ':registry_id' => $modelAssessment->registry_id,
-                ':qtr' => $modelAssessment->qtr,
+                ':qtr' => $activeQuarter->setting,
+                // ':qtr' => $modelAssessment->qtr,
                 ':year' => date("Y")
             ])
             ->one();
@@ -312,8 +315,10 @@ class RegistryassessmentController extends Controller
         $registry_type = $_GET['registry_type'];
         $modelAssessment->registry_id = $modelAssessment->registry_id;
         $modelAssessment->year = date("Y");
+        $modelAssessment->qtr = $activeQuarter->setting;
         $modelAction->registry_id = $modelAssessment->registry_id;
         $modelAction->year = date("Y");
+        $modelAction->qtr = $activeQuarter->setting;
 
         $likelihood = ArrayHelper::map(Likelihoodscale::find()->all(),'likelihood_id','scale');
         $benefit = ArrayHelper::map(Benefitscale::find()->all(),'benefit_id','scale');
@@ -340,7 +345,7 @@ class RegistryassessmentController extends Controller
                     'modelAction' => $modelAction,
                     'likelihood' => $likelihood,
                     'benefit_consequence' => $benefit_consequence,
-                    // 'registry' => $registry,
+                    'activeQuarter' => $activeQuarter,
                 ]);
             } else {
                 return $this->render('_form', [
@@ -348,7 +353,7 @@ class RegistryassessmentController extends Controller
                     'modelAction' => $modelAction,
                     'likelihood' => $likelihood,
                     'benefit_consequence' => $benefit_consequence,
-                    // 'registry' => $registry,
+                    'activeQuarter' => $activeQuarter,
                 ]);
             }
         }

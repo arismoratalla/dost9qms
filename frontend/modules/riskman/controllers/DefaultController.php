@@ -14,6 +14,8 @@ use yii\helpers\ArrayHelper;
 use common\models\docman\Functionalunit;
 use common\models\riskman\Functionalunitgoalitem;
 use common\models\riskman\Registry;
+use common\models\riskman\Appsetting;
+use common\models\riskman\AppsettingSearch;
 
 /**
  * Default controller for the `Budget` module
@@ -199,6 +201,17 @@ class DefaultController extends Controller
     public function actionCharts()
     {
         return $this->render('charts', [
+        ]);
+    }
+
+    public function actionSettings()
+    {
+        $searchModel = new AppsettingSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('settings', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
         ]);
     }
 }
