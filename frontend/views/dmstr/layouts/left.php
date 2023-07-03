@@ -114,6 +114,11 @@ if(Yii::$app->user->isGuest){
                                         'icon' => 'bookmark text-aqua', 
                                         'url' => ['/riskman/badge/index', 'module_id'=>'riskman'],
                                     ],
+                                    [
+                                        'label' => 'Settings', 
+                                        'icon' => 'bookmark text-aqua', 
+                                        'url' => ['/riskman/default/settings', 'module_id'=>'riskman'],
+                                    ],
                                 ]
                             ],
                         ]
