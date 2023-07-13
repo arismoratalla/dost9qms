@@ -127,7 +127,7 @@ Modal::end();
                                     if($model->assessment){
                                         $evaluation = "";
                                         foreach($model->assessment as $assessment){
-                                            if($assessment->year == $_GET['year'] && $assessment->qtr == 1){
+                                            if($assessment->year == $_GET['year'] && $assessment->qtr == 0){
                                                 if($model->registry_type == "Risk"){
                                                     $evaluation = Riskappetite::find()
                                                         ->where('min_rating<=:evaluation')
@@ -144,10 +144,10 @@ Modal::end();
                                                 $remarks = isset($assessment->remarks) ? $assessment->remarks : '';
                                             }
                                         }
-                                        return ( $evaluation ? explode(' ', trim($evaluation->evaluation))[0] : '-' ) . '<br/><br/>';// . 
+                                        // return print_r($evaluation);
+                                        return ( $evaluation ? explode(' ', trim($evaluation->evaluation))[0].'<br/>(Initial)' : '-' ) . '<br/><br/>';// . 
                                                 //'<span title="'.$remarks.'">'.$remarks.'</span>';
                                     }else{
-                                        
                                     }
                                 },
                             ],
