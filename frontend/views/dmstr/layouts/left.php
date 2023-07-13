@@ -124,6 +124,19 @@ if(Yii::$app->user->isGuest){
                         ]
                     ],
                     [
+                        'label' => 'ISO 9001 QMS', 
+                        'icon' => 'book',
+                        'visible'=> ( Yii::$app->user->can('9001-qms-role') || (Yii::$app->user->identity->username == 'Admin') ),
+                        'items' => [
+                            [
+                                'label' => 'Directory', 
+                                'icon' => 'dashboard text-aqua', 
+                                'url' => ['/docman/default/directory'],
+                            ],
+                            
+                        ]
+                    ],
+                    [
                         'label' => 'ISO 9001', 
                         'icon' => 'book',
                         'visible'=> ( Yii::$app->user->can('9001-basic-role') || (Yii::$app->user->identity->username == 'Admin') ),
