@@ -141,11 +141,11 @@ Modal::end();
                                                         ->addParams([':evaluation' => $assessment->evaluation,])
                                                         ->one();
                                                 }
-                                                $remarks = $assessment->remarks;
+                                                $remarks = isset($assessment->remarks) ? $assessment->remarks : '';
                                             }
                                         }
-                                        return ( $evaluation ? explode(' ', trim($evaluation->evaluation))[0] : '-' ) . '<br/><br/>' . 
-                                                '<span title="'.$remarks.'">'.$remarks.'</span>';
+                                        return ( $evaluation ? explode(' ', trim($evaluation->evaluation))[0] : '-' ) . '<br/><br/>';// . 
+                                                //'<span title="'.$remarks.'">'.$remarks.'</span>';
                                     }else{
                                         
                                     }
@@ -175,11 +175,11 @@ Modal::end();
                                                         ->addParams([':evaluation' => $assessment->evaluation,])
                                                         ->one();
                                                 }
-                                                $remarks = $assessment->remarks;
+                                                $remarks = isset($assessment->remarks) ? $assessment->remarks : '';
                                             }
                                         }
-                                        return ( $evaluation ? explode(' ', trim($evaluation->evaluation))[0] : '-' ) . '<br/><br/>' . 
-                                                '<span title="'.$remarks.'">'.$remarks.'</span>';
+                                        return ( $evaluation ? explode(' ', trim($evaluation->evaluation))[0] : '-' ) . '<br/><br/>';// . 
+                                                //'<span title="'.$remarks.'">'.$remarks.'</span>';
                                     }else{
                                         
                                     }
@@ -209,11 +209,11 @@ Modal::end();
                                                         ->addParams([':evaluation' => $assessment->evaluation,])
                                                         ->one();
                                                 }
-                                                $remarks = $assessment->remarks;
+                                                $remarks = isset($assessment->remarks) ? $assessment->remarks : '';
                                             }
                                         }
-                                        return ( $evaluation ? explode(' ', trim($evaluation->evaluation))[0] : '-' ) . '<br/><br/>' . 
-                                                '<span title="'.$remarks.'">'.$remarks.'</span>';
+                                        return ( $evaluation ? explode(' ', trim($evaluation->evaluation))[0] : '-' ) . '<br/><br/>';// . 
+                                                //'<span title="'.$remarks.'">'.$remarks.'</span>';
                                     }else{
                                         
                                     }
@@ -243,11 +243,11 @@ Modal::end();
                                                         ->addParams([':evaluation' => $assessment->evaluation,])
                                                         ->one();
                                                 }
-                                                $remarks = $assessment->remarks;
+                                                $remarks = isset($assessment->remarks) ? $assessment->remarks : '';
                                             }
                                         }
-                                        return ( $evaluation ? explode(' ', trim($evaluation->evaluation))[0] : '-' ) . '<br/><br/>' . 
-                                                '<span title="'.$remarks.'">'.$remarks.'</span>';
+                                        return ( $evaluation ? explode(' ', trim($evaluation->evaluation))[0] : '-' ) . '<br/><br/>';// . 
+                                                //'<span title="'.$remarks.'">'.$remarks.'</span>';
                                     }else{
                                         
                                     }
