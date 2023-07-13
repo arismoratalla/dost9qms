@@ -67,11 +67,12 @@ Modal::end();
                                 'width'=>'120px',
                                 'format'=>'raw',
                                 'value'=>function ($model, $key, $index, $widget) { 
-                                    if($_GET['qms_type_id'] == 1) {
-                                        return ($model->category_id == 2) ? 'Procedures Manual' : $model->category->name ;
-                                    } elseif($_GET['qms_type_id'] == 2){
-                                        return ($model->category_id == 2) ? 'Operational Procedure' : $model->category->name;
-                                    }
+                                    return $model->category->name;
+                                    // if($_GET['qms_type_id'] == 1) {
+                                    //     return ($model->category_id == 2) ? 'Procedures Manual' : $model->category->name ;
+                                    // } elseif($_GET['qms_type_id'] == 2){
+                                    //     return ($model->category_id == 2) ? 'Operational Procedure' : $model->category->name;
+                                    // }
                                 },
                                 'filterType' => GridView::FILTER_SELECT2,
                                 'filter' => ArrayHelper::map($filter_categories, 'category_id', 'name'), 
