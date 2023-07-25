@@ -114,8 +114,26 @@ if(Yii::$app->user->isGuest){
                                         'icon' => 'bookmark text-aqua', 
                                         'url' => ['/riskman/badge/index', 'module_id'=>'riskman'],
                                     ],
+                                    [
+                                        'label' => 'Settings', 
+                                        'icon' => 'bookmark text-aqua', 
+                                        'url' => ['/riskman/default/settings', 'module_id'=>'riskman'],
+                                    ],
                                 ]
                             ],
+                        ]
+                    ],
+                    [
+                        'label' => 'ISO 9001 QMS', 
+                        'icon' => 'book',
+                        'visible'=> ( Yii::$app->user->can('9001-qms-role') || (Yii::$app->user->identity->username == 'Admin') ),
+                        'items' => [
+                            [
+                                'label' => 'Directory', 
+                                'icon' => 'dashboard text-aqua', 
+                                'url' => ['/docman/default/directory'],
+                            ],
+                            
                         ]
                     ],
                     [

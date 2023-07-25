@@ -17,6 +17,7 @@ use common\models\riskman\Consequencescale;
 use common\models\riskman\Likelihoodscale;
 use common\models\riskman\Riskappetite;
 use common\models\riskman\Registryaction;
+use common\models\riskman\Registryassessment;
 use common\models\riskman\Opportunityappetite;
 // use common\models\docman\Category;
 // use common\models\docman\Document;
@@ -95,14 +96,15 @@ Modal::end();
                     'format'=>'raw',
                     'value'=>function ($model, $key, $index, $widget) { 
                         return  
-                                '<div style="float: left; margin-left: -4px; margin-right: 15px; margin-top: 15px;">' .
+                            
+                                ('<div style="float: left; margin-left: -4px; margin-right: 15px; margin-top: 15px;">' .
                                 Html::button('<i class="fas fa-eye"></i>', 
                                     ['value' => Url::to(['registry/view', 'id' => $model->registry->registry_id]), 
                                     'title' => 'View Registry', 
                                     'class' => 'btn btn-info', 
                                     'style'=>'margin-left: 6px;', 
                                     'id'=>'buttonViewRegistry']) . 
-                                '</div>'.
+                                '</div>').
                                 // '&nbsp;&nbsp;' .  
                                 // Html::button('<i class="fas fa-edit"></i>', 
                                 // ['value' => Url::to(['registry/update', 'registry_id' => $model->registry_id]), 
@@ -147,18 +149,20 @@ Modal::end();
                         //             'class' => 'btn btn-info', 
                         //             'style'=>'margin-left: 6px;', 
                         //             'id'=>'buttonViewRegistry']) . 
-
-                         return Html::button('<i class="fas fa-edit"></i>', 
-                                ['value' => Url::to(['registryassessment/update', 
-                                                    'id' => $model->registry_assessment_id,
-                                                    'registry_type' => $_GET['registry_type'], 
-                                                    'year' => $_GET['year'] 
-                                                    ]
-                                                ), 
-                                'title' => 'Update Assessment', 
-                                'class' => $model->evaluation ? 'btn btn-info' : 'btn btn-warning', 
-                                'style'=>'margin-right: 6px;', 
-                                'id'=>'buttonViewRegistry']);
+                        return (Registryassessment::checkEnabled($model->year, $model->qtr) ) ?
+                                    Html::button('<i class="fas fa-edit"></i>', 
+                                        ['value' => Url::to(['registryassessment/update', 
+                                                            'id' => $model->registry_assessment_id,
+                                                            'registry_type' => $_GET['registry_type'], 
+                                                            'year' => $_GET['year'] 
+                                                            ]
+                                                        ), 
+                                        'title' => 'Update Assessment', 
+                                        'class' => $model->evaluation ? 'btn btn-info' : 'btn btn-warning', 
+                                        'style'=>'margin-right: 6px;', 
+                                        'id'=>'buttonViewRegistry']) 
+                                : 
+                                '';
                     },
                 ],
                 /*[
