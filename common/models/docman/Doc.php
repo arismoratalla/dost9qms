@@ -8,15 +8,19 @@ use Yii;
  * This is the model class for table "tbl_doc".
  *
  * @property integer $doc_id
- * @property integer $subcategory_id
+ * @property integer $section_id
  * @property string $code
  * @property string $name
- * @property string $file
- * @property integer $functional_unit_id
+ * @property string $effectivity_date
+ * @property integer $revision_num
+ * @property string $person_responsible
+ * @property string $copy_holder
  * @property integer $status_id
  */
 class Doc extends \yii\db\ActiveRecord
 {
+    const STATUS_OBSOLETE = 0;
+    const STATUS_ACTIVE = 10;
     /**
      * @inheritdoc
      */
@@ -31,10 +35,12 @@ class Doc extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['subcategory_id', 'name'], 'required'],
-            [['subcategory_id', 'functional_unit_id', 'status_id'], 'integer'],
+            [['section_id', 'name'], 'required'],
+            [['section_id', 'revision_num', 'status_id'], 'integer'],
+            [['effectivity_date'], 'safe'],
             [['code'], 'string', 'max' => 50],
-            [['name', 'file'], 'string', 'max' => 100],
+            [['name'], 'string', 'max' => 200],
+            [['person_responsible', 'copy_holder'], 'string', 'max' => 100],
         ];
     }
 
@@ -45,17 +51,30 @@ class Doc extends \yii\db\ActiveRecord
     {
         return [
             'doc_id' => 'Doc ID',
-            'subcategory_id' => 'Subcategory ID',
+            'section_id' => 'Section ID',
             'code' => 'Code',
             'name' => 'Name',
-            'file' => 'File',
-            'functional_unit_id' => 'Functional Unit ID',
+            'effectivity_date' => 'Effectivity Date',
+            'revision_num' => 'Revision Num',
+            'person_responsible' => 'Person Responsible',
+            'copy_holder' => 'Copy Holder',
             'status_id' => 'Status ID',
         ];
     }
 
-    public function getSubcategory()
-    {
-        return $this->hasOne(Subcategory::className(), ['subcategory_id' => 'subcategory_id']);
+    /** 
+    * @return \yii\db\ActiveQuery 
+    */ 
+    public function getSection() 
+    { 
+        return $this->hasOne(Section::className(), ['section_id' => 'section_id']); 
+    }
+
+    /** 
+    * @return \yii\db\ActiveQuery 
+    */ 
+    public function getAttachments() 
+    { 
+        return $this->hasMany(Docattachment::className(), ['doc_id' => 'doc_id']); 
     }
 }

@@ -9,8 +9,17 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
+use common\models\docman\Docattachment;
 use common\models\docman\Doccategory;
-use common\models\docman\Subcategory;
+use common\models\docman\Section;
+
+use kartik\helpers\Html;
+use yii\helpers\Url;
+
+use yii\data\ActiveDataProvider;
+use yii\data\ArrayDataProvider;
+use yii\db\Query;
+use yii\web\UploadedFile;
 /**
  * DocController implements the CRUD actions for Doc model.
  */
@@ -35,7 +44,7 @@ class DocController extends Controller
      * Lists all Doc models.
      * @return mixed
      */
-    public function actionIndex()
+    public function actionIndex2()
     {
         $subcategory_id = $_GET['subcategory_id'];
 
@@ -52,6 +61,23 @@ class DocController extends Controller
         ]);
     }
 
+    public function actionIndex()
+    {
+        $section_id = $_GET['section_id'];
+
+        $section = Section::findOne($section_id);
+
+        $searchModel = new DocSearch();
+        $searchModel->section_id = $section_id;
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('index', [
+            'section' => $section,
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
     /**
      * Displays a single Doc model.
      * @param integer $id
@@ -59,8 +85,17 @@ class DocController extends Controller
      */
     public function actionView($id)
     {
+        $model = $this->findModel($id); 
+        $_code = $model->code;
+
+        $attachmentsDataProvider = new ActiveDataProvider([
+            'query' => $model->getAttachments(),
+            'pagination' => false,
+        ]);
+
         return $this->render('view', [
             'model' => $this->findModel($id),
+            'attachmentsDataProvider' => $attachmentsDataProvider,
         ]);
     }
 
@@ -127,6 +162,42 @@ class DocController extends Controller
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
+    public function actionUploadattachment($id)
+    {
+        //Yii::$app->params['uploadPath'] = Yii::$app->basePath . '/uploads/';
+        $model = Docattachment::findOne($id);
+        date_default_timezone_set('Asia/Manila');
+        
+        if (Yii::$app->request->post()) {
+            // $random = Yii::$app->security->generateRandomString(40);
+            $model->pdfFile = UploadedFile::getInstance($model, 'pdfFile');
+            
+            //$path = Yii::getAlias('@uploads') . "/docman/document/" . $model->document->document_id;
+            $path = Yii::getAlias('@uploads') . "/docman/9001/" . $model->document->section->doccategory->folder . '/' . $model->document->section->section_id . '/' . $model->filename;
+            if(!file_exists($path)){
+                mkdir($path, 0755, true);
+                $indexFile = fopen($path.'/index.php', 'w') or die("Unable to open file!");
+            }
+                
+            $model->pdfFile->saveAs( $path ."/". $model->document_attachment_id . $random . '.' . $model->pdfFile->extension);
+            $model->filename = $model->document_attachment_id . $random . '.' . $model->pdfFile->extension;
+            $model->last_update = date("Y-m-d H:i:s");
+            $model->save(false);
+            
+            Yii::$app->session->setFlash('success', 'Document Successfully Uploaded!');
+            
+            return $this->redirect(['view?id='.$model->document_id]);
+        }
+        
+        if (Yii::$app->request->isAjax) {
+                return $this->renderAjax('_upload', ['model'=>$model]);   
+        }else {
+            return $this->render('_upload', [
+                        'model' => $model,
+            ]);
         }
     }
 }

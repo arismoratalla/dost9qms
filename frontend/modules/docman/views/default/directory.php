@@ -38,12 +38,12 @@ Modal::end();
             <div class="inner">
               <!-- <h3><?= $qm ?></h3> -->
 
-              <p style="font-weight: bold;">FORMS MANUAL</p>
+              <p style="font-weight: bold;">QUALITY MANUAL</p>
             </div>
             <div class="icon">
               <i class="ion ion-bag"></i>
             </div>
-            <a href="/docman/default/subdirectory?cat_id=2&bg=bg-aqua" target="_blank" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="/docman/default/section?cat_id=1&bg=bg-aqua" target="_blank" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
       </div>
@@ -60,7 +60,7 @@ Modal::end();
             <div class="icon">
               <i class="ion ion-stats-bars"></i>
             </div>
-            <a href="/docman/default/subdirectory?cat_id=3&bg=bg-green" target="_blank" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="/docman/default/section?cat_id=2&bg=bg-green" target="_blank" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
       </div>
@@ -73,12 +73,12 @@ Modal::end();
             <div class="inner">
               <!-- <h3><?= $wi ?></h3> -->
 
-              <p style="font-weight: bold;">QUALITY MANUAL</p>
+              <p style="font-weight: bold;">WORK INSTRUCTION MANUAL</p>
             </div>
             <div class="icon">
               <i class="ion ion-person-add"></i>
             </div>
-            <a href="/docman/default/subdirectory?cat_id=4&bg=bg-yellow" target="_blank" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="/docman/default/section?cat_id=3&bg=bg-yellow" target="_blank" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
       </div>
@@ -90,12 +90,12 @@ Modal::end();
             <div class="inner">
               <!-- <h3><?= $methods ?></h3> -->
 
-              <p style="font-weight: bold;">WORK INSTRUCTION</p>
+              <p style="font-weight: bold;">FORMS MANUAL</p>
             </div>
             <div class="icon">
               <i class="ion ion-pie-graph"></i>
             </div>
-            <a href="/docman/default/subdirectory?cat_id=5&bg=bg-red" target="_blank" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="/docman/default/section?cat_id=4&bg=bg-red" target="_blank" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
       </div>
@@ -108,12 +108,12 @@ Modal::end();
             <div class="inner">
               <!-- <h3><?= $zeroRevisions ?></h3> -->
 
-              <p style="font-weight: bold;">DOCUMENT CHANGE FORMS</p>
+              <p style="font-weight: bold;">MASTERLIST OF RECORDS</p>
             </div>
             <div class="icon">
               <i class="ion ion-pie-graph"></i>
             </div>
-            <a href="/docman/default/subdirectory?cat_id=1&bg=bg-fuchsia" target="_blank" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="/docman/default/section?cat_id=5&bg=bg-fuchsia" target="_blank" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         </div>

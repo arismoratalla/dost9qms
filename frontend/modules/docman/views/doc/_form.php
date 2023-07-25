@@ -12,15 +12,19 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'subcategory_id')->textInput() ?>
+    <?= $form->field($model, 'section_id')->textInput() ?>
 
     <?= $form->field($model, 'code')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'file')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'effectivity_date')->textInput() ?>
 
-    <?= $form->field($model, 'functional_unit_id')->textInput() ?>
+    <?= $form->field($model, 'revision_num')->textInput() ?>
+
+    <?= $form->field($model, 'person_responsible')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'copy_holder')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'status_id')->textInput() ?>
 

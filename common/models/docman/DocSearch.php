@@ -18,8 +18,8 @@ class DocSearch extends Doc
     public function rules()
     {
         return [
-            [['doc_id', 'subcategory_id', 'functional_unit_id', 'status_id'], 'integer'],
-            [['code', 'name', 'file'], 'safe'],
+            [['doc_id', 'section_id', 'revision_num', 'status_id'], 'integer'],
+            [['code', 'name', 'effectivity_date', 'person_responsible', 'copy_holder'], 'safe'],
         ];
     }
 
@@ -60,14 +60,16 @@ class DocSearch extends Doc
         // grid filtering conditions
         $query->andFilterWhere([
             'doc_id' => $this->doc_id,
-            'subcategory_id' => $this->subcategory_id,
-            'functional_unit_id' => $this->functional_unit_id,
+            'section_id' => $this->section_id,
+            'effectivity_date' => $this->effectivity_date,
+            'revision_num' => $this->revision_num,
             'status_id' => $this->status_id,
         ]);
 
         $query->andFilterWhere(['like', 'code', $this->code])
             ->andFilterWhere(['like', 'name', $this->name])
-            ->andFilterWhere(['like', 'file', $this->file]);
+            ->andFilterWhere(['like', 'person_responsible', $this->person_responsible])
+            ->andFilterWhere(['like', 'copy_holder', $this->copy_holder]);
 
         return $dataProvider;
     }

@@ -17,15 +17,19 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'doc_id') ?>
 
-    <?= $form->field($model, 'subcategory_id') ?>
+    <?= $form->field($model, 'section_id') ?>
 
     <?= $form->field($model, 'code') ?>
 
     <?= $form->field($model, 'name') ?>
 
-    <?= $form->field($model, 'file') ?>
+    <?= $form->field($model, 'effectivity_date') ?>
 
-    <?php // echo $form->field($model, 'functional_unit_id') ?>
+    <?php // echo $form->field($model, 'revision_num') ?>
+
+    <?php // echo $form->field($model, 'person_responsible') ?>
+
+    <?php // echo $form->field($model, 'copy_holder') ?>
 
     <?php // echo $form->field($model, 'status_id') ?>
 

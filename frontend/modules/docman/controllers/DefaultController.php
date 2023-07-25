@@ -75,4 +75,16 @@ class DefaultController extends Controller
             'subdirs'=>$subdirs,
         ]);
     }
+
+    public function actionSection()
+    {
+        $catId = $_GET['cat_id'];
+        $cat = Doccategory::findOne($catId);
+        $sections = $cat->sections;
+            
+        return $this->render('section', [
+            'cat'=>$cat,
+            'sections'=>$sections,
+        ]);
+    }
 }

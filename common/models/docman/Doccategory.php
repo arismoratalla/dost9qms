@@ -10,6 +10,7 @@ use Yii;
  * @property integer $doccategory_id
  * @property string $name
  * @property integer $qms_id
+ * @property string $folder
  */
 class Doccategory extends \yii\db\ActiveRecord
 {
@@ -27,9 +28,9 @@ class Doccategory extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'qms_id'], 'required'],
+            [['name', 'qms_id', 'folder'], 'required'],
             [['qms_id'], 'integer'],
-            [['name'], 'string', 'max' => 50],
+            [['name', 'folder'], 'string', 'max' => 50],
         ];
     }
 
@@ -42,14 +43,15 @@ class Doccategory extends \yii\db\ActiveRecord
             'doccategory_id' => 'Doccategory ID',
             'name' => 'Name',
             'qms_id' => 'Qms ID',
+            'folder' => 'Folder',
         ];
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getSubcategories()
-    {
-        return $this->hasMany(Subcategory::className(), ['doccategory_id' => 'doccategory_id']);
+    /** 
+    * @return \yii\db\ActiveQuery 
+    */ 
+    public function getSections() 
+    { 
+        return $this->hasMany(Section::className(), ['doccategory_id' => 'doccategory_id']); 
     }
 }

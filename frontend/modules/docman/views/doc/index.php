@@ -15,9 +15,9 @@ use yii\bootstrap\Modal;
 /* @var $searchModel common\models\finance\RequestSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = $subCategory->name;
-$this->params['breadcrumbs'][] = $subCategory->doccategory->name;
-$this->params['breadcrumbs'][] = $subCategory->name;
+$this->title = $section->name;
+$this->params['breadcrumbs'][] = $section->doccategory->name;
+$this->params['breadcrumbs'][] = $section->name;
 
 // Modal Create Request
 Modal::begin([
@@ -88,8 +88,8 @@ Modal::end();
                                 'contentOptions' => ['style' => 'vertical-align:middle; text-align: left;'],
                                 'width'=>'120px',
                                 'format'=>'raw',
-                            ],
-                                                        [
+                            ],*/
+                            [
                                 'attribute'=>'effectivity_date',
                                 'headerOptions' => ['style' => 'text-align: center;'],
                                 'contentOptions' => ['style' => 'vertical-align:middle; text-align: center;'],
@@ -97,15 +97,15 @@ Modal::end();
                                 'format'=>'raw',
                             ],
                                             [
-                                'attribute'=>'revision_number',
+                                'attribute'=>'revision_num',
                                 'headerOptions' => ['style' => 'text-align: center;'],
                                 'contentOptions' => ['style' => 'vertical-align:middle; text-align: center;'],
                                 'width'=>'120px',
                                 'format'=>'raw',
                                 'value' => function($model, $key, $index, $widget){
-                                    return ($model->revision_number < 0 ) ? 'N/A' : $model->revision_number;
+                                    return ($model->revision_num < 0 ) ? 'N/A' : $model->revision_num;
                                 }
-                            ],*/
+                            ],
                             [
                                 'class' => kartik\grid\ActionColumn::className(),
                                 'template' => '{view}',
