@@ -44,6 +44,10 @@ class DefaultController extends Controller
 
     public function actionDirectory()
     {
+        $qm = 53;
+        $pm = 51;
+        $wi = 37;
+        $fm = 97;
         // return $this->render('directory');
             // $qm = Document::find()->where('qms_type_id =:qms_type_id AND category_id =:category_id AND active =1',[':qms_type_id'=>$_GET['qms_type_id'], ':category_id'=>1])->count();
             // $op = Document::find()->where('qms_type_id =:qms_type_id AND category_id =:category_id AND active =1',[':qms_type_id'=>$_GET['qms_type_id'], ':category_id'=>2])->count();
@@ -54,10 +58,10 @@ class DefaultController extends Controller
             // $duplicates = Document::find()->select(['document_code'])->where('qms_type_id =:qms_type_id AND active =1',[':qms_type_id'=>$_GET['qms_type_id']])->distinct();
 
         return $this->render('directory', [
-            'qm'=>1,
-            'op'=>2,
-            'wi'=>3,
-            'methods'=>4,
+            'qm'=>$qm,
+            'pm'=>$pm,
+            'wi'=>$wi,
+            'fm'=>$fm,
             'noAttachments'=>5,
             'zeroRevisions'=>6,
             'duplicates'=>7,
