@@ -54,4 +54,12 @@ class Section extends \yii\db\ActiveRecord
     { 
         return $this->hasOne(Doccategory::className(), ['doccategory_id' => 'doccategory_id']); 
     }
+
+    /** 
+    * @return \yii\db\ActiveQuery 
+    */ 
+    public function getDocs() 
+    { 
+        return $this->hasMany(Doc::className(), ['section_id' => 'section_id']); 
+    }
 }
