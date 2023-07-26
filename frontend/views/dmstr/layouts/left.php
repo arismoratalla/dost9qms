@@ -134,6 +134,11 @@ if(Yii::$app->user->isGuest){
                                 'url' => ['/docman/default/directory'],
                             ],
                             [
+                                'label' => 'Masterlist of Records', 
+                                'icon' => 'dashboard text-aqua', 
+                                'url' => ['/docman/doc/category', 'category_id'=>5],
+                            ],
+                            [
                                 'label' => 'Quality Manual', 
                                 'icon' => 'dashboard text-aqua', 
                                 'url' => ['/docman/doc/category', 'category_id'=>1],
