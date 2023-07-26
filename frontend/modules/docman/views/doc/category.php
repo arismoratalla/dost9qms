@@ -114,9 +114,15 @@ Modal::end();
                                 'template' => '{view}',
                                 'buttons' => [
                                     'view' => function ($url, $model){
-                                        return Html::button('<span class="glyphicon glyphicon-eye-open"></span>', ['value' => '/docman/doc/view?id=' . $model->doc_id,'onclick'=>'location.href=this.value', 'class' => 'btn btn-primary', 'title' => Yii::t('app', "View Document")]);
+                                        // return Html::button('<span class="glyphicon glyphicon-eye-open"></span>', ['value' => '/docman/doc/view?id=' . $model->doc_id,'onclick'=>'location.href=this.value', 'class' => 'btn btn-primary', 'title' => Yii::t('app', "View Document")]);
+                                        return Html::a('<span class="glyphicon glyphicon-eye-open"></span>', $url, [
+
+                                            'title' => Yii::t('app', 'ctrl + click me')], ['class' => 'btn btn-primary', 'target'=>'_blank' ]);
                                     },
                                 ],
+                                'buttonOptions' => [
+                                    'target' => "_blank"
+                                 ]
                             ],
                     ],
             'pjax' => true, // pjax is set to always true for this demo
