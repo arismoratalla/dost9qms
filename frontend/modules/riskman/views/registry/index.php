@@ -207,7 +207,7 @@ Modal::end();
                             [
                                 'attribute'=>'assessment_id',
                                 'headerOptions' => ['style' => 'width: 6%; text-align: center; vertical-align: middle;'.implode($paramsHeader)],
-                                'label'=> ( ($_GET['registry_type'] == "Risk") ? "Benefit" : "Consequence"),
+                                'label'=> ( ($_GET['registry_type'] == "Risk") ? "Consequence" : "Benefit"),
                                 'contentOptions' => ['style' => 'width: 6%; text-align: center; vertical-align: middle;'.$paramsContent],
                                 'format'=>'raw',
                                 'value'=>function ($model, $key, $index, $widget) { 
@@ -243,7 +243,7 @@ Modal::end();
                             [
                                 'attribute'=>'assessment_id',
                                 'headerOptions' => ['style' => 'width: 6%; text-align: center; vertical-align: middle;'.implode($paramsHeader)],
-                                'label'=>'Effects',
+                                'label'=>'Impact',
                                 'contentOptions' => ['style' => 'width: 6%; text-align: center; vertical-align: middle;'.$paramsContent],
                                 'format'=>'raw',
                                 'value'=>function ($model, $key, $index, $widget) { 
@@ -309,7 +309,7 @@ Modal::end();
                             [
                                 'attribute'=>'preventive_control_initiatives',
                                 'headerOptions' => ['style' => 'width: 6%; text-align: center; vertical-align: middle;'.implode($paramsHeader)],
-                                'label'=> ($_GET['registry_type'] == 'Risk') ? 'Preventive Control' : 'Initiatives',
+                                'label'=> ($_GET['registry_type'] == 'Risk') ? 'Existing Actions' : 'Initiatives',
                                 'contentOptions' => ['style' => 'width: 6%; text-align: center; vertical-align: middle;'.$paramsContent],
                                 'format'=>'raw',
                                 'value'=>function ($model, $key, $index, $widget) { 
@@ -332,7 +332,7 @@ Modal::end();
                             [
                                 'attribute'=>'corrective_additional_action',
                                 'headerOptions' => ['style' => 'width: 6%; text-align: center; vertical-align: middle;'.implode($paramsHeader)],
-                                'label'=> ($_GET['registry_type'] == 'Risk') ? 'Corrective Action' : 'Additional Action',
+                                'label'=> ($_GET['registry_type'] == 'Risk') ? 'Additional Action' : 'Additional Actions',
                                 'contentOptions' => ['style' => 'width: 6%; text-align: center; vertical-align: middle;'.$paramsContent],
                                 'format'=>'raw',
                                 'value'=>function ($model, $key, $index, $widget) { 
