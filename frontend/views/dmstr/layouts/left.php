@@ -133,7 +133,26 @@ if(Yii::$app->user->isGuest){
                                 'icon' => 'dashboard text-aqua', 
                                 'url' => ['/docman/default/directory'],
                             ],
-                            
+                            [
+                                'label' => 'Quality Manual', 
+                                'icon' => 'dashboard text-aqua', 
+                                'url' => ['/docman/doc/category', 'category_id'=>1],
+                            ],
+                            [
+                                'label' => 'Procedures Manual', 
+                                'icon' => 'dashboard text-aqua', 
+                                'url' => ['/docman/doc/category', 'category_id'=>2],
+                            ],
+                            [
+                                'label' => 'Work Instructions Manual', 
+                                'icon' => 'dashboard text-aqua', 
+                                'url' => ['/docman/doc/category', 'category_id'=>3],
+                            ],
+                            [
+                                'label' => 'Forms Manual', 
+                                'icon' => 'dashboard text-aqua', 
+                                'url' => ['/docman/doc/category', 'category_id'=>4],
+                            ],
                         ]
                     ],
                     [
