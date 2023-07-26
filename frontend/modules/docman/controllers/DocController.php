@@ -5,6 +5,8 @@ namespace frontend\modules\docman\controllers;
 use Yii;
 use common\models\docman\Doc;
 use common\models\docman\DocSearch;
+use common\models\docman\DocCategorySearch;
+
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -73,6 +75,22 @@ class DocController extends Controller
 
         return $this->render('index', [
             'section' => $section,
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    public function actionCategory()
+    {
+        $category = Doccategory::findOne($_GET['category_id']);
+        $sections = Section::find()->where('doccategory_id = :doccategory_id',[':doccategory_id' => $_GET['category_id']])->all();
+        $searchModel = new DocCategorySearch();
+        $searchModel->doccategory_id = $_GET['category_id'];
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('category', [
+            'category' => $category,
+            'sections' => $sections,
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
