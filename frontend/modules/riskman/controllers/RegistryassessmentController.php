@@ -297,8 +297,12 @@ class RegistryassessmentController extends Controller
     public function actionEvaluate($id)
     {
         // $model = $this->findModel($id);
-        $modelAssessment = Registryassessment::findOne($id);
+        // $modelAssessment = Registryassessment::findOne($id);
         $activeQuarter = Appsetting::findOne(1); //setting variable for quatert = 1
+        $modelAssessment = Registryassessment::find()
+            ->where([ 'registry_id'=> $id ])
+            ->andWhere([ 'qtr'=> $activeQuarter->setting ])
+            ->one();
 
         // FIX THIS
         $modelAction = new Registryaction();
