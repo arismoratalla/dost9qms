@@ -126,6 +126,7 @@ Modal::end();
 
                                     if($model->assessment){
                                         $evaluation = "";
+                                        $remarks = "";
                                         foreach($model->assessment as $assessment){
                                             if($assessment->year == $_GET['year'] && $assessment->qtr == 0){
                                                 if($model->registry_type == "Risk"){
@@ -141,7 +142,7 @@ Modal::end();
                                                         ->addParams([':evaluation' => $assessment->evaluation,])
                                                         ->one();
                                                 }
-                                                $remarks = isset($assessment->remarks) ? $assessment->remarks : '';
+                                                $remarks = isset($assessment->remarks) ? $assessment->remarks : "";
                                             }
                                         }
                                         // return print_r($evaluation);
@@ -160,6 +161,7 @@ Modal::end();
                                 'value'=>function ($model, $key, $index, $widget) {
                                     if($model->assessment){
                                         $evaluation = "";
+                                        $remarks = "";
                                         foreach($model->assessment as $assessment){
                                             if($assessment->year == $_GET['year'] && $assessment->qtr == 2){
                                                 if($model->registry_type == "Risk"){
@@ -175,7 +177,7 @@ Modal::end();
                                                         ->addParams([':evaluation' => $assessment->evaluation,])
                                                         ->one();
                                                 }
-                                                $remarks = isset($assessment->remarks) ? $assessment->remarks : '';
+                                                $remarks = isset($assessment->remarks) ? $assessment->remarks : "";
                                             }
                                         }
                                         return ( $evaluation ? explode(' ', trim($evaluation->evaluation))[0] : '-' ) . '<br/><br/>';// . 
@@ -194,6 +196,7 @@ Modal::end();
                                 'value'=>function ($model, $key, $index, $widget) {
                                     if($model->assessment){
                                         $evaluation = "";
+                                        $remarks = "";
                                         foreach($model->assessment as $assessment){
                                             if($assessment->year == $_GET['year']  && $assessment->qtr == 3){
                                                 if($model->registry_type == "Risk"){
@@ -209,7 +212,7 @@ Modal::end();
                                                         ->addParams([':evaluation' => $assessment->evaluation,])
                                                         ->one();
                                                 }
-                                                $remarks = isset($assessment->remarks) ? $assessment->remarks : '';
+                                                $remarks = isset($assessment->remarks) ? $assessment->remarks : "";
                                             }
                                         }
                                         return ( $evaluation ? explode(' ', trim($evaluation->evaluation))[0] : '-' ) . '<br/><br/>';// . 
