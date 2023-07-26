@@ -126,6 +126,7 @@ Modal::end();
 
                                     if($model->assessment){
                                         $evaluation = "";
+                                        $remarks = "";
                                         foreach($model->assessment as $assessment){
                                             if($assessment->year == $_GET['year'] && $assessment->qtr == 0){
                                                 if($model->registry_type == "Risk"){
@@ -144,9 +145,8 @@ Modal::end();
                                                 $remarks = isset($assessment->remarks) ? $assessment->remarks : '';
                                             }
                                         }
-                                        // return print_r($evaluation);
-                                        return ( $evaluation ? explode(' ', trim($evaluation->evaluation))[0].'<br/>(Initial)' : '-' ) . '<br/><br/>';// . 
-                                                //'<span title="'.$remarks.'">'.$remarks.'</span>';
+                                        return ( $evaluation ? explode(' ', trim($evaluation->evaluation))[0].'<br/>(Initial)' : '-' ) . '<br/><br/>' . 
+                                                '<span title="'.$remarks.'">'.$remarks.'</span>';
                                     }else{
                                     }
                                 },
