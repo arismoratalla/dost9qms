@@ -20,6 +20,25 @@ if(Yii::$app->user->isGuest){
        $UsernameDesignation=$CurrentUserName.'-'.$CurrentUserDesignation;
     }
 }
+
+$currentYear = (int)date('Y');
+$yearsRange = range($currentYear, 2013); // Adjust the start year as needed
+
+$memos = [];
+$sos = [];
+
+foreach ($yearsRange as $year) {
+    $memos[] = [
+        'label' => (string)$year,
+        'icon' => 'folder text-aqua',
+        'url' => ['/docman/issuance/index', 'issuance_type_id' => 1, 'year' => $year]
+    ];
+    $sos[] = [
+        'label' => (string)$year,
+        'icon' => 'folder text-aqua',
+        'url' => ['/docman/issuance/index', 'issuance_type_id' => 2, 'year' => $year]
+    ];
+}
 ?>
 
 <aside class="main-sidebar">
@@ -353,6 +372,26 @@ if(Yii::$app->user->isGuest){
                                 'icon' => 'folder-open text-aqua', 
                                 'url' => ['/docman/document/referenceindex', 'qms_type_id'=>2, 'category_id'=>25],
                                 'visible'=> ( Yii::$app->user->can('17025-basic-role') || (Yii::$app->user->identity->username == 'Admin') ),
+                            ],
+                        ]
+                    ],
+                    [
+                        'label' => 'Issuances', 
+                        'icon' => 'book',
+                        // 'visible'=> false,
+                        // 'visible'=> ( Yii::$app->user->can('9001-basic-role') || (Yii::$app->user->identity->username == 'Admin') ),
+                        'items' => [
+                            [
+                                'label' => 'Memoranda', 
+                                'icon' => 'folder text-aqua', 
+                                // 'url' => ['/docman/issuance/index', 'issuance_type_id'=>1],
+                                'items' => $memos,
+                            ],
+                            [
+                                'label' => 'Special Orders', 
+                                'icon' => 'folder text-aqua', 
+                                // 'url' => ['/docman/issuance/index', 'issuance_type_id'=>2],
+                                'items' => $sos,
                             ],
                         ]
                     ],
