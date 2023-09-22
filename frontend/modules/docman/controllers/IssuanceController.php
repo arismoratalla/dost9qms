@@ -88,6 +88,7 @@ class IssuanceController extends Controller
         $filePath = "/Fileserver/1_ORD/Issuances/".$type.$year."/".$filename;
 
         $sid = SynologyService::login($username, $password);
+        print_r($sid);
 
         if ($sid) {
             $fileContent = SynologyService::downloadFile($sid, $filePath);
@@ -101,8 +102,6 @@ class IssuanceController extends Controller
         } else {
             echo "Login failed.";
         }
-
-        // return Url::current();
     }
 
     /**
