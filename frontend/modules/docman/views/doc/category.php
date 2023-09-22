@@ -10,14 +10,13 @@ use kartik\editable\Editable;
 use kartik\grid\GridView;
 
 use yii\bootstrap\Modal;
+use frontend\modules\docman\components\SynologyService;
 
 /* @var $this yii\web\View */
 /* @var $searchModel common\models\finance\RequestSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = $category->name;
-// $this->params['breadcrumbs'][] = $section->doccategory->name;
-// $this->params['breadcrumbs'][] = $section->name;
 
 // Modal Create Request
 Modal::begin([
@@ -44,6 +43,30 @@ Modal::begin([
 
 echo "<div id='modalContent'><div style='text-align:center'><img src='/images/loading.gif'></div></div>";
 Modal::end();
+
+/*
+$username = "dost9ict";
+$password = "D057R3g10n9";
+$filePath = "/Fileserver/1_ORD/Issuances/Memo/2013/02Apr_Submission of SALN.pdf";
+
+$sid = SynologyService::login($username, $password);
+
+if ($sid) {
+    // $data = SynologyService::getFolderContents($sid, $folderPath);
+    // print_r($data);
+
+    $fileContent = SynologyService::downloadFile($sid, $filePath);
+    
+    // Example: Directly send the file to the browser for user download
+    if ($fileContent) {
+        header('Content-Type: application/octet-stream');
+        header('Content-Disposition: attachment; filename="' . basename($filePath) . '"');
+        // echo $fileContent;
+    }
+
+} else {
+    echo "Login failed.";
+}*/
 
 ?>
 <div class="request-index">
