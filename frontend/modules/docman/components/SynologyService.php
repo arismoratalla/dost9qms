@@ -33,7 +33,7 @@ const UPLOAD_ENDPOINT = '/webapi/upload.cgi';
         } else {
             // Handle error
             \Yii::error("Login error: " . $response->content);
-            return null;
+            return "Login error: " . $response->content; // return detailed error message
         }
     }
        
@@ -83,7 +83,7 @@ const UPLOAD_ENDPOINT = '/webapi/upload.cgi';
         } else {
             // Handle error
             \Yii::error("Error downloading file: " . $response->content);
-            return null;
+            return false;
         }
     }
 
