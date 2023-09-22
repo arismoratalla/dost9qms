@@ -56,7 +56,7 @@ const UPLOAD_ENDPOINT = '/webapi/upload.cgi';
         } else {
             // Handle error
             \Yii::error("Error retrieving folder contents: " . $response->content);
-            return null;
+            return $response->content;
         }
     }
 
@@ -83,7 +83,7 @@ const UPLOAD_ENDPOINT = '/webapi/upload.cgi';
         } else {
             // Handle error
             \Yii::error("Error downloading file: " . $response->content);
-            return false;
+            return $response->content;
         }
     }
 
@@ -110,7 +110,7 @@ const UPLOAD_ENDPOINT = '/webapi/upload.cgi';
         } else {
             // Handle error
             \Yii::error("Error uploading file: " . $response->content);
-            return null;
+            return $response->content;
         }
     }
     /*
