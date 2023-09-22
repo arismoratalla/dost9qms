@@ -77,31 +77,43 @@ class IssuanceController extends Controller
         $model = $this->findModel($id);
         $type = $model->type->code."/";
 
-        // if($model->issuance_type_id === 1)
         $filename = $model->file;
-        // elseif($model->issuance_type_id === 2)
-            // $filename = $model->code.$model->file;
 
         $username = "dost9ict";
         $password = "D057R3g10n9";
-        // $filePath = "/Fileserver/1_ORD/Issuances/SO/2013/SO 010_Review and Compliance Committee.pdf";
         $filePath = "/Fileserver/1_ORD/Issuances/".$type.$year."/".$filename;
 
         $sid = SynologyService::login($username, $password);
-        print_r($sid);
 
         if ($sid) {
             $fileContent = SynologyService::downloadFile($sid, $filePath);
-
+        
             if ($fileContent) {
-                header('Content-Type: application/octet-stream');
-                header('Content-Disposition: attachment; filename="' . basename($filePath) . '"');
-                echo $fileContent;
+                Yii::$app->response->format = \yii\web\Response::FORMAT_RAW;
+                Yii::$app->response->headers->add('Content-Type', 'application/octet-stream');
+                Yii::$app->response->headers->add('Content-Disposition', 'attachment; filename="' . basename($filePath) . '"');
+                return $fileContent;
+            } else {
+                Yii::$app->response->statusCode = 500;
+                return 'Error downloading file';
             }
-
         } else {
-            echo "Login failed.";
+            Yii::$app->response->statusCode = 401;
+            return $sid; // return detailed error message from SynologyService::login
         }
+        
+        // if ($sid) {
+        //     $fileContent = SynologyService::downloadFile($sid, $filePath);
+
+        //     if ($fileContent) {
+        //         header('Content-Type: application/octet-stream');
+        //         header('Content-Disposition: attachment; filename="' . basename($filePath) . '"');
+        //         echo $fileContent;
+        //     }
+
+        // } else {
+        //     echo "Login failed.";
+        // }
     }
 
     /**
