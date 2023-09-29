@@ -379,7 +379,7 @@ foreach ($yearsRange as $year) {
                         'label' => 'Issuances', 
                         'icon' => 'book',
                         // 'visible'=> false,
-                        // 'visible'=> ( Yii::$app->user->can('9001-basic-role') || (Yii::$app->user->identity->username == 'Admin') ),
+                        'visible'=> ( Yii::$app->user->can('9001-basic-role') || (Yii::$app->user->identity->username == 'Admin') ),
                         'items' => [
                             [
                                 'label' => 'Memoranda', 
