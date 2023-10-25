@@ -13,6 +13,40 @@ const LIST_ENDPOINT = '/webapi/entry.cgi';
 const UPLOAD_ENDPOINT = '/webapi/upload.cgi';
 
     public static function login($username, $password) {
+        $url = self::NAS_URL . self::LOGIN_ENDPOINT . '?' . http_build_query([
+            'api' => 'SYNO.API.Auth',
+            'version' => '3',
+            'method' => 'login',
+            'account' => $username,
+            'passwd' => $password,
+            'session' => 'FileStation',
+            'format' => 'cookie'
+        ]);
+
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // If you're using HTTPS and the certificate is not verified
+        $response = curl_exec($ch);
+
+        if (curl_errno($ch)) {
+            // Handle error
+            \Yii::error("Login error: " . curl_error($ch));
+            return "Login error: " . curl_error($ch);
+        }
+
+        curl_close($ch);
+
+        $responseData = json_decode($response, true);
+
+        if (isset($responseData['data']['sid'])) {
+            return $responseData['data']['sid'];
+        } else {
+            // Handle error
+            \Yii::error("Login error: " . $response);
+            return "Login error: " . $response;
+        }
+    }
+    /*public static function login($username, $password) {
         $client = new Client();
         $response = $client->createRequest()
             ->setMethod('GET')
@@ -35,7 +69,7 @@ const UPLOAD_ENDPOINT = '/webapi/upload.cgi';
             \Yii::error("Login error: " . $response->content);
             return "Login error: " . $response->content; // return detailed error message
         }
-    }
+    }*/
        
     public static function getFolderContents($sid, $folderPath) {
         $client = new Client();
