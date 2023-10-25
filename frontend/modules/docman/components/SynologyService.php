@@ -7,10 +7,52 @@ use yii\httpclient\Client;
 
 class SynologyService {
 
-const NAS_URL = 'https://dost9.ph:5001';
+const NAS_URL = 'https://192.168.1.20:5001';
+// const NAS_URL = 'http://192.168.1.20:5000';
 const LOGIN_ENDPOINT = '/webapi/auth.cgi';
 const LIST_ENDPOINT = '/webapi/entry.cgi';
 const UPLOAD_ENDPOINT = '/webapi/upload.cgi';
+
+    /*public static function login($username, $password) {
+        $url = self::NAS_URL . self::LOGIN_ENDPOINT;
+
+        $postData = [
+            'api' => 'SYNO.API.Auth',
+            'version' => '3',
+            'method' => 'login',
+            'account' => $username,
+            'passwd' => $password,
+            'session' => 'FileStation',
+            'format' => 'cookie'
+        ];
+
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true); // Enable SSL verification
+        curl_setopt($ch, CURLOPT_CAINFO, Yii::getAlias('@uploads') . '/docman/ca/syno-ca-cert.pem');
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($postData));
+
+        $response = curl_exec($ch);
+
+        if (curl_errno($ch)) {
+            // Handle error
+            \Yii::error("Login error: " . curl_error($ch));
+            return "Login error: " . curl_error($ch);
+        }
+
+        curl_close($ch);
+
+        $responseData = json_decode($response, true);
+
+        if (isset($responseData['data']['sid'])) {
+            return $responseData['data']['sid'];
+        } else {
+            // Handle error
+            \Yii::error("Login error: " . $response);
+            return "Login error: " . $response;
+        }
+    }*/
 
     public static function login($username, $password) {
         $client = new Client();
@@ -18,7 +60,7 @@ const UPLOAD_ENDPOINT = '/webapi/upload.cgi';
             ->setMethod('GET')
             ->setUrl(self::NAS_URL . self::LOGIN_ENDPOINT)
             ->addOptions([
-                'sslVerifyPeer' => false,  // Disable SSL peer verification (not recommended for production)
+                // 'sslVerifyPeer' => false,  // Disable SSL peer verification (not recommended for production)
                 'sslCafile' => Yii::getAlias('@uploads') . '/docman/ca/syno-ca-cert.pem'  // Path to the CA certificate
             ])
             ->setData([
