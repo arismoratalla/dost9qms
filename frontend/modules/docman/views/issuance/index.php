@@ -44,6 +44,9 @@ Modal::end();
                             [
                                 'attribute'=>'subject',
                                 'label'=>'Subject',
+                                // 'value'=> function($model, $key, $index) {
+                                //     return Html::a($model->subject, ['issuance/update', 'id'=>$model->issuance_id], ['style' => 'font-size: medium;', 'data-pjax'=>0]);
+                                // },
                                 'width'=>'120px',
                                 'format'=>'raw',
                             ],
@@ -56,9 +59,9 @@ Modal::end();
                             ],
                             [
                                 'class' => kartik\grid\ActionColumn::className(),
-                                'template' => '{download}',
+                                'template' => '{download} {custom} {view}',
                                 'buttons' => [
-                                    'download' => function ($url, $model) {
+                                    /*'download' => function ($url, $model) {
                                         return Html::a('<span class="glyphicon glyphicon-download-alt"></span>', 
                                             ['issuance/download', 'id' => $model->issuance_id, 'year' => $_GET['year']], 
                                             [
@@ -67,6 +70,13 @@ Modal::end();
                                                 // 'target' => '_blank'
                                             ]
                                         );
+                                    },*/
+                                    'download' => function ($url, $model) {
+                                        $customUrl = Url::to(['issuance/download', 'id' => $model->issuance_id, 'year' => $_GET['year']]);
+                                        return Html::a('<span class="glyphicon glyphicon-download"></span>', $customUrl, [
+                                            'title' => Yii::t('app', 'ctrl + click to download'),
+                                            'target' => '_blank',
+                                        ]);
                                     },
                                 ],
                             ]
@@ -124,3 +134,8 @@ Modal::end();
         ?>
         <?php Pjax::end(); ?>
 </div>
+<script>
+    $("#buttonUpdateIssuanc").click(function(){
+        alert('hehehhe');
+    });
+</script>
