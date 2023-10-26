@@ -31,7 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
         [
             'attribute'=>'issuance_type_id',
             'label'=>'Issuance Type',
-            'inputContainer' => ['class'=>'col-sm-4'],
+            'inputContainer' => ['class'=>'col-sm-12'],
             // 'displayOnly'=>true
             'type'=>DetailView::INPUT_SELECT2, 
             'widgetOptions'=>[
