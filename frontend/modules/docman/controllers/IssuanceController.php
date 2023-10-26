@@ -62,8 +62,15 @@ class IssuanceController extends Controller
      */
     public function actionView($id)
     {
+        $model = $this->findModel($id);
+
+        if ($model->load(Yii::$app->request->post()) && $model->save(false)) {
+            
+            Yii::$app->session->setFlash('kv-detail-success', 'Record Updated!');
+        }
+
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $model,
         ]);
     }
 
