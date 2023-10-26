@@ -30,15 +30,6 @@ Modal::begin([
 
 echo "<div id='modalContent'><div style='text-align:center'><img src='/images/loading.gif'></div></div>";
 Modal::end();
-
-use frontend\modules\docman\components\SynologyService;
-
-$username = "dost9ict";
-$password = "D057R3g10n9";
-
-$sid = SynologyService::login($username, $password);
-
-print_r($sid);
 ?>
 <div class="issuance-index">
 
