@@ -59,10 +59,10 @@ const UPLOAD_ENDPOINT = '/webapi/upload.cgi';
         $response = $client->createRequest()
             ->setMethod('GET')
             ->setUrl(self::NAS_URL . self::LOGIN_ENDPOINT)
-            ->addOptions([
+            //->addOptions([
                 // 'sslVerifyPeer' => false,  // Disable SSL peer verification (not recommended for production)
-                'sslCafile' => Yii::getAlias('@uploads') . '/docman/ca/syno-ca-cert.pem'  // Path to the CA certificate
-            ])
+                //'sslCafile' => Yii::getAlias('@uploads') . '/docman/ca/syno-ca-cert.pem'  // Path to the CA certificate
+            //])
             ->setData([
                 'api' => 'SYNO.API.Auth',
                 'version' => '3',
