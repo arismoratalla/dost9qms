@@ -135,7 +135,7 @@ Modal::end();
         <?php Pjax::end(); ?>
 </div>
 <script>
-    $("#buttonUpdateIssuanc").click(function(){
-        alert('hehehhe');
-    });
+    // $("#buttonUpdateIssuanc").click(function(){
+    //    alert('hehehhe');
+    // });
 </script>
