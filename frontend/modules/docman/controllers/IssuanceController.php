@@ -145,18 +145,19 @@ class IssuanceController extends Controller
                 $type = $model->type->code;  // Assuming issuance_type_id is the type
                 $year = date('Y'); // Or fetch the relevant year if it's not the current one
 
-                // $synologyFilePath = "/Fileserver/1_ORD/Issuances/".$type."/".$year."/".$uploadedFile->name;
-                $synologyFilePath = "/Fileserver/1_ORD/Issuances/Memo/2023/".$uploadedFile->name;
+                $synologyFilePath = "/Fileserver/1_ORD/Issuances/".$type."/".$year."/".$uploadedFile->name;
+                // $synologyFilePath = "/Fileserver/1_ORD/Issuances/Memo/2023/".$uploadedFile->name;
 
                 // Save the uploaded file temporarily to the local server
-                $tempPath = Yii::getAlias('@uploads') . "/docman/issuance/" . $uploadedFile->name;
+                $tempPath = Yii::getAlias('@uploads') . "/docman/issuance/".$type."/".$year."/" . $uploadedFile->name;
+                // $tempPath = Yii::getAlias('@uploads') . "/docman/issuance/2023/" . $uploadedFile->name;
                 // $tempPath = Yii::getAlias('@webroot/uploads/') . $uploadedFile->name;
                 $uploadedFile->saveAs($tempPath);
             
                 // Upload to Synology
                 $synologyService = new SynologyService();
-                // $sid = $synologyService::login('dost9ict', 'D057R3g10n9');
-                $sid = 'HJzgHBDq_vzkkNiORqCjsouBw2_B6owcHOS7QOki7yY54SO-xIrb3MOb5Ck2MdjJdhqFMdGAsNkSFsF-7kJ-OA';
+                $sid = $synologyService::login('dost9ict', 'D057R3g10n9');
+                // $sid = 'HJzgHBDq_vzkkNiORqCjsouBw2_B6owcHOS7QOki7yY54SO-xIrb3MOb5Ck2MdjJdhqFMdGAsNkSFsF-7kJ-OA';
 
                 if ($sid) {
                     $uploadResult = SynologyService::uploadFile($sid, $tempPath, $synologyFilePath);
