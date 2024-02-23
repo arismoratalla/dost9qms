@@ -48,9 +48,9 @@ echo $form->field($model, 'pdfFile')->widget(FileInput::classname(), [
     ]
 ]);
 
-    // echo Html::submitButton('Upload', [
-    //     'class'=>$model->isNewRecord ? 'btn btn-success' : 'btn btn-primary', 'style' => 'float: right;']
-    // );
+    echo Html::submitButton('Upload', [
+        'class'=>$model->isNewRecord ? 'btn btn-success' : 'btn btn-primary', 'style' => 'float: right;']
+    );
 
 
 ActiveForm::end(); ?>
