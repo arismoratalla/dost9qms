@@ -111,6 +111,23 @@ class DocController extends Controller
             'pagination' => false,
         ]);
 
+        if ($model->load(Yii::$app->request->post()))
+        {
+            $model->effectivity_date = date("Y-m-d", strtotime($_POST['Doc']['effectivity_date']));
+            if ($model->save(false))
+            {
+                // if($_document_code != $model->document_code){
+                //     $oldPath = Yii::getAlias('@uploads') . "/docman/document/" . $_document_code;
+                //     $newPath = Yii::getAlias('@uploads') . "/docman/document/" . $model->document_code;
+                //     rename( $oldPath, $newPath);
+                // }
+
+                Yii::$app->session->setFlash('kv-detail-success', 'Request Updated!');
+            }else{
+                Yii::$app->session->setFlash('error', print_r($model->getErrors()));
+            }
+        }
+
         return $this->render('view', [
             'model' => $this->findModel($id),
             'attachmentsDataProvider' => $attachmentsDataProvider,
