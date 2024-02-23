@@ -202,7 +202,7 @@ class DocController extends Controller
 
     public function actionUploadattachment($id)
     {
-        //Yii::$app->params['uploadPath'] = Yii::$app->basePath . '/uploads/';
+        // Yii::$app->params['uploadPath'] = Yii::$app->basePath . '/uploads/';
         $model = Docattachment::findOne($id);
         date_default_timezone_set('Asia/Manila');
         
@@ -217,8 +217,8 @@ class DocController extends Controller
                 $indexFile = fopen($path.'/index.php', 'w') or die("Unable to open file!");
             }
                 
-            $model->pdfFile->saveAs( $path ."/". $model->document_attachment_id . $random . '.' . $model->pdfFile->extension);
-            $model->filename = $model->document_attachment_id . $random . '.' . $model->pdfFile->extension;
+            $model->pdfFile->saveAs( $path ."/". $model->doc_attachment_id . '.' . $model->pdfFile->extension);
+            $model->filename = $model->doc_attachment_id . $random . '.' . $model->pdfFile->extension;
             $model->last_update = date("Y-m-d H:i:s");
             $model->save(false);
             
