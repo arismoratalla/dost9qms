@@ -211,14 +211,16 @@ class DocController extends Controller
             $model->pdfFile = UploadedFile::getInstance($model, 'pdfFile');
             
             //$path = Yii::getAlias('@uploads') . "/docman/document/" . $model->document->document_id;
-            $path = Yii::getAlias('@uploads') . "/docman/9001/" . $model->document->section->doccategory->folder . '/' . $model->document->section->section_id . '/' . $model->filename;
+            $path = Yii::getAlias('@uploads') . "/docman/9001/" . $model->document->section->doccategory->folder . '/' . $model->document->section->section_id ;
             if(!file_exists($path)){
                 mkdir($path, 0755, true);
                 $indexFile = fopen($path.'/index.php', 'w') or die("Unable to open file!");
             }
                 
             // $model->pdfFile->saveAs( $path ."/". $model->doc_attachment_id . '.' . $model->pdfFile->extension);
-            $model->pdfFile->saveAs( $path );
+            // $model->pdfFile->saveAs( $path );
+
+            $model->pdfFile->saveAs( $path ."/". $model->document_attachment_id . $model->filename . '.' . $model->pdfFile->extension);
 
             $model->filename = $model->doc_attachment_id . $random . '.' . $model->pdfFile->extension;
             $model->last_update = date("Y-m-d H:i:s");
