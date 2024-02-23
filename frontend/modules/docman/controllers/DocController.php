@@ -221,8 +221,7 @@ class DocController extends Controller
             // $model->pdfFile->saveAs( $path );
 
             $model->pdfFile->saveAs( $path ."/". $model->doc_attachment_id . $model->filename . '.' . $model->pdfFile->extension);
-
-            $model->filename = $model->doc_attachment_id . $random . '.' . $model->pdfFile->extension;
+            $model->filename = $model->doc_attachment_id . $model->filename . '.' . $model->pdfFile->extension;
             $model->last_update = date("Y-m-d H:i:s");
             $model->save(false);
             
