@@ -227,7 +227,7 @@ class DocController extends Controller
             
             Yii::$app->session->setFlash('success', 'Document Successfully Uploaded!');
             
-            return $this->redirect(['view?id='.$model->document_id]);
+            return $this->redirect(['view?id='.$model->doc_id]);
         }
         
         if (Yii::$app->request->isAjax) {
